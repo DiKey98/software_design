@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelServicesLib;
+using System;
 using System.Collections.Generic;
 
 namespace ConsoleTest.Menu
@@ -9,6 +10,8 @@ namespace ConsoleTest.Menu
 
         private ICommand _currentCommand;
         private readonly List<ICommand> _commands;
+
+        public static User CurrentUser;
 
         public MainMenu(IEnumerable<ICommand> commands)
         {

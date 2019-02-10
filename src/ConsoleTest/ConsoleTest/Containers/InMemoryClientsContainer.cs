@@ -19,6 +19,7 @@ namespace ConsoleTest
         {
             return _operations ?? (_operations = new InMemoryClientsContainer());
         }
+
         public void AddClient(Client client)
         {
             _container.Add(client);
