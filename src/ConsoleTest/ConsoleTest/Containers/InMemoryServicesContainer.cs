@@ -10,14 +10,14 @@ namespace ConsoleTest
 
         private readonly List<IService> _container;
 
-        private InMemoryServicesContainer(IEnumerable<IService> container)
+        public InMemoryServicesContainer()
         {
-            _container = container as List<IService>;
+            _container = new List<IService>();
         }
 
-        public static InMemoryServicesContainer GetInstance(IEnumerable<IService> container)
+        public static InMemoryServicesContainer GetInstance()
         {
-            return _operations ?? (_operations = new InMemoryServicesContainer(container));
+            return _operations ?? (_operations = new InMemoryServicesContainer());
         }
 
         public void AddService(IService service)
