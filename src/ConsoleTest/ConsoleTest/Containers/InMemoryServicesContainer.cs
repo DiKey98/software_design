@@ -2,7 +2,7 @@
 using System.Linq;
 using HotelServicesLib;
 
-namespace ConsoleTest
+namespace ConsoleTest.Containers
 {
     public class InMemoryServicesContainer: IServicesContainer
     {
@@ -40,14 +40,14 @@ namespace ConsoleTest
             return _container.GetRange(0, _container.Count);
         }
 
-        public ICollection<IService> GetPaidServices(Client client = null)
+        public ICollection<IService> GetPaidServices(User user = null)
         {
-            return client == null 
+            return user == null 
                 ? _container.Where(service => service.IsPaid).ToList() 
-                : _container.Where(service => service.IsPaid && service.Client.Equals(client)).ToList();
+                : _container.Where(service => service.IsPaid && service.Client.Equals(user)).ToList();
         }
 
-        public ICollection<IService> GetUnPaidServices(Client client = null)
+        public ICollection<IService> GetUnPaidServices(User client = null)
         {
             return client == null
                 ? _container.Where(service => !service.IsPaid).ToList()
