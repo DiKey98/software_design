@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HotelServicesLib">
-      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Release\HotelServicesLib.dll</HintPath>
+      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Debug\HotelServicesLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,14 +48,20 @@
     <Compile Include="Menu\ClientMenu.cs" />
     <Compile Include="Menu\Commands\CancelServiceCommand.cs" />
     <Compile Include="Menu\Commands\PayServiceCommand.cs" />
+    <Compile Include="Menu\Commands\EnterCommand.cs" />
+    <Compile Include="Menu\Commands\ExitCommand.cs" />
+    <Compile Include="Menu\Commands\RegistrationCommand.cs" />
+    <Compile Include="Menu\Commands\ViewAllPaidServicesCommand.cs" />
+    <Compile Include="Menu\Commands\ViewAllServicesCommand.cs" />
+    <Compile Include="Menu\Commands\ViewAllUnpaidServicesCommand.cs" />
     <Compile Include="Menu\ICommand.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\MainMenu.cs" />
-    <Compile Include="Containers\InMemoryClientsContainer.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />
     <Compile Include="Operations\InMemoryUserOperations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SpaService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

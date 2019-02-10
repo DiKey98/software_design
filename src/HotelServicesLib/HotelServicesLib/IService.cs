@@ -6,6 +6,7 @@ namespace HotelServicesLib
     {
         string Name { get; }
         string Id { get; }
+        decimal Cost { get; }
         bool IsPaid { get; set; }
         DateTime TimeOrder { get; }
         User Client { get; }
