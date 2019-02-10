@@ -45,10 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu\ClientMenu.cs" />
+    <Compile Include="Menu\Commands\CancelServiceCommand.cs" />
+    <Compile Include="Menu\Commands\PayServiceCommand.cs" />
     <Compile Include="Menu\ICommand.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\MainMenu.cs" />
-    <Compile Include="Operations\InMemoryClientOperations.cs" />
     <Compile Include="Containers\InMemoryClientsContainer.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />
     <Compile Include="Operations\InMemoryUserOperations.cs" />
