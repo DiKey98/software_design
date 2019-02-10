@@ -4,28 +4,27 @@ namespace HotelServicesLib
 {
     public class User
     {
-        private readonly string _login;
-        private readonly string _password;
-        private readonly string _fio;
-
+        public readonly string Login;
+        public readonly string Password;
+        public readonly string Fio;
         public readonly string Id;
         public readonly Roles Role;
         
         public User(string fio, string login, string password, Roles role)
         {
             Role = role;
-            _fio = fio;
-            _login = login;
-            _password = password;
+            Fio = fio;
+            Login = login;
+            Password = password;
             Id = Guid.NewGuid().ToString();
         }
 
         public User(User user)
         {
             Role = user.Role;
-            _fio = user._fio;
-            _login = user._login;
-            _password = user._password;
+            Fio = user.Fio;
+            Login = user.Login;
+            Password = user.Password;
             Id = Guid.NewGuid().ToString();
         }
     }
