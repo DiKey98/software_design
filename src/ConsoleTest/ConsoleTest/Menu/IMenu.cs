@@ -6,5 +6,6 @@
         void SetCommand(ICommand command);
         void AddCommand(ICommand command);
         void Print();
+        ICommand ReadCommand();
     }
 }

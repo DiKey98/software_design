@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 namespace ConsoleTest.Menu
 {
-    public class Menu: IMenu
+    public class MainMenu: IMenu
     {
+        private const string InputMessage = ">> ";
+
         private ICommand _currentCommand;
         private readonly List<ICommand> _commands;
 
-        public Menu(IEnumerable<ICommand> commands)
+        public MainMenu(IEnumerable<ICommand> commands)
         {
             _commands = commands as List<ICommand>;
         }
 
-        public Menu()
+        public MainMenu()
         {
             _commands = new List<ICommand>();
         }
@@ -35,10 +37,18 @@ namespace ConsoleTest.Menu
 
         public void Print()
         {
-            foreach (var command in _commands)
+            for (var i = 0; i < _commands.Count; i++)
             {
-                Console.WriteLine(command.ToString());
+                Console.WriteLine($"{i+1}.{_commands[i].Name}");
             }
+            Console.WriteLine();
+        }
+
+        public ICommand ReadCommand()
+        {
+            Console.WriteLine(InputMessage);
+            var code = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            return _commands[code - 1];
         }
     }
 }
