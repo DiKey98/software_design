@@ -4,7 +4,7 @@
     {
         string Name { get; }
         string Id { get; }
-        bool IsPaid { get; }
+        bool IsPaid { get; set; }
         Client Client { get; }
     }
 }
