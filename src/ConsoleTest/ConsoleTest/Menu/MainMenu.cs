@@ -42,11 +42,12 @@ namespace ConsoleTest.Menu
                 Console.WriteLine($"{i+1}.{_commands[i].Name}");
             }
             Console.WriteLine();
+            Console.WriteLine();
         }
 
         public ICommand ReadCommand()
         {
-            Console.WriteLine(InputMessage);
+            Console.Write(InputMessage);
             var code = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             return _commands[code - 1];
         }
