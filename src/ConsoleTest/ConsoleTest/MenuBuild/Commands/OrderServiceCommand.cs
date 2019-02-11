@@ -60,7 +60,7 @@ namespace ConsoleTest.MenuBuild.Commands
             Execute();
         }
 
-        private void PrintServices(IEnumerable<IServiceInfo> services)
+        private void PrintServices(IEnumerable<ServiceInfo> services)
         {
             foreach (var service in services)
             {

@@ -6,7 +6,6 @@ using ConsoleTest.MenuBuild;
 using ConsoleTest.MenuBuild.Commands;
 using ConsoleTest.Operations;
 using ConsoleTest.Services;
-using ConsoleTest.ServicesInfo;
 using HotelServicesLib;
 
 namespace ConsoleTest
@@ -27,23 +26,23 @@ namespace ConsoleTest
 
             ServicesOptions.ServicesInputs = new Dictionary<string, Func<IService>>
             {
-                {"спаа", ServicesOptions.GetSpaService}
+                {"спа", ServicesOptions.GetSpaService},
+                {"бильярд", ServicesOptions.GetBilliards},
+                {"алкоголь", ServicesOptions.GetAlcohol}
             };
 
             ServicesOptions.ServicesCosts = new Dictionary<string, decimal>
             {
-                {"спаа", 3000},
-                {"спаб", 3000},
-                {"спав", 3000},
-                {"спаг", 3000}
+                {"спа", 3000},
+                {"бильярд", 1000},
+                {"алкоголь", 5000},
             };
 
-            var availableServices = new List<IServiceInfo>
+            var availableServices = new List<ServiceInfo>
             {
-                new SpaServiceInfo("Спаа", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спаб", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спав", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спаг", ServicesOptions.ServicesCosts["спаа"]),
+                new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"]),
+                new ServiceInfo("Бильярд", ServicesOptions.ServicesCosts["бильярд"]),
+                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"]),
             };
 
             var usersContainer = InMemoryUsersContainer.GetInstance(users);
