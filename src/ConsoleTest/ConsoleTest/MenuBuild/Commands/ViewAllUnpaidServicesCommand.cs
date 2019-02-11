@@ -22,7 +22,7 @@ namespace ConsoleTest.MenuBuild.Commands
             var services = _servicesContainer.GetUnPaidServices();
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost}");
+                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost} Клиент {service.Client.Fio}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

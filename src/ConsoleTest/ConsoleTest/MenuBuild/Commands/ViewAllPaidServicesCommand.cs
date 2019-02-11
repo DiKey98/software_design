@@ -1,5 +1,6 @@
 ﻿using HotelServicesLib;
 using System;
+using System.Globalization;
 
 namespace ConsoleTest.MenuBuild.Commands
 {
@@ -23,7 +24,8 @@ namespace ConsoleTest.MenuBuild.Commands
             var services = _servicesContainer.GetPaidServices();
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost}");
+                var timeString = service.TimeOrder.ToString("g", CultureInfo.CurrentCulture);
+                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost} Дата {timeString}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

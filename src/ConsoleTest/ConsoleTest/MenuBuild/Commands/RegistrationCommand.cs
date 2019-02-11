@@ -50,7 +50,11 @@ namespace ConsoleTest.MenuBuild.Commands
                 return;
             }
             _usersContainer.AddUser(user);
-            Refresh("Регистрация прошла успешно");
+            Console.Clear();
+            Console.WriteLine("Регистрация прошла успешно");
+            _mainMenu.Print();
+            _mainMenu.SetCommand(_mainMenu.ReadCommand());
+            _mainMenu.Run();
         }
 
         private void Refresh(string message)

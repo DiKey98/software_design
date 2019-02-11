@@ -26,7 +26,7 @@ namespace ConsoleTest
 
             ServicesOptions.ServicesInputs = new Dictionary<string, Func<IService>>
             {
-                {"алкоголь", ServicesOptions.GetSpaService},
+                {"спа", ServicesOptions.GetSpaService},
                 {"бильярд", ServicesOptions.GetBilliards},
                 {"алкоголь", ServicesOptions.GetAlcohol}
             };
@@ -56,7 +56,6 @@ namespace ConsoleTest
 
             mainMenu.AddCommand(new EnterCommand("Вход", usersContainer, new []{adminMenu, managerMenu, clientMenu}));
             mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
-            mainMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
             clientMenu.AddCommand(new CancelServiceCommand("Отменить заказ", userOperations, servicesContainer, clientMenu));
