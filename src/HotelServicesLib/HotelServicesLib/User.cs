@@ -8,9 +8,9 @@ namespace HotelServicesLib
         public readonly string Password;
         public readonly string Fio;
         public readonly string Id;
-        public readonly Roles Role;
+        public readonly Roles.RolesValues Role;
         
-        public User(string fio, string login, string password, Roles role)
+        public User(string fio, string login, string password, Roles.RolesValues role)
         {
             Role = role;
             Fio = fio;

@@ -2,11 +2,9 @@
 
 namespace HotelServicesLib
 {
-    public interface IService
+    public interface IService: IServiceInfo
     {
-        string Name { get; }
         string Id { get; }
-        decimal Cost { get; }
         bool IsPaid { get; set; }
         DateTime TimeOrder { get; }
         User Client { get; }

@@ -7,7 +7,9 @@ namespace HotelServicesLib
         void AddService(IService service);
         void RemoveService(IService service);
         IService GetServiceById(string id);
-        ICollection<IService> GetAllServices();
+        IServiceInfo GetServiceInfoByName(string name);
+        ICollection<IServiceInfo> GetAllAvailableServices();
+        ICollection<IService> GetAllServices(User user = null);
         ICollection<IService> GetPaidServices(User user = null);
         ICollection<IService> GetUnPaidServices(User user = null);
     }
