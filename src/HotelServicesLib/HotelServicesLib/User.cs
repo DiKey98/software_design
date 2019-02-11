@@ -27,5 +27,25 @@ namespace HotelServicesLib
             Password = user.Password;
             Id = Guid.NewGuid().ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            var user = (User) obj;
+            return Role == user.Role &&
+                   Fio == user.Fio &&
+                   Login == user.Login &&
+                   Password == user.Password &&
+                   Id == user.Id;
+        }
     }
 }

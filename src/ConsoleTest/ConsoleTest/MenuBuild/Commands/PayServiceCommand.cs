@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using HotelServicesLib;
 
-namespace ConsoleTest.Menu.Commands
+namespace ConsoleTest.MenuBuild.Commands
 {
     public class PayServiceCommand: ICommand
     {

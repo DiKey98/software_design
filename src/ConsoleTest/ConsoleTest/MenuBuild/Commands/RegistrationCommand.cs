@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HotelServicesLib;
 
-namespace ConsoleTest.Menu.Commands
+namespace ConsoleTest.MenuBuild.Commands
 {
     public class RegistrationCommand : ICommand
     {
         private readonly IUsersContainer _usersContainer;
-        private readonly Menu _mainMenu;
+        private readonly MenuBuild.Menu _mainMenu;
 
         public string Name { get; }
 

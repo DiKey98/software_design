@@ -9,6 +9,8 @@ namespace ConsoleTest.Operations
         private readonly IUsersContainer _usersContainer;
         private readonly IServicesContainer _servicesContainer;
 
+        private User _currentUser;
+
         private InMemoryUserOperations(IUsersContainer usersContainer, IServicesContainer servicesContainer)
         {
             _usersContainer = usersContainer;
@@ -17,13 +19,23 @@ namespace ConsoleTest.Operations
 
         public static InMemoryUserOperations GetInstance(IUsersContainer container, IServicesContainer servicesContainer)
         {
-            return _operations ?? (_operations = new InMemoryUserOperations(container, servicesContainer));
+            if (_operations == null)
+            {
+                _operations = new InMemoryUserOperations(container, servicesContainer);
+            }
+            return _operations;
         }
 
-        public void ChangeUser(User oldUser, User newUser)
+        public void SetCurrentUser(User user)
         {
-            _usersContainer.RemoveUser(oldUser);
+            _currentUser = user;
+        }
+
+        public void ChangeUser(User newUser)
+        {
+            _usersContainer.RemoveUser(_currentUser);
             _usersContainer.AddUser(newUser);
+            _currentUser = newUser;
         }
 
         public void OrderService(IService service)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleTest.Services;
 using HotelServicesLib;
 
-namespace ConsoleTest.Menu.Commands
+namespace ConsoleTest.MenuBuild.Commands
 {
     public class OrderServiceCommand: ICommand
     {
@@ -29,6 +30,11 @@ namespace ConsoleTest.Menu.Commands
             Console.WriteLine();
             Console.Write("Введите название услуги: ");
             var serviceName = Console.ReadLine();
+            if (serviceName == null)
+            {
+                Refresh("Неверное название услуги");
+                return;
+            }
             var service = _servicesContainer.GetServiceInfoByName(serviceName);
             if (service == null)
             {
@@ -36,7 +42,8 @@ namespace ConsoleTest.Menu.Commands
                 return;
             }
             var tmpService = ServicesOptions.ServicesInputs[service.Name.ToLower()];
-            _userOperations.OrderService(tmpService);
+            _userOperations.OrderService(tmpService());
+            Console.Clear();
             Console.WriteLine("Услуга успешно заказана");
             Console.WriteLine();
             Console.WriteLine();

@@ -1,4 +1,4 @@
-﻿namespace ConsoleTest.Menu
+﻿namespace ConsoleTest.MenuBuild
 {
     public interface ICommand
     {

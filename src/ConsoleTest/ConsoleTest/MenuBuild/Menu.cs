@@ -1,8 +1,8 @@
-﻿using HotelServicesLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using HotelServicesLib;
 
-namespace ConsoleTest.Menu
+namespace ConsoleTest.MenuBuild
 {
     public class Menu
     {
@@ -52,6 +52,7 @@ namespace ConsoleTest.Menu
         {
             Console.Write(InputMessage);
             var code = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.Clear();
             return _commands[code - 1];
         }
     }

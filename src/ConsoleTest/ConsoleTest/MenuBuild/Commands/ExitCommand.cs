@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleTest.Menu.Commands
+namespace ConsoleTest.MenuBuild.Commands
 {
     public class ExitCommand : ICommand
     {
@@ -19,7 +15,7 @@ namespace ConsoleTest.Menu.Commands
         {
             Console.WriteLine("Вы уверны, что хотите выйти? (y/n)");
             var answer = Console.ReadLine();
-            if (answer == "y" || answer == "н")
+            if (answer != null && (answer.ToLower() == "y" || answer.ToLower() == "н"))
             {
                 Environment.Exit(0);
             }

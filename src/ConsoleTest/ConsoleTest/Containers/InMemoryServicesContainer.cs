@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HotelServicesLib;
 
@@ -11,7 +12,7 @@ namespace ConsoleTest.Containers
         private readonly List<IService> _container;
         private readonly List<IServiceInfo> _availableServices;
 
-        public InMemoryServicesContainer(IEnumerable<IServiceInfo> availableServices)
+        private InMemoryServicesContainer(IEnumerable<IServiceInfo> availableServices)
         {
             _availableServices = availableServices as List<IServiceInfo>;
             _container = new List<IService>();
@@ -19,7 +20,11 @@ namespace ConsoleTest.Containers
 
         public static InMemoryServicesContainer GetInstance(IEnumerable<IServiceInfo> availableServices)
         {
-            return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer(availableServices));
+            if (_servicesContainer == null)
+            {
+                _servicesContainer = new InMemoryServicesContainer(availableServices);
+            }
+            return _servicesContainer;
         }
 
         public void AddService(IService service)
@@ -34,12 +39,14 @@ namespace ConsoleTest.Containers
 
         public IService GetServiceById(string id)
         {
-            return _container.FirstOrDefault(service => service.Id == id);
+            return _container.FirstOrDefault(service =>
+                string.Equals(service.Id, id, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public IServiceInfo GetServiceInfoByName(string name)
         {
-            return _availableServices.FirstOrDefault(service => service.Name == name);
+            return _availableServices.FirstOrDefault(service => 
+                string.Equals(service.Name, name, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public ICollection<IServiceInfo> GetAllAvailableServices()

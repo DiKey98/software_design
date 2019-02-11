@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using HotelServicesLib;
 
-namespace ConsoleTest.Menu.Commands
+namespace ConsoleTest.MenuBuild.Commands
 {
     public class CancelServiceCommand: ICommand
     {
@@ -23,9 +23,10 @@ namespace ConsoleTest.Menu.Commands
 
         public void Execute()
         {
-            Console.WriteLine("Неоплаченные услуги:");
+            Console.WriteLine("Заказанные услуги:");
             Console.WriteLine();
             PrintServices(_servicesContainer.GetUnPaidServices(Menu.CurrentUser));
+            Console.WriteLine();
             Console.Write("Введите идентификатор услуги: ");
             var idService = Console.ReadLine();
             var service = _servicesContainer.GetServiceById(idService);
@@ -40,6 +41,7 @@ namespace ConsoleTest.Menu.Commands
                 return;
             }
             _userOperations.CancelService(service);
+            Console.Clear();
             Console.WriteLine("Услуга успешно отменена");
             Console.WriteLine();
             Console.WriteLine();
@@ -56,8 +58,17 @@ namespace ConsoleTest.Menu.Commands
             Execute();
         }
 
-        private void PrintServices(IEnumerable<IService> services)
+        private void PrintServices(ICollection<IService> services)
         {
+            if (services.Count == 0)
+            {
+                Console.WriteLine("Нет заказанных услуг. Нажмите любую клавишу...");
+                Console.ReadKey(false);
+                Console.Clear();
+                _clientMenu.Print();
+                _clientMenu.SetCommand(_clientMenu.ReadCommand());
+                _clientMenu.Run();
+            }
             foreach (var service in services)
             {
                 Console.WriteLine($"Услуга {service.Name} с id = {service.Id}");
