@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IService.cs" />
-    <Compile Include="IServiceInfo.cs" />
     <Compile Include="IServicesContainer.cs" />
     <Compile Include="IUsersContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles.cs" />
+    <Compile Include="ServiceInfo.cs" />
     <Compile Include="User.cs" />
     <Compile Include="IUserOperations.cs" />
   </ItemGroup>

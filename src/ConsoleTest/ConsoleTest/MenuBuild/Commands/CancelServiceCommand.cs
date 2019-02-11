@@ -68,6 +68,7 @@ namespace ConsoleTest.MenuBuild.Commands
                 _clientMenu.Print();
                 _clientMenu.SetCommand(_clientMenu.ReadCommand());
                 _clientMenu.Run();
+                return;
             }
             foreach (var service in services)
             {

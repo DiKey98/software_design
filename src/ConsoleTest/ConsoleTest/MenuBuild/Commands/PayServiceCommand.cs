@@ -26,6 +26,7 @@ namespace ConsoleTest.MenuBuild.Commands
             Console.WriteLine("Неоплаченные услуги:");
             Console.WriteLine();
             PrintServices(_servicesContainer.GetUnPaidServices(Menu.CurrentUser));
+            Console.WriteLine();
             Console.Write("Введите идентификатор услуги: ");
             var idService = Console.ReadLine();
             var service = _servicesContainer.GetServiceById(idService);
@@ -40,6 +41,7 @@ namespace ConsoleTest.MenuBuild.Commands
                 return;
             }
             _clientOperations.PayService(service);
+            Console.Clear();
             Console.WriteLine("Услуга успешно оплачена");
             Console.WriteLine();
             Console.WriteLine();
@@ -56,8 +58,18 @@ namespace ConsoleTest.MenuBuild.Commands
             Execute();
         }
 
-        private void PrintServices(IEnumerable<IService> services)
+        private void PrintServices(ICollection<IService> services)
         {
+            if (services.Count == 0)
+            {
+                Console.WriteLine("Нет неоплаченных услуг. Нажмите любую клавишу...");
+                Console.ReadKey(false);
+                Console.Clear();
+                _clientMenu.Print();
+                _clientMenu.SetCommand(_clientMenu.ReadCommand());
+                _clientMenu.Run();
+                return;
+            }
             foreach (var service in services)
             {
                 Console.WriteLine($"Услуга {service.Name} с id = {service.Id}");

@@ -6,7 +6,7 @@ namespace ConsoleTest.MenuBuild.Commands
     public class RegistrationCommand : ICommand
     {
         private readonly IUsersContainer _usersContainer;
-        private readonly MenuBuild.Menu _mainMenu;
+        private readonly Menu _mainMenu;
 
         public string Name { get; }
 
@@ -19,7 +19,6 @@ namespace ConsoleTest.MenuBuild.Commands
    
         public void Execute()
         {
-            Console.Clear();
             Console.Write("Роль (администратор, управляющий, клиент): ");
             var role = Console.ReadLine()?.ToLower();
             Roles.RolesValues roleId;
@@ -30,7 +29,7 @@ namespace ConsoleTest.MenuBuild.Commands
             }
             else
             {
-                Refresh("Неверно указна роль");
+                Refresh("Неверно указана роль");
                 return;
             }
 
@@ -58,10 +57,8 @@ namespace ConsoleTest.MenuBuild.Commands
         {
             Console.Clear();
             Console.WriteLine(message);
-            _mainMenu.Print();
-            var command = _mainMenu.ReadCommand();
-            _mainMenu.SetCommand(command);
-            _mainMenu.Run();
+            Console.WriteLine();
+            Execute();
         }
     }
 }

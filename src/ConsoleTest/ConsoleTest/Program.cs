@@ -6,7 +6,6 @@ using ConsoleTest.MenuBuild;
 using ConsoleTest.MenuBuild.Commands;
 using ConsoleTest.Operations;
 using ConsoleTest.Services;
-using ConsoleTest.ServicesInfo;
 using HotelServicesLib;
 
 namespace ConsoleTest
@@ -27,23 +26,32 @@ namespace ConsoleTest
 
             ServicesOptions.ServicesInputs = new Dictionary<string, Func<IService>>
             {
-                {"спаа", ServicesOptions.GetSpaService}
+                {"спа", ServicesOptions.GetSpaService},
+<<<<<<< HEAD
+                {"бильярд", ServicesOptions.GetSpaService},
+                {"алкоголь", ServicesOptions.GetSpaService}
+=======
+                {"бильярд", ServicesOptions.GetBilliards},
+                {"алкоголь", ServicesOptions.GetAlcohol}
+>>>>>>> 8e05b7034c8db9a8c9a6de07277ff2e03ea42547
             };
 
             ServicesOptions.ServicesCosts = new Dictionary<string, decimal>
             {
-                {"спаа", 3000},
-                {"спаб", 3000},
-                {"спав", 3000},
-                {"спаг", 3000}
+                {"спа", 3000},
+                {"бильярд", 1000},
+                {"алкоголь", 5000},
             };
 
-            var availableServices = new List<IServiceInfo>
+            var availableServices = new List<ServiceInfo>
             {
-                new SpaServiceInfo("Спаа", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спаб", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спав", ServicesOptions.ServicesCosts["спаа"]),
-                new SpaServiceInfo("Спаг", ServicesOptions.ServicesCosts["спаа"]),
+                new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"]),
+                new ServiceInfo("Бильярд", ServicesOptions.ServicesCosts["бильярд"]),
+<<<<<<< HEAD
+                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"])
+=======
+                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"]),
+>>>>>>> 8e05b7034c8db9a8c9a6de07277ff2e03ea42547
             };
 
             var usersContainer = InMemoryUsersContainer.GetInstance(users);
@@ -57,19 +65,21 @@ namespace ConsoleTest
 
             mainMenu.AddCommand(new EnterCommand("Вход", usersContainer, new []{adminMenu, managerMenu, clientMenu}));
             mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
-            mainMenu.AddCommand(new ExitCommand("Выход"));
+            mainMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
             clientMenu.AddCommand(new CancelServiceCommand("Отменить заказ", userOperations, servicesContainer, clientMenu));
             clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, servicesContainer, clientMenu));
-            clientMenu.AddCommand(new ExitCommand("Выход"));
+            clientMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
-            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer));
-            managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer));
-            managerMenu.AddCommand(new ExitCommand("Выход"));
+            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
-            adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", servicesContainer));
-            adminMenu.AddCommand(new ExitCommand("Выход"));
+            adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", servicesContainer, adminMenu));
+            adminMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             mainMenu.Print();
             mainMenu.SetCommand(mainMenu.ReadCommand());

@@ -10,15 +10,15 @@ namespace ConsoleTest.Containers
         private static InMemoryServicesContainer _servicesContainer;
 
         private readonly List<IService> _container;
-        private readonly List<IServiceInfo> _availableServices;
+        private readonly List<ServiceInfo> _availableServices;
 
-        private InMemoryServicesContainer(IEnumerable<IServiceInfo> availableServices)
+        private InMemoryServicesContainer(IEnumerable<ServiceInfo> availableServices)
         {
-            _availableServices = availableServices as List<IServiceInfo>;
+            _availableServices = availableServices as List<ServiceInfo>;
             _container = new List<IService>();
         }
 
-        public static InMemoryServicesContainer GetInstance(IEnumerable<IServiceInfo> availableServices)
+        public static InMemoryServicesContainer GetInstance(IEnumerable<ServiceInfo> availableServices)
         {
             if (_servicesContainer == null)
             {
@@ -43,13 +43,13 @@ namespace ConsoleTest.Containers
                 string.Equals(service.Id, id, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public IServiceInfo GetServiceInfoByName(string name)
+        public ServiceInfo GetServiceInfoByName(string name)
         {
             return _availableServices.FirstOrDefault(service => 
                 string.Equals(service.Name, name, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public ICollection<IServiceInfo> GetAllAvailableServices()
+        public ICollection<ServiceInfo> GetAllAvailableServices()
         {
             return _availableServices.GetRange(0, _availableServices.Count);
         }

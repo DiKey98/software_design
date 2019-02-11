@@ -1,23 +1,36 @@
 ﻿using HotelServicesLib;
+using System;
 
 namespace ConsoleTest.MenuBuild.Commands
 {
     public class ViewAllPaidServicesCommand : ICommand
     {
         private readonly IServicesContainer _servicesContainer;
+        private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllPaidServicesCommand(string name, IServicesContainer servicesContainer)
+        public ViewAllPaidServicesCommand(string name, IServicesContainer servicesContainer, Menu clientMenu)
         {
-            Name = name;
             _servicesContainer = servicesContainer;
+            _clientMenu = clientMenu;
+            Name = name;
         }
+
 
         public void Execute()
         {
-            _servicesContainer.GetPaidServices();
-
+            var services = _servicesContainer.GetPaidServices();
+            foreach (var service in services)
+            {
+                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost}");
+            }
+            Console.WriteLine("Для продолжения нажмите любую клавишу");
+            Console.ReadKey(false);
+            Console.Clear();
+            _clientMenu.Print();
+            _clientMenu.SetCommand(_clientMenu.ReadCommand());
+            _clientMenu.Run();
 
         }
     }

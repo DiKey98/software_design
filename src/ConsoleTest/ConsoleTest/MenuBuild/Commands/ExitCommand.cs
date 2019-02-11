@@ -4,10 +4,14 @@ namespace ConsoleTest.MenuBuild.Commands
 {
     public class ExitCommand : ICommand
     {
+        private readonly Menu _menu;
+
         public string Name { get; }
 
-        public ExitCommand(string name)
+
+        public ExitCommand(string name, Menu menu)
         {
+            _menu = menu;
             Name = name;
         }
 
@@ -17,7 +21,10 @@ namespace ConsoleTest.MenuBuild.Commands
             var answer = Console.ReadLine();
             if (answer != null && (answer.ToLower() == "y" || answer.ToLower() == "н"))
             {
-                Environment.Exit(0);
+                Console.Clear();
+                _menu.Print();
+                _menu.SetCommand(_menu.ReadCommand());
+                _menu.Run();
             }
         }
     }
