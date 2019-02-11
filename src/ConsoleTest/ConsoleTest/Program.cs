@@ -26,14 +26,9 @@ namespace ConsoleTest
 
             ServicesOptions.ServicesInputs = new Dictionary<string, Func<IService>>
             {
-                {"спа", ServicesOptions.GetSpaService},
-<<<<<<< HEAD
-                {"бильярд", ServicesOptions.GetSpaService},
-                {"алкоголь", ServicesOptions.GetSpaService}
-=======
+                {"алкоголь", ServicesOptions.GetSpaService},
                 {"бильярд", ServicesOptions.GetBilliards},
                 {"алкоголь", ServicesOptions.GetAlcohol}
->>>>>>> 8e05b7034c8db9a8c9a6de07277ff2e03ea42547
             };
 
             ServicesOptions.ServicesCosts = new Dictionary<string, decimal>
@@ -47,11 +42,7 @@ namespace ConsoleTest
             {
                 new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"]),
                 new ServiceInfo("Бильярд", ServicesOptions.ServicesCosts["бильярд"]),
-<<<<<<< HEAD
                 new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"])
-=======
-                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"]),
->>>>>>> 8e05b7034c8db9a8c9a6de07277ff2e03ea42547
             };
 
             var usersContainer = InMemoryUsersContainer.GetInstance(users);
