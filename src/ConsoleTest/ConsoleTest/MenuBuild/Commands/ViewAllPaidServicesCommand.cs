@@ -17,6 +17,8 @@ namespace ConsoleTest.MenuBuild.Commands
         public void Execute()
         {
             _servicesContainer.GetPaidServices();
+
+
         }
     }
 }
