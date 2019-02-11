@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleTest.Menu.Commands
 {
-    class EnterCommand : ICommand
+    public class EnterCommand : ICommand
     {
-        private IUsersContainer _usersContainer;
+        private readonly IUsersContainer _usersContainer;
 
         public string Name { get; }
 
-        public EnterCommand(string name)
+        public EnterCommand(string name, IUsersContainer usersContainer)
         {
             Name = name;
+            _usersContainer = usersContainer;
         }
 
         public void Execute()
@@ -28,23 +29,20 @@ namespace ConsoleTest.Menu.Commands
 
             var tmpUser = _usersContainer.GetUserByLogin(login);
 
-            if (tmpUser==null)
+            if (tmpUser == null)
             {
                 Console.WriteLine("Пользователь с таким логином не найден");
             }
 
-            if (tmpUser.Password==password)
+            if (tmpUser.Password == password)
             {
                 Console.WriteLine("Авторизация успешна");
-                MainMenu.CurrentUser = tmpUser;
+                Menu.CurrentUser = tmpUser;
             }
             else
             {
                 Console.WriteLine("Пароль неверный");
             }
-
-
-            
         }
     }
 }

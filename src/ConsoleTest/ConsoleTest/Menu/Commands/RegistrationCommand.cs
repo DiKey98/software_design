@@ -7,14 +7,14 @@ using HotelServicesLib;
 
 namespace ConsoleTest.Menu.Commands
 {
-    class RegistrationCommand : ICommand
+    public class RegistrationCommand : ICommand
     {
-        private IUsersContainer _usersContainer;
-        private MainMenu _mainMenu;
+        private readonly IUsersContainer _usersContainer;
+        private readonly Menu _mainMenu;
 
         public string Name { get; }
 
-        public RegistrationCommand(string name, IUsersContainer usersContainer, MainMenu mainMenu)
+        public RegistrationCommand(string name, IUsersContainer usersContainer, Menu mainMenu)
         {
             Name = name;
             _usersContainer = usersContainer;
@@ -25,9 +25,9 @@ namespace ConsoleTest.Menu.Commands
         {
             Console.Clear();
             Console.Write("Роль (администратор, управляющий, клиент): ");
-            string role = Console.ReadLine().ToLower();
+            var role = Console.ReadLine()?.ToLower();
             Roles.RolesValues roleId;
-            if (Roles.Values.ContainsKey(role))
+            if (role != null && Roles.Values.ContainsKey(role))
             {
                 roleId = Roles.Values[role];
 
@@ -39,15 +39,15 @@ namespace ConsoleTest.Menu.Commands
             }
 
             Console.Write("ФИО: ");
-            string fio = Console.ReadLine();
+            var fio = Console.ReadLine();
 
             Console.Write("Логин: ");
-            string login = Console.ReadLine();
+            var login = Console.ReadLine();
 
             Console.Write("Пароль: ");
-            string password = Console.ReadLine();
+            var password = Console.ReadLine();
 
-            User user = new User(fio, login, password, roleId);
+            var user = new User(fio, login, password, roleId);
             var tmpUser = _usersContainer.GetUserByLogin(user.Login);
             if (tmpUser != null)
             {

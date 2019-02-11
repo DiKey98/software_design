@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleTest.Menu.Commands
 {
-    class ExitCommand : ICommand
+    public class ExitCommand : ICommand
     {
         public string Name { get; }
 

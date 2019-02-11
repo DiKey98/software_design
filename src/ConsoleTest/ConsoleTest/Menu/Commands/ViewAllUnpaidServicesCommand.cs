@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleTest.Menu.Commands
 {
-    class ViewAllUnpaidServicesCommand : ICommand
+    public class ViewAllUnpaidServicesCommand : ICommand
     {
-        private IServicesContainer _servicesContainer;
+        private readonly IServicesContainer _servicesContainer;
 
         public string Name { get; }
 
-        public ViewAllUnpaidServicesCommand(string name)
+        public ViewAllUnpaidServicesCommand(string name, IServicesContainer servicesContainer)
         {
             Name = name;
+            _servicesContainer = servicesContainer;
         }
 
         public void Execute()
