@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HotelServicesLib">
-      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Debug\HotelServicesLib.dll</HintPath>
+    <Reference Include="HotelServicesLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Release\HotelServicesLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\ClientMenu.cs" />
     <Compile Include="Menu\Commands\CancelServiceCommand.cs" />
+    <Compile Include="Menu\Commands\OrderServiceCommand.cs" />
     <Compile Include="Menu\Commands\PayServiceCommand.cs" />
     <Compile Include="Menu\Commands\EnterCommand.cs" />
     <Compile Include="Menu\Commands\ExitCommand.cs" />
@@ -55,9 +56,9 @@
     <Compile Include="Menu\Commands\ViewAllServicesCommand.cs" />
     <Compile Include="Menu\Commands\ViewAllUnpaidServicesCommand.cs" />
     <Compile Include="Menu\ICommand.cs" />
-    <Compile Include="Menu\IMenu.cs" />
-    <Compile Include="Menu\MainMenu.cs" />
+    <Compile Include="Menu\Menu.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />
+    <Compile Include="Menu\ServicesOptions.cs" />
     <Compile Include="Operations\InMemoryUserOperations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,21 +7,23 @@ using HotelServicesLib;
 
 namespace ConsoleTest.Services
 {
-    class SpaService : IService
+    public class SpaService : IService
     {
         public string Name { get; }
         public string Id { get; }
         public decimal Cost { get; }
         public bool IsPaid { get; set; }
-        public Client Client { get; }
+        public DateTime TimeOrder { get; }
+        public User Client { get; }
 
-        public SpaService(string name, string id, decimal cost, bool isPaid, Client client)
+        public SpaService(string name, decimal cost, bool isPaid, User client, DateTime timeOrder)
         {
             Name = name;
-            Id = id;
+            Id = Guid.NewGuid().ToString();
             Cost = cost;
             IsPaid = isPaid;
             Client = client;
+            TimeOrder = timeOrder;
         }
     }
 }

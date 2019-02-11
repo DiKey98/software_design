@@ -8,12 +8,12 @@ namespace ConsoleTest.Menu.Commands
     {
         private readonly IServicesContainer _servicesContainer;
         private readonly IUserOperations _userOperations;
-        private readonly ClientMenu _clientMenu;
+        private readonly Menu _clientMenu;
 
         public string Name { get; }
         
         public CancelServiceCommand(string name, IUserOperations userOperations,  
-            IServicesContainer servicesContainer, ClientMenu clientMenu)
+            IServicesContainer servicesContainer, Menu clientMenu)
         {
             Name = name;
             _servicesContainer = servicesContainer;
@@ -25,7 +25,7 @@ namespace ConsoleTest.Menu.Commands
         {
             Console.WriteLine("Неоплаченные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesContainer.GetUnPaidServices(MainMenu.CurrentUser));
+            PrintServices(_servicesContainer.GetUnPaidServices(Menu.CurrentUser));
             Console.Write("Введите идентификатор услуги: ");
             var idService = Console.ReadLine();
             var service = _servicesContainer.GetServiceById(idService);
