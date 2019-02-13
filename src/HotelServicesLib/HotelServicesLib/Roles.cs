@@ -19,7 +19,7 @@ namespace HotelServicesLib
             Client = 2
         }
 
-        public RolesValues StringToRole(string s)
+        public static RolesValues StringToRole(string s)
         {
             if (s == null)
             {

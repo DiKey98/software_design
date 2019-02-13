@@ -41,7 +41,7 @@ namespace ConsoleTest.Containers
 
         public ServiceInfo GetServiceInfoByName(string name)
         {
-            return _container.FirstOrDefault(service => service.Name.Equals(name));
+            return _container.FirstOrDefault(service => service.Name.ToLower().Equals(name.ToLower()));
         }
 
         public ICollection<ServiceInfo> GetAvailableServices()

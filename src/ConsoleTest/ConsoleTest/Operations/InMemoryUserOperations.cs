@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using HotelServicesLib;
 
 namespace ConsoleTest.Operations
@@ -11,8 +10,6 @@ namespace ConsoleTest.Operations
         private readonly IUsersContainer _usersContainer;
         private readonly IOrdersContainer _ordersContainer;
         private readonly IServiceInfoContainer _serviceInfoContainer;
-
-        private User _currentUser;
 
         private InMemoryUserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer, 
             IServiceInfoContainer serviceInfoContainer)
@@ -26,11 +23,6 @@ namespace ConsoleTest.Operations
             IServiceInfoContainer serviceInfoContainer)
         {
             return _operations ?? (_operations = new InMemoryUserOperations(container, servicesContainer, serviceInfoContainer));
-        }
-
-        public void SetCurrentUser(User user)
-        {
-            _currentUser = user;
         }
 
         public void ChangeUser(User oldUser, User newUser)

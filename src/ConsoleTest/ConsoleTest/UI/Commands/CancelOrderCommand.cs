@@ -34,12 +34,12 @@ namespace ConsoleTest.UI.Commands
             var order = _ordersContainer.GetOrderById(idOrder);
             if (order == null)
             {
-                Refresh("Неверный id услуги");
+                Refresh("Неверный id заказа");
                 return;
             }
             if (order.IsPaid)
             {
-                Refresh("Услуга уже оплачена");
+                Refresh("Заказ уже оплачен");
                 return;
             }
             _userOperations.CancelService(Menu.CurrentUser, order.Id);

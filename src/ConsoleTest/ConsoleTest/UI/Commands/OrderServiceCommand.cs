@@ -6,16 +6,16 @@ namespace ConsoleTest.UI.Commands
 {
     public class OrderServiceCommand: ICommand
     {
-        private readonly IServicesContainer _servicesContainer;
-        private readonly IUserOperations _userOperations;
+        private readonly IServiceInfoContainer _serviceInfoContainer;
+        private readonly IUsersOperations _userOperations;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public OrderServiceCommand(string name, IServicesContainer servicesContainer, 
-            IUserOperations userOperations, Menu clientMenu)
+        public OrderServiceCommand(string name, IServiceInfoContainer serviceInfoContainer, 
+            IUsersOperations userOperations, Menu clientMenu)
         {
-            _servicesContainer = servicesContainer;
+            _serviceInfoContainer = serviceInfoContainer;
             _userOperations = userOperations;
             _clientMenu = clientMenu;
             Name = name;
@@ -25,7 +25,7 @@ namespace ConsoleTest.UI.Commands
         {
             Console.WriteLine("Доступные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesContainer.GetAllAvailableServices());
+            PrintServices(_serviceInfoContainer.GetAvailableServices());
             Console.WriteLine();
             Console.Write("Введите название услуги: ");
             var serviceName = Console.ReadLine();
@@ -34,14 +34,15 @@ namespace ConsoleTest.UI.Commands
                 Refresh("Неверное название услуги");
                 return;
             }
-            var service = _servicesContainer.GetServiceInfoByName(serviceName);
+            var service = _serviceInfoContainer.GetServiceInfoByName(serviceName);
             if (service == null)
             {
                 Refresh("Неверное название услуги");
                 return;
             }
-            var tmpService = ServicesOptions.ServicesInputs[service.Name.ToLower()];
-            _userOperations.OrderService(tmpService());
+            Console.Write("Объём услуги (ед.): ");
+            var units = uint.Parse(Console.ReadLine());
+            _userOperations.OrderService(Menu.CurrentUser, service.Name, units);
             Console.Clear();
             Console.WriteLine("Услуга успешно заказана");
             Console.WriteLine();
@@ -63,7 +64,7 @@ namespace ConsoleTest.UI.Commands
         {
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name}  {service.Cost} руб.");
+                Console.WriteLine($"Услуга {service.Name} {service.CostPerUnit}руб./{service.Measurement} id = {service.Id}");
             }
         }
     }
