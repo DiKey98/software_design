@@ -39,11 +39,21 @@ namespace ConsoleTest.Operations
             return _servicesContainer.GetRange(0, _servicesContainer.Count);
         }
 
-        public ICollection<Order> GetOrders(User user = null, DateTime? from = null, DateTime? to = null)
+        public ICollection<Order> GetOrders(User user = null, bool paid = true, bool unpaid = true, DateTime? from = null, DateTime? to = null)
         {
+            if (!paid && !unpaid)
+            {
+                return null;
+            }
+
             var result = user == null 
                 ? _ordersContainer.Where(order => true)
                 : _ordersContainer.Where(order => order.Client.Equals(user));
+
+            if (!(paid && unpaid))
+            {
+                result = result.Where(order => order.IsPaid = paid);
+            }
 
             if (from != null)
             {
