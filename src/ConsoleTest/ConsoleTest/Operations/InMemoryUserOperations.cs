@@ -1,29 +1,31 @@
-﻿using HotelServicesLib;
+﻿using System;
+using System.Collections.Generic;
+using HotelServicesLib;
 
 namespace ConsoleTest.Operations
 {
-    public class InMemoryUserOperations: IUserOperations
+    public class InMemoryUserOperations: IUsersOperations
     {
         private static InMemoryUserOperations _operations;
 
         private readonly IUsersContainer _usersContainer;
-        private readonly IServicesContainer _servicesContainer;
+        private readonly IOrdersContainer _ordersContainer;
+        private readonly IServiceInfoContainer _serviceInfoContainer;
 
         private User _currentUser;
 
-        private InMemoryUserOperations(IUsersContainer usersContainer, IServicesContainer servicesContainer)
+        private InMemoryUserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer, 
+            IServiceInfoContainer serviceInfoContainer)
         {
             _usersContainer = usersContainer;
-            _servicesContainer = servicesContainer;
+            _ordersContainer = ordersContainer;
+            _serviceInfoContainer = serviceInfoContainer;
         }
 
-        public static InMemoryUserOperations GetInstance(IUsersContainer container, IServicesContainer servicesContainer)
+        public static InMemoryUserOperations GetInstance(IUsersContainer container, IOrdersContainer servicesContainer,
+            IServiceInfoContainer serviceInfoContainer)
         {
-            if (_operations == null)
-            {
-                _operations = new InMemoryUserOperations(container, servicesContainer);
-            }
-            return _operations;
+            return _operations ?? (_operations = new InMemoryUserOperations(container, servicesContainer, serviceInfoContainer));
         }
 
         public void SetCurrentUser(User user)
@@ -31,41 +33,44 @@ namespace ConsoleTest.Operations
             _currentUser = user;
         }
 
-        public void ChangeUser(User newUser)
+        public void ChangeUser(User oldUser, User newUser)
         {
-            _usersContainer.RemoveUser(_currentUser);
+            var tmpUser = _usersContainer.GetUserById(oldUser.Id);
+            if (tmpUser == null)
+            {
+                return;
+            }
+            _usersContainer.RemoveUser(tmpUser);
             _usersContainer.AddUser(newUser);
-            _currentUser = newUser;
         }
 
-        public void OrderService(IService service)
+        public void OrderService(User user, string name, uint units)
         {
-            if (service.IsPaid)
+            var serviceInfo = _serviceInfoContainer.GetServiceInfoByName(name);
+            var order = new Order(serviceInfo, units, false, DateTime.Now, user);
+            _ordersContainer.AddOrder(order);
+        }
+
+        public void PayService(User user, string id)
+        {
+            var order = _ordersContainer.GetOrderById(id);
+            if (order == null || order.IsPaid)
             {
                 return;
             }
-            service.IsPaid = false;
-            _servicesContainer.AddService(service);
+            _ordersContainer.RemoveOrder(order);
+            order.IsPaid = true;
+            _ordersContainer.AddOrder(order);
         }
 
-        public void PayService(IService service)
+        public void CancelService(User user, string id)
         {
-            if (service.IsPaid)
+            var order = _ordersContainer.GetOrderById(id);
+            if (order == null || order.IsPaid)
             {
                 return;
             }
-            _servicesContainer.RemoveService(service);
-            service.IsPaid = true;
-            _servicesContainer.AddService(service);
-        }
-
-        public void CancelService(IService service)
-        {
-            if (service.IsPaid)
-            {
-                return;
-            }
-            _servicesContainer.RemoveService(service);
+            _ordersContainer.RemoveOrder(order);
         }
     }
 }

@@ -6,7 +6,6 @@ namespace HotelServicesLib
     public interface IServicesOperations
     {
         void ChangeServiceInfo(ServiceInfo oldService, ServiceInfo newService);
-        ICollection<ServiceInfo> GetAvailableServices();
         ICollection<Order> GetOrders(User user = null, bool paid = true, bool unpaid = true, DateTime? from = null, DateTime? to = null);
     }
 }

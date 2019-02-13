@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HotelServicesLib;
 
@@ -41,6 +42,11 @@ namespace ConsoleTest.Containers
         public ServiceInfo GetServiceInfoByName(string name)
         {
             return _container.FirstOrDefault(service => service.Name.Equals(name));
+        }
+
+        public ICollection<ServiceInfo> GetAvailableServices()
+        {
+            return _container.GetRange(0, _container.Count);
         }
     }
 }

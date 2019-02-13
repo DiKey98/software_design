@@ -57,7 +57,7 @@ namespace ConsoleTest
             mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
-            clientMenu.AddCommand(new CancelServiceCommand("Отменить заказ", userOperations, servicesContainer, clientMenu));
+            clientMenu.AddCommand(new CancelOrderCommand("Отменить заказ", userOperations, servicesContainer, clientMenu));
             clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, servicesContainer, clientMenu));
             clientMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 

@@ -1,4 +1,6 @@
-﻿namespace HotelServicesLib
+﻿using System.Collections.Generic;
+
+namespace HotelServicesLib
 {
     public interface IServiceInfoContainer
     {
@@ -6,5 +8,6 @@
         void RemoveServiceInfo(ServiceInfo service);
         ServiceInfo GetServiceInfoById(string id);
         ServiceInfo GetServiceInfoByName(string name);
+        ICollection<ServiceInfo> GetAvailableServices();
     }
 }

@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotelServicesLib;
 
 namespace ConsoleTest.UI.Commands
 {
-    public class CancelServiceCommand: ICommand
+    public class CancelOrderCommand: ICommand
     {
-        private readonly IServicesContainer _servicesContainer;
-        private readonly IUserOperations _userOperations;
+        private readonly IOrdersContainer _ordersContainer;
+        private readonly IServicesOperations _servicesOperations;
+        private readonly IUsersOperations _userOperations;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
         
-        public CancelServiceCommand(string name, IUserOperations userOperations,  
-            IServicesContainer servicesContainer, Menu clientMenu)
+        public CancelOrderCommand(string name, IUsersOperations userOperations,  
+            IOrdersContainer ordersContainer, IServicesOperations servicesOperations, Menu clientMenu)
         {
             Name = name;
-            _servicesContainer = servicesContainer;
+            _ordersContainer = ordersContainer;
             _clientMenu = clientMenu;
+            _servicesOperations = servicesOperations;
             _userOperations = userOperations;
         }
 
@@ -24,22 +27,22 @@ namespace ConsoleTest.UI.Commands
         {
             Console.WriteLine("Заказанные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesContainer.GetUnPaidServices(Menu.CurrentUser));
+            PrintServices(_servicesOperations.GetOrders(Menu.CurrentUser, false));
             Console.WriteLine();
-            Console.Write("Введите идентификатор услуги: ");
-            var idService = Console.ReadLine();
-            var service = _servicesContainer.GetServiceById(idService);
-            if (service == null)
+            Console.Write("Введите идентификатор заказа: ");
+            var idOrder = Console.ReadLine();
+            var order = _ordersContainer.GetOrderById(idOrder);
+            if (order == null)
             {
                 Refresh("Неверный id услуги");
                 return;
             }
-            if (service.IsPaid)
+            if (order.IsPaid)
             {
                 Refresh("Услуга уже оплачена");
                 return;
             }
-            _userOperations.CancelService(service);
+            _userOperations.CancelService(Menu.CurrentUser, order.Id);
             Console.Clear();
             Console.WriteLine("Услуга успешно отменена");
             Console.WriteLine();
@@ -57,9 +60,9 @@ namespace ConsoleTest.UI.Commands
             Execute();
         }
 
-        private void PrintServices(ICollection<IService> services)
+        private void PrintServices(ICollection<Order> orders)
         {
-            if (services.Count == 0)
+            if (orders.Count == 0)
             {
                 Console.WriteLine("Нет заказанных услуг. Нажмите любую клавишу...");
                 Console.ReadKey(false);
@@ -69,9 +72,9 @@ namespace ConsoleTest.UI.Commands
                 _clientMenu.Run();
                 return;
             }
-            foreach (var service in services)
+            foreach (var order in orders)
             {
-                Console.WriteLine($"Услуга {service.Name} с id = {service.Id}");
+                Console.WriteLine($"Заказ {order.Id} с услуги {order.Service.Name}");
             }
         }
     }

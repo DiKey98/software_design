@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Containers\InMemoryOrdersContainer.cs" />
     <Compile Include="Containers\InMemoryUsersContainer.cs" />
-    <Compile Include="UI\Commands\CancelServiceCommand.cs" />
+    <Compile Include="UI\Commands\CancelOrderCommand.cs" />
     <Compile Include="UI\Commands\ChangeServiceCommand.cs" />
     <Compile Include="UI\Commands\OrderServiceCommand.cs" />
     <Compile Include="UI\Commands\PayServiceCommand.cs" />

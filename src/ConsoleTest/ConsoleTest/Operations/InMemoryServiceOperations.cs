@@ -34,11 +34,6 @@ namespace ConsoleTest.Operations
             _servicesContainer.Add(newService);
         }
 
-        public ICollection<ServiceInfo> GetAvailableServices()
-        {
-            return _servicesContainer.GetRange(0, _servicesContainer.Count);
-        }
-
         public ICollection<Order> GetOrders(User user = null, bool paid = true, bool unpaid = true, DateTime? from = null, DateTime? to = null)
         {
             if (!paid && !unpaid)
@@ -46,7 +41,7 @@ namespace ConsoleTest.Operations
                 return null;
             }
 
-            var result = user == null 
+            var result = user == null
                 ? _ordersContainer.Where(order => true)
                 : _ordersContainer.Where(order => order.Client.Equals(user));
 
