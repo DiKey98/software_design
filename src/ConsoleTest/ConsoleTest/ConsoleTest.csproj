@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="HotelServicesLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Release\HotelServicesLib.dll</HintPath>
+      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Debug\HotelServicesLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,6 +58,7 @@
     <Compile Include="UI\Commands\ViewAllPaidServicesCommand.cs" />
     <Compile Include="UI\Commands\ViewAllServicesCommand.cs" />
     <Compile Include="UI\Commands\ViewAllUnpaidServicesCommand.cs" />
+    <Compile Include="UI\Commands\ViewAllUsers.cs" />
     <Compile Include="UI\ICommand.cs" />
     <Compile Include="UI\Menu.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />

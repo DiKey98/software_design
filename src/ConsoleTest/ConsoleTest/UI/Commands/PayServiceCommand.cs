@@ -1,18 +1,20 @@
-﻿using System;
+﻿using HotelServicesLib;
+using System;
 using System.Collections.Generic;
 
 namespace ConsoleTest.UI.Commands
 {
     public class PayServiceCommand: ICommand
     {
-        private readonly IUserOperations _clientOperations;
-        private readonly IServicesContainer _servicesContainer;
+        private readonly IUsersOperations _clientOperations;
+        private readonly IOrdersContainer _servicesContainer;
+        private readonly IServicesOperations _servicesOperations;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public PayServiceCommand(string name, IUserOperations clientOperations, 
-            IServicesContainer servicesContainer, Menu clientMenu)
+        public PayServiceCommand(string name, IUsersOperations clientOperations,
+            IOrdersContainer servicesContainer, Menu clientMenu)
         {
             Name = name;
             _clientOperations = clientOperations;
@@ -24,11 +26,11 @@ namespace ConsoleTest.UI.Commands
         {
             Console.WriteLine("Неоплаченные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesContainer.GetUnPaidServices(Menu.CurrentUser));
+            PrintServices(_servicesOperations.GetOrders(Menu.CurrentUser, false));
             Console.WriteLine();
             Console.Write("Введите идентификатор услуги: ");
             var idService = Console.ReadLine();
-            var service = _servicesContainer.GetServiceById(idService);
+            var service = _servicesContainer.GetOrderById(idService);
             if (service == null)
             {
                 Refresh("Неверный id услуги");
@@ -39,7 +41,7 @@ namespace ConsoleTest.UI.Commands
                 Refresh("Услуга уже оплачена");
                 return;
             }
-            _clientOperations.PayService(service);
+            _clientOperations.PayService(Menu.CurrentUser, idService);
             Console.Clear();
             Console.WriteLine("Услуга успешно оплачена");
             Console.WriteLine();
@@ -57,7 +59,7 @@ namespace ConsoleTest.UI.Commands
             Execute();
         }
 
-        private void PrintServices(ICollection<IService> services)
+        private void PrintServices(ICollection<Order> services)
         {
             if (services.Count == 0)
             {
@@ -71,7 +73,7 @@ namespace ConsoleTest.UI.Commands
             }
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name} с id = {service.Id}");
+                Console.WriteLine($"Услуга {service.Service.Name} с id = {service.Id}");
             }
         }
     }

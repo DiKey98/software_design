@@ -22,9 +22,9 @@ namespace ConsoleTest.UI.Commands
             Console.Write("Роль (администратор, управляющий, клиент): ");
             var role = Console.ReadLine()?.ToLower();
             Roles.RolesValues roleId;
-            if (role != null && Roles.Values.ContainsKey(role))
+            if (role != null && Roles.StringToRole(role) != Roles.RolesValues.ErrorRole)
             {
-                roleId = Roles.Values[role];
+                roleId = Roles.StringToRole(role);
 
             }
             else
