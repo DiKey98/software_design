@@ -24,7 +24,7 @@ namespace ConsoleTest.MenuBuild.Commands
             var services = _servicesContainer.GetAllAvailableServices();
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost}");
+                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost} {service.Measurement}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);
