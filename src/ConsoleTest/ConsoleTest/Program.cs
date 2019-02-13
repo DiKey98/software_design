@@ -23,20 +23,7 @@ namespace ConsoleTest
                 new User("Логинов П.П", "loga", "66666", Roles.RolesValues.Client),
             };
 
-            ServicesOptions.ServicesInputs = new Dictionary<string, Func<Order>>
-            {
-                {"спа", ServicesOptions.GetSpaService},
-                {"бильярд", ServicesOptions.GetBilliards},
-                {"алкоголь", ServicesOptions.GetAlcohol}
-            };
-
-            ServicesOptions.ServicesCosts = new Dictionary<string, decimal>
-            {
-                {"спа", 3000},
-                {"бильярд", 1000},
-                {"алкоголь", 5000},
-            };
-
+           
             var availableServices = new List<ServiceInfo>
             {
                 new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"], "руб/час"),
@@ -48,6 +35,8 @@ namespace ConsoleTest
             var servicesContainer = InMemoryServicesContainer.GetInstance();
             var ordersContainer = InMemoryOrdersContainer.GetInstance();
             var userOperations = InMemoryUserOperations.GetInstance(usersContainer, ordersContainer, servicesContainer);
+            var serverOperations = InMemoryServiceOperations.GetInstance(servicesContainer, ordersContainer);
+
 
             var mainMenu = new Menu();
             var clientMenu = new Menu();
@@ -59,10 +48,10 @@ namespace ConsoleTest
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
             clientMenu.AddCommand(new CancelOrderCommand("Отменить заказ", userOperations, servicesContainer, clientMenu));
-            clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, servicesContainer, clientMenu));
+            clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, ordersContainer, clientMenu));
             clientMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
-            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servi, managerMenu));
             managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, managerMenu));
             managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
