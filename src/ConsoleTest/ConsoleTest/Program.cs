@@ -40,9 +40,9 @@ namespace ConsoleTest
 
             var availableServices = new List<ServiceInfo>
             {
-                new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"]),
-                new ServiceInfo("Бильярд", ServicesOptions.ServicesCosts["бильярд"]),
-                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"])
+                new ServiceInfo("Спа", ServicesOptions.ServicesCosts["спа"], "руб/час"),
+                new ServiceInfo("Бильярд", ServicesOptions.ServicesCosts["бильярд"], "руб/час"),
+                new ServiceInfo("Алкоголь", ServicesOptions.ServicesCosts["алкоголь"], "")
             };
 
             var usersContainer = InMemoryUsersContainer.GetInstance(users);
