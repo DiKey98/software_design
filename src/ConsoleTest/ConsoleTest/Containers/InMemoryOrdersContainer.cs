@@ -52,7 +52,7 @@ namespace ConsoleTest.Containers
 
             if (!(paid && unpaid))
             {
-                result = result.Where(order => order.IsPaid == paid);
+                result = paid ? result.Where(order => order.IsPaid) : result.Where(order => !order.IsPaid);
             }
 
             if (from != null)
