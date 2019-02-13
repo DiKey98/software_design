@@ -59,6 +59,7 @@
     <Compile Include="MenuBuild\ICommand.cs" />
     <Compile Include="MenuBuild\Menu.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />
+    <Compile Include="Operations\InMemoryServiceOperations.cs" />
     <Compile Include="Services\Alcohol.cs" />
     <Compile Include="Services\Billiards.cs" />
     <Compile Include="Services\ServicesOptions.cs" />
