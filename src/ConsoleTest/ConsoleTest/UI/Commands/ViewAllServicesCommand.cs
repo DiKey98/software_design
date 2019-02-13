@@ -6,12 +6,12 @@ namespace ConsoleTest.UI.Commands
 {
     public class ViewAllServicesCommand : ICommand
     {
-        private readonly IOrdersContainer _servicesContainer;
+        private readonly IServiceInfoContainer _servicesContainer;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllServicesCommand(string name, IOrdersContainer servicesContainer, Menu clientMenu)
+        public ViewAllServicesCommand(string name, IServiceInfoContainer servicesContainer, Menu clientMenu)
         {
             _servicesContainer = servicesContainer;
             _clientMenu = clientMenu;
@@ -22,10 +22,10 @@ namespace ConsoleTest.UI.Commands
 
         public void Execute()
         {
-            var services = _servicesContainer.GetOrders();
+            var services = _servicesContainer.GetAvailableServices();
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} {service.Service.Measurement}");
+                Console.WriteLine($"Услуга {service.Name} Стоимость {service.CostPerUnit} руб/{service.Measurement}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);
