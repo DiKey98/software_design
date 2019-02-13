@@ -62,7 +62,6 @@
     <Compile Include="UI\Menu.cs" />
     <Compile Include="Containers\InMemoryServicesContainer.cs" />
     <Compile Include="Operations\InMemoryServiceOperations.cs" />
-    <Compile Include="UI\ServicesOptions.cs" />
     <Compile Include="Operations\InMemoryUserOperations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

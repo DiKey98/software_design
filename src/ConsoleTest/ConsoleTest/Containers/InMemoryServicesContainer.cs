@@ -16,9 +16,19 @@ namespace ConsoleTest.Containers
             _container = new List<ServiceInfo>();
         }
 
+        private InMemoryServicesContainer(IEnumerable<ServiceInfo> services)
+        {
+            _container = services as List<ServiceInfo>;
+        }
+
         public static InMemoryServicesContainer GetInstance()
         {
             return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer());
+        }
+
+        public static InMemoryServicesContainer GetInstance(IEnumerable<ServiceInfo> services)
+        {
+            return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer(services));
         }
 
         public void AddServiceInfo(ServiceInfo service)
