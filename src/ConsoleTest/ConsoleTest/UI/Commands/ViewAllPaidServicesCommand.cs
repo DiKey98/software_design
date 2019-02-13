@@ -22,7 +22,7 @@ namespace ConsoleTest.UI.Commands
 
         public void Execute()
         {
-            var services = _ordersContainer.GetOrders();
+            var services = _ordersContainer.GetOrders(paid:true, unpaid:false);
             foreach (var service in services)
             {
                 var timeString = service.OrderDate.ToString("g", CultureInfo.CurrentCulture);
