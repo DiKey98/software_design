@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using HotelServicesLib;
 
-namespace ConsoleTest.MenuBuild
+namespace ConsoleTest.UI
 {
     public class Menu
     {

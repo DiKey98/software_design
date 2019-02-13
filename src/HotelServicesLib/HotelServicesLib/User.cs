@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HotelServicesLib
 {
@@ -46,6 +47,17 @@ namespace HotelServicesLib
                    Login == user.Login &&
                    Password == user.Password &&
                    Id == user.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1601222816;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Login);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Password);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Fio);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+            hashCode = hashCode * -1521134295 + Role.GetHashCode();
+            return hashCode;
         }
     }
 }

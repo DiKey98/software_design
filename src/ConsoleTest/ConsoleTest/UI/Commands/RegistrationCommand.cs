@@ -1,7 +1,7 @@
 ﻿using System;
 using HotelServicesLib;
 
-namespace ConsoleTest.MenuBuild.Commands
+namespace ConsoleTest.UI.Commands
 {
     public class RegistrationCommand : ICommand
     {

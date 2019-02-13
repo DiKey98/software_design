@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using HotelServicesLib;
 
-namespace ConsoleTest.MenuBuild.Commands
+namespace ConsoleTest.UI.Commands
 {
     public class PayServiceCommand: ICommand
     {

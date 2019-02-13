@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using ConsoleTest.Containers;
 using ConsoleTest.Containers.ConsoleTest;
-using ConsoleTest.MenuBuild;
-using ConsoleTest.MenuBuild.Commands;
 using ConsoleTest.Operations;
-using ConsoleTest.Services;
+using ConsoleTest.UI;
+using ConsoleTest.UI.Commands;
 using HotelServicesLib;
 
 namespace ConsoleTest

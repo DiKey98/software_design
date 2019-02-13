@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleTest.MenuBuild.Commands
+namespace ConsoleTest.UI.Commands
 {
     public class ExitCommand : ICommand
     {

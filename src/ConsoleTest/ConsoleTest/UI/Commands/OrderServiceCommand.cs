@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ConsoleTest.Services;
 using HotelServicesLib;
 
-namespace ConsoleTest.MenuBuild.Commands
+namespace ConsoleTest.UI.Commands
 {
     public class OrderServiceCommand: ICommand
     {

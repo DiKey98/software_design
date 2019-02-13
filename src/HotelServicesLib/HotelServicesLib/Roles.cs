@@ -4,7 +4,7 @@ namespace HotelServicesLib
 {
     public class Roles
     {
-        public static readonly Dictionary<string, RolesValues> Values = new Dictionary<string, RolesValues>
+        private static readonly Dictionary<string, RolesValues> Values = new Dictionary<string, RolesValues>
         {
             { "администратор", RolesValues.Admin },
             { "управляющий", RolesValues.Manager },
@@ -13,9 +13,19 @@ namespace HotelServicesLib
 
         public enum RolesValues
         {
+            ErrorRole = -1,
             Admin = 0,
             Manager = 1,
             Client = 2
+        }
+
+        public RolesValues StringToRole(string s)
+        {
+            if (s == null)
+            {
+                return RolesValues.ErrorRole;
+            }
+            return !Values.ContainsKey(s.ToLower()) ? RolesValues.ErrorRole : Values[s.ToLower()];
         }
     }
 }
