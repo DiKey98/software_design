@@ -23,7 +23,7 @@ namespace ConsoleTest
                 new User("Логинов П.П", "loga", "66666", Roles.RolesValues.Client),
             };
 
-            ServicesOptions.ServicesInputs = new Dictionary<string, Func<IService>>
+            ServicesOptions.ServicesInputs = new Dictionary<string, Func<Order>>
             {
                 {"спа", ServicesOptions.GetSpaService},
                 {"бильярд", ServicesOptions.GetBilliards},
@@ -45,8 +45,9 @@ namespace ConsoleTest
             };
 
             var usersContainer = InMemoryUsersContainer.GetInstance(users);
-            var servicesContainer = InMemoryServicesContainer.GetInstance(availableServices);
-            var userOperations = InMemoryUserOperations.GetInstance(usersContainer, servicesContainer);
+            var servicesContainer = InMemoryServicesContainer.GetInstance();
+            var ordersContainer = InMemoryOrdersContainer.GetInstance();
+            var userOperations = InMemoryUserOperations.GetInstance(usersContainer, ordersContainer, servicesContainer);
 
             var mainMenu = new Menu();
             var clientMenu = new Menu();
@@ -68,6 +69,7 @@ namespace ConsoleTest
             adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));
             adminMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, adminMenu));
             adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", servicesContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllUsers("Посмотреть всех пользователей", servicesContainer, adminMenu));
             adminMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             mainMenu.Print();

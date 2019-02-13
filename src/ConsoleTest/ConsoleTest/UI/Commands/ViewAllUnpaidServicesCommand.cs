@@ -1,15 +1,16 @@
-﻿using System;
+﻿using HotelServicesLib;
+using System;
 
 namespace ConsoleTest.UI.Commands
 {
     public class ViewAllUnpaidServicesCommand : ICommand
     {
-        private readonly IServicesContainer _servicesContainer;
+        private readonly IServicesOperations _servicesContainer;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllUnpaidServicesCommand(string name, IServicesContainer servicesContainer, Menu clientMenu)
+        public ViewAllUnpaidServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
         {
             _servicesContainer = servicesContainer;
             _clientMenu = clientMenu;
@@ -18,10 +19,10 @@ namespace ConsoleTest.UI.Commands
 
         public void Execute()
         {
-            var services = _servicesContainer.GetUnPaidServices();
+            var services = _servicesContainer.GetOrders(null, false);
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost} Клиент {service.Client.Fio}");
+                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Клиент {service.Client.Fio}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

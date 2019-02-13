@@ -1,30 +1,34 @@
 ﻿using HotelServicesLib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleTest.UI.Commands
 {
-    public class ViewAllServicesCommand : ICommand
+    public class ViewAllUsers : ICommand
     {
-        private readonly IServicesOperations _servicesContainer;
+        private readonly IUsersContainer _userContainer;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
+
+        public ViewAllUsers(string name, IUsersContainer userContainer, Menu clientMenu)
         {
-            _servicesContainer = servicesContainer;
+            _userContainer = userContainer;
             _clientMenu = clientMenu;
             Name = name;
         }
 
 
-
         public void Execute()
         {
-            var services = _servicesContainer.GetOrders();
-            foreach (var service in services)
+            var users = _userContainer.GetUsers();
+            foreach (var user in users)
             {
-                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} {service.Service.Measurement}");
+                Console.WriteLine($"ФИО {user.Fio} логин {user.Login}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

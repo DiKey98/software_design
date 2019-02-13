@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Globalization;
+using HotelServicesLib;
 
 namespace ConsoleTest.UI.Commands
 {
     public class ViewAllPaidServicesCommand : ICommand
     {
-        private readonly IServicesContainer _servicesContainer;
+        private readonly IServicesOperations _servicesContainer;
         private readonly Menu _clientMenu;
+
 
         public string Name { get; }
 
-        public ViewAllPaidServicesCommand(string name, IServicesContainer servicesContainer, Menu clientMenu)
+        public ViewAllPaidServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
         {
             _servicesContainer = servicesContainer;
             _clientMenu = clientMenu;
@@ -20,11 +22,11 @@ namespace ConsoleTest.UI.Commands
 
         public void Execute()
         {
-            var services = _servicesContainer.GetPaidServices();
+            var services = _servicesContainer.GetOrders(null, true);
             foreach (var service in services)
             {
-                var timeString = service.TimeOrder.ToString("g", CultureInfo.CurrentCulture);
-                Console.WriteLine($"Услуга {service.Name} Стоимость {service.Cost} Дата {timeString}");
+                var timeString = service.OrderDate.ToString("g", CultureInfo.CurrentCulture);
+                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Дата {timeString}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);
