@@ -8,7 +8,6 @@ namespace ConsoleTest.UI.Commands
     {
         private readonly IUsersOperations _clientOperations;
         private readonly IOrdersContainer _servicesContainer;
-        private readonly IServicesOperations _servicesOperations;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
@@ -26,7 +25,7 @@ namespace ConsoleTest.UI.Commands
         {
             Console.WriteLine("Неоплаченные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesOperations.GetOrders(Menu.CurrentUser, false));
+            PrintServices(_servicesContainer.GetOrders(Menu.CurrentUser, false));
             Console.WriteLine();
             Console.Write("Введите идентификатор услуги: ");
             var idService = Console.ReadLine();

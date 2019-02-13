@@ -1,16 +1,17 @@
 ﻿using HotelServicesLib;
 using System;
+using ConsoleTest.Containers;
 
 namespace ConsoleTest.UI.Commands
 {
     public class ViewAllServicesCommand : ICommand
     {
-        private readonly IServicesOperations _servicesContainer;
+        private readonly IOrdersContainer _servicesContainer;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
+        public ViewAllServicesCommand(string name, IOrdersContainer servicesContainer, Menu clientMenu)
         {
             _servicesContainer = servicesContainer;
             _clientMenu = clientMenu;

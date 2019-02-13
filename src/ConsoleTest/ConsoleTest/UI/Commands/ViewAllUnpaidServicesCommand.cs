@@ -5,12 +5,12 @@ namespace ConsoleTest.UI.Commands
 {
     public class ViewAllUnpaidServicesCommand : ICommand
     {
-        private readonly IServicesOperations _servicesContainer;
+        private readonly IOrdersContainer _servicesContainer;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
 
-        public ViewAllUnpaidServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
+        public ViewAllUnpaidServicesCommand(string name, IOrdersContainer servicesContainer, Menu clientMenu)
         {
             _servicesContainer = servicesContainer;
             _clientMenu = clientMenu;

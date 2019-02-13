@@ -7,19 +7,16 @@ namespace ConsoleTest.UI.Commands
     public class CancelOrderCommand: ICommand
     {
         private readonly IOrdersContainer _ordersContainer;
-        private readonly IServicesOperations _servicesOperations;
         private readonly IUsersOperations _userOperations;
         private readonly Menu _clientMenu;
 
         public string Name { get; }
         
-        public CancelOrderCommand(string name, IUsersOperations userOperations,  
-            IOrdersContainer ordersContainer, IServicesOperations servicesOperations, Menu clientMenu)
+        public CancelOrderCommand(string name, IUsersOperations userOperations, IOrdersContainer ordersContainer, Menu clientMenu)
         {
             Name = name;
             _ordersContainer = ordersContainer;
             _clientMenu = clientMenu;
-            _servicesOperations = servicesOperations;
             _userOperations = userOperations;
         }
 
@@ -27,7 +24,7 @@ namespace ConsoleTest.UI.Commands
         {
             Console.WriteLine("Заказанные услуги:");
             Console.WriteLine();
-            PrintServices(_servicesOperations.GetOrders(Menu.CurrentUser, false));
+            PrintServices(_ordersContainer.GetOrders(Menu.CurrentUser, false));
             Console.WriteLine();
             Console.Write("Введите идентификатор заказа: ");
             var idOrder = Console.ReadLine();

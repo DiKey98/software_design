@@ -45,18 +45,18 @@ namespace ConsoleTest
             mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
-            clientMenu.AddCommand(new CancelOrderCommand("Отменить заказ", userOperations, ordersContainer, servicesOperations, clientMenu));
-            clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, servicesContainer, clientMenu));
+            clientMenu.AddCommand(new CancelOrderCommand("Отменить заказ", userOperations, ordersContainer, clientMenu));
+            clientMenu.AddCommand(new PayServiceCommand("Оплатить услугу", userOperations, ordersContainer, clientMenu));
             clientMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
-            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, managerMenu));
-            managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, managerMenu));
-            mainMenu.AddCommand(new ChangeServiceCommand("Изменить услугу", servicesOperations, servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", ordersContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, managerMenu));
+            managerMenu.AddCommand(new ChangeServiceCommand("Изменить услугу", servicesOperations, servicesContainer, managerMenu));
             managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
-            adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));
-            adminMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", servicesContainer, adminMenu));
-            adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", servicesContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", ordersContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", ordersContainer, adminMenu));
             adminMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             mainMenu.Print();

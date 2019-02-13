@@ -6,15 +6,15 @@ namespace ConsoleTest.UI.Commands
 {
     public class ViewAllPaidServicesCommand : ICommand
     {
-        private readonly IServicesOperations _servicesContainer;
+        private readonly IOrdersContainer _ordersContainer;
         private readonly Menu _clientMenu;
 
 
         public string Name { get; }
 
-        public ViewAllPaidServicesCommand(string name, IServicesOperations servicesContainer, Menu clientMenu)
+        public ViewAllPaidServicesCommand(string name, IOrdersContainer ordersContainer, Menu clientMenu)
         {
-            _servicesContainer = servicesContainer;
+            _ordersContainer = ordersContainer;
             _clientMenu = clientMenu;
             Name = name;
         }
@@ -22,7 +22,7 @@ namespace ConsoleTest.UI.Commands
 
         public void Execute()
         {
-            var services = _servicesContainer.GetOrders(null, true);
+            var services = _ordersContainer.GetOrders();
             foreach (var service in services)
             {
                 var timeString = service.OrderDate.ToString("g", CultureInfo.CurrentCulture);

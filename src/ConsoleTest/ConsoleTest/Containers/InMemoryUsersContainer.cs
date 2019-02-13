@@ -31,11 +31,7 @@ namespace ConsoleTest.Containers
 
         public static InMemoryUsersContainer GetInstance(IEnumerable<User> users)
         {
-            if (_operations == null)
-            {
-                _operations = new InMemoryUsersContainer(users);
-            }
-            return _operations;
+            return _operations ?? (_operations = new InMemoryUsersContainer(users));
         }
 
         public void AddUser(User client)
@@ -56,6 +52,11 @@ namespace ConsoleTest.Containers
         public User GetUserByLogin(string login)
         {
             return _container.FirstOrDefault(client => string.Equals(client.Login, login));
+        }
+
+        public ICollection<User> GetUsers()
+        {
+            return _container.Where(user => true).ToList();
         }
     }
 }
