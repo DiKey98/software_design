@@ -1,9 +1,13 @@
 ﻿using HotelServicesLib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleTest.UI.Commands
 {
-    public class ViewAllUsers : ICommand
+    public class ViewAllUsersCommand : ICommand
     {
         private readonly IUsersContainer _userContainer;
         private readonly Menu _clientMenu;
@@ -11,7 +15,7 @@ namespace ConsoleTest.UI.Commands
         public string Name { get; }
 
 
-        public ViewAllUsers(string name, IUsersContainer userContainer, Menu clientMenu)
+        public ViewAllUsersCommand(string name, IUsersContainer userContainer, Menu clientMenu)
         {
             _userContainer = userContainer;
             _clientMenu = clientMenu;
