@@ -57,6 +57,7 @@ namespace ConsoleTest
             adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));
             adminMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, adminMenu));
             adminMenu.AddCommand(new ViewAllUnpaidServicesCommand("Посмотреть все неоплаченные услуги", ordersContainer, adminMenu));
+            adminMenu.AddCommand(new ViewAllUsersCommand("Посмотреть всех пользователей", usersContainer, adminMenu));
             adminMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             mainMenu.Print();
