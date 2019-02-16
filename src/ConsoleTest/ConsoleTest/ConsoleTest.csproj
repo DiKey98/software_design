@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="HotelServicesLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Debug\HotelServicesLib.dll</HintPath>
+      <HintPath>..\..\HotelServicesLib\HotelServicesLib\bin\Release\HotelServicesLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
