@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 *.orig
 src/ConsoleTest/ConsoleTest/Program_*
+*.cd
