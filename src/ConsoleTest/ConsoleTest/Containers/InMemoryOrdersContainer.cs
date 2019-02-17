@@ -16,11 +16,6 @@ namespace ConsoleTest.Containers
             _container = new List<Order>();
         }
 
-        public InMemoryOrdersContainer(IEnumerable<Order> orders)
-        {
-            _container = orders as List<Order>;
-        }
-
         //public static InMemoryOrdersContainer GetInstance()
         //{
         //    return _ordersContainer ?? (_ordersContainer = new InMemoryOrdersContainer());

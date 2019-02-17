@@ -6,7 +6,7 @@ namespace ConsoleTest.Containers
 {
     public class InMemoryUsersContainer : IUsersContainer
     {
-        private static InMemoryUsersContainer _operations;
+        //private static InMemoryUsersContainer _operations;
 
         private readonly List<User> _container;
 
@@ -20,15 +20,15 @@ namespace ConsoleTest.Containers
             _container = users as List<User>;
         }
 
-        public static InMemoryUsersContainer GetInstance()
-        {
-            return _operations ?? (_operations = new InMemoryUsersContainer());
-        }
+        //public static InMemoryUsersContainer GetInstance()
+        //{
+        //    return _operations ?? (_operations = new InMemoryUsersContainer());
+        //}
 
-        public static InMemoryUsersContainer GetInstance(IEnumerable<User> users)
-        {
-            return _operations ?? (_operations = new InMemoryUsersContainer(users));
-        }
+        //public static InMemoryUsersContainer GetInstance(IEnumerable<User> users)
+        //{
+        //    return _operations ?? (_operations = new InMemoryUsersContainer(users));
+        //}
 
         public void AddUser(User client)
         {

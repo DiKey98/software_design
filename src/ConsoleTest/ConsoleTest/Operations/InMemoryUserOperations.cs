@@ -13,7 +13,7 @@ namespace ConsoleTest.Operations
         private readonly IOrdersContainer _ordersContainer;
         private readonly IServiceInfoContainer _serviceInfoContainer;
 
-        public InMemoryUserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer, 
+        public InMemoryUserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer,
             IServiceInfoContainer serviceInfoContainer)
         {
             _usersContainer = usersContainer;
@@ -43,7 +43,6 @@ namespace ConsoleTest.Operations
             var serviceInfo = _serviceInfoContainer.GetServiceInfoByName(name);
             var order = new Order(serviceInfo, units, false, DateTime.Now, user);
             _ordersContainer.AddOrder(order);
-            bool t = true;
         }
 
         public void PayService(User user, string id)
