@@ -40,10 +40,19 @@ namespace ConsoleTest
 
             container.Register(Component.For<ConsoleLoggerInterceptor>().LifeStyle.Singleton.Named("consoleLogger"));
 
+            container.Register(Component
+                .For<IEnumerable<User>>()
+                .Instance(users)
+                .LifestyleSingleton());
+
+            container.Register(Component
+                .For<IEnumerable<ServiceInfo>>()
+                .Instance(availableServices)
+                .LifestyleSingleton());
+
             container.Register(
                 Component.For<IUsersContainer>()
                     .ImplementedBy<InMemoryUsersContainer>()
-                    .DependsOn(Dependency.OnValue("users", users))
                     .LifestyleSingleton());
 
             container.Register(
@@ -54,7 +63,6 @@ namespace ConsoleTest
             container.Register(
                 Component.For<IServiceInfoContainer>()
                     .ImplementedBy<InMemoryServicesContainer>()
-                    .DependsOn(Dependency.OnValue("services", availableServices))
                     .LifestyleSingleton());
 
             var ordersContainer = container.Resolve<IOrdersContainer>();
@@ -64,16 +72,12 @@ namespace ConsoleTest
             container.Register(
                 Component.For<IUsersOperations>()
                 .ImplementedBy<InMemoryUserOperations>()
-                .DependsOn(Dependency.OnValue("usersContainer", usersContainer))
-                .DependsOn(Dependency.OnValue("ordersContainer", ordersContainer))
-                .DependsOn(Dependency.OnValue("serviceInfoContainer", servicesContainer))
                 .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
                 .LifestyleSingleton());
 
             container.Register(
                 Component.For<IServicesOperations>()
                     .ImplementedBy<InMemoryServiceOperations>()
-                    .DependsOn(Dependency.OnValue("serviceInfoContainer", servicesContainer))
                     .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
                     .LifestyleSingleton());
 
