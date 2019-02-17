@@ -10,23 +10,19 @@ namespace ConsoleTest.Containers
 
         private readonly List<User> _container;
 
-        private InMemoryUsersContainer()
+        public InMemoryUsersContainer()
         {
             _container = new List<User>();
         }
 
-        private InMemoryUsersContainer(IEnumerable<User> users)
+        public InMemoryUsersContainer(IEnumerable<User> users)
         {
             _container = users as List<User>;
         }
 
         public static InMemoryUsersContainer GetInstance()
         {
-            if (_operations == null)
-            {
-                _operations = new InMemoryUsersContainer();
-            }
-            return _operations;
+            return _operations ?? (_operations = new InMemoryUsersContainer());
         }
 
         public static InMemoryUsersContainer GetInstance(IEnumerable<User> users)

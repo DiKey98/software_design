@@ -1,22 +1,24 @@
-﻿using HotelServicesLib;
+﻿using Castle.Core;
+using HotelServicesLib;
 
 namespace ConsoleTest.Operations
 {
+    [Interceptor("consoleLogger")]
     public class InMemoryServiceOperations: IServicesOperations
     {
-        private static InMemoryServiceOperations _serviceOperations;
+        //private static InMemoryServiceOperations _serviceOperations;
 
         private readonly IServiceInfoContainer _servicesContainer;
 
-        private InMemoryServiceOperations(IServiceInfoContainer servicesContainer)
+        public InMemoryServiceOperations(IServiceInfoContainer servicesContainer)
         {
             _servicesContainer = servicesContainer;
         }
 
-        public static InMemoryServiceOperations GetInstance(IServiceInfoContainer servicesContainer)
-        {
-            return _serviceOperations ?? (_serviceOperations = new InMemoryServiceOperations(servicesContainer));
-        }
+        //public static InMemoryServiceOperations GetInstance(IServiceInfoContainer servicesContainer)
+        //{
+        //    return _serviceOperations ?? (_serviceOperations = new InMemoryServiceOperations(servicesContainer));
+        //}
 
         public void ChangeServiceInfo(ServiceInfo oldService, ServiceInfo newService)
         {

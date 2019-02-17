@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HotelServicesLib;
 
@@ -7,29 +6,29 @@ namespace ConsoleTest.Containers
 {
     public class InMemoryServicesContainer: IServiceInfoContainer
     {
-        private static InMemoryServicesContainer _servicesContainer;
+        //private static InMemoryServicesContainer _servicesContainer;
 
         private readonly List<ServiceInfo> _container;
 
-        private InMemoryServicesContainer()
+        public InMemoryServicesContainer()
         {
             _container = new List<ServiceInfo>();
         }
 
-        private InMemoryServicesContainer(IEnumerable<ServiceInfo> services)
+        public InMemoryServicesContainer(IEnumerable<ServiceInfo> services)
         {
             _container = services as List<ServiceInfo>;
         }
 
-        public static InMemoryServicesContainer GetInstance()
-        {
-            return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer());
-        }
+        //public static InMemoryServicesContainer GetInstance()
+        //{
+        //    return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer());
+        //}
 
-        public static InMemoryServicesContainer GetInstance(IEnumerable<ServiceInfo> services)
-        {
-            return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer(services));
-        }
+        //public static InMemoryServicesContainer GetInstance(IEnumerable<ServiceInfo> services)
+        //{
+        //    return _servicesContainer ?? (_servicesContainer = new InMemoryServicesContainer(services));
+        //}
 
         public void AddServiceInfo(ServiceInfo service)
         {

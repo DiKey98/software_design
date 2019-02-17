@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
-using Castle.Core;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.Resolvers.SpecializedResolvers;
-using Castle.Windsor;
 using ConsoleTest.Containers;
-using ConsoleTest.Logging;
 using ConsoleTest.Operations;
 using ConsoleTest.UI;
 using ConsoleTest.UI.Commands;
@@ -34,59 +29,19 @@ namespace ConsoleTest
                 new ServiceInfo("Русский бильярд", 2000, "час"),
             };
 
+            var ordersContainer = InMemoryOrdersContainer.GetInstance();
+            var usersContainer = InMemoryUsersContainer.GetInstance(users);
+            var servicesContainer = InMemoryServicesContainer.GetInstance(availableServices);
 
-            var container = new WindsorContainer();
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
-
-            container.Register(Component.For<ConsoleLoggerInterceptor>().LifeStyle.Singleton.Named("consoleLogger"));
-
-            container.Register(
-                Component.For<IUsersContainer>()
-                    .ImplementedBy<InMemoryUsersContainer>()
-                    .DependsOn(Dependency.OnValue("users", users))
-                    .LifestyleSingleton());
-
-            container.Register(
-                Component.For<IOrdersContainer>()
-                    .ImplementedBy<InMemoryOrdersContainer>()
-                    .LifestyleSingleton());
-
-            container.Register(
-                Component.For<IServiceInfoContainer>()
-                    .ImplementedBy<InMemoryServicesContainer>()
-                    .DependsOn(Dependency.OnValue("services", availableServices))
-                    .LifestyleSingleton());
-
-            var ordersContainer = container.Resolve<IOrdersContainer>();
-            var usersContainer = container.Resolve<IUsersContainer>();
-            var servicesContainer = container.Resolve<IServiceInfoContainer>();
-
-            container.Register(
-                Component.For<IUsersOperations>()
-                .ImplementedBy<InMemoryUserOperations>()
-                .DependsOn(Dependency.OnValue("usersContainer", usersContainer))
-                .DependsOn(Dependency.OnValue("ordersContainer", ordersContainer))
-                .DependsOn(Dependency.OnValue("serviceInfoContainer", servicesContainer))
-                .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
-                .LifestyleSingleton());
-
-            container.Register(
-                Component.For<IServicesOperations>()
-                    .ImplementedBy<InMemoryServiceOperations>()
-                    .DependsOn(Dependency.OnValue("serviceInfoContainer", servicesContainer))
-                    .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
-                    .LifestyleSingleton());
-
-            var userOperations = container.Resolve<IUsersOperations>();
-            var servicesOperations = container.Resolve<IServicesOperations>();
-
+            var userOperations = InMemoryUserOperations.GetInstance(usersContainer, ordersContainer, servicesContainer);
+            var servicesOperations = InMemoryServiceOperations.GetInstance(servicesContainer);
 
             var mainMenu = new Menu();
             var clientMenu = new Menu();
             var managerMenu = new Menu();
             var adminMenu = new Menu();
-        
-            mainMenu.AddCommand(new EnterCommand("Вход", usersContainer, new[] { adminMenu, managerMenu, clientMenu }));
+
+            mainMenu.AddCommand(new EnterCommand("Вход", usersContainer, new []{adminMenu, managerMenu, clientMenu}));
             mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));

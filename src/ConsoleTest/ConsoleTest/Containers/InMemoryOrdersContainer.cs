@@ -7,19 +7,24 @@ namespace ConsoleTest.Containers
 {
     public class InMemoryOrdersContainer: IOrdersContainer
     {
-        private static InMemoryOrdersContainer _ordersContainer;
+        //private static InMemoryOrdersContainer _ordersContainer;
 
         private readonly List<Order> _container;
 
-        private InMemoryOrdersContainer()
+        public InMemoryOrdersContainer()
         {
             _container = new List<Order>();
         }
 
-        public static InMemoryOrdersContainer GetInstance()
+        public InMemoryOrdersContainer(IEnumerable<Order> orders)
         {
-            return _ordersContainer ?? (_ordersContainer = new InMemoryOrdersContainer());
+            _container = orders as List<Order>;
         }
+
+        //public static InMemoryOrdersContainer GetInstance()
+        //{
+        //    return _ordersContainer ?? (_ordersContainer = new InMemoryOrdersContainer());
+        //}
 
         public void AddOrder(Order order)
         {
