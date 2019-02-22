@@ -8,7 +8,7 @@ using ConsoleTestNetCore.Containers.InMemory;
 using ConsoleTestNetCore.Logging;
 using ConsoleTestNetCore.Operations;
 using ConsoleTestNetCore.UI.Commands;
-using HotelServicesLib;
+using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore
 {
@@ -16,22 +16,23 @@ namespace ConsoleTestNetCore
     {
         private static void Main(string[] args)
         {
-            
+            //using (var db = new DbUsersContainer())
+            //{
+            //    var user1 = new User("Петров", "petr337", "12345", Roles.RolesValues.Client);
+            //    var user2 = new User("Смирнов", "smr337", "12345", Roles.RolesValues.Client);
 
+            //    db.Users.Add(user1);
+            //    db.Users.Add(user2);
+            //    db.SaveChanges();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //    var users = db.Users.ToList();
+            //    Console.WriteLine("Список объектов:");
+            //    foreach (var u in users)
+            //    {
+            //        Console.WriteLine($"{u.Id} {u.Fio} {u.Login}");
+            //    }
+            //}
+            //Console.Read();
 
             var users = new List<User>
         {

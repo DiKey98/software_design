@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotelServicesLib
+namespace HotelServicesNetCore
 {
     public class Order
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HotelServicesLib;
+using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.Containers.InMemory
 {

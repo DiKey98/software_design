@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HotelServicesLib
+namespace HotelServicesNetCore
 {
     public class User
     {
-        public readonly string Login;
-        public readonly string Password;
-        public readonly string Fio;
-        public readonly string Id;
-        public readonly Roles.RolesValues Role;
-        
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Fio { get; set; }
+        public string Id { get; set; }
+        public Roles.RolesValues Role { get; set; }
+
         public User(string fio, string login, string password, Roles.RolesValues role)
         {
             Role = role;
@@ -51,13 +51,7 @@ namespace HotelServicesLib
 
         public override int GetHashCode()
         {
-            var hashCode = -1601222816;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Login);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Password);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Fio);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-            hashCode = hashCode * -1521134295 + Role.GetHashCode();
-            return hashCode;
+            return HashCode.Combine(Login, Password, Fio, Id, Role);
         }
     }
 }

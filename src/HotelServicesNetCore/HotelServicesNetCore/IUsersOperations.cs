@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HotelServicesLib
+﻿namespace HotelServicesNetCore
 {
     public interface IUsersOperations
     {

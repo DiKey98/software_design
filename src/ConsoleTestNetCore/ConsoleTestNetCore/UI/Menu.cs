@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConsoleTestNetCore.UI;
-using HotelServicesLib;
+using HotelServicesNetCore;
 
 namespace ConsoleTest.UI
 {

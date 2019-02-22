@@ -1,6 +1,6 @@
 ﻿using System;
 using Castle.Core;
-using HotelServicesLib;
+using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.Operations
 {
