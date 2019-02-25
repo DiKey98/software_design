@@ -1,5 +1,4 @@
 ﻿using System;
-using ConsoleTest.UI;
 using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.UI.Commands
@@ -40,10 +39,26 @@ namespace ConsoleTestNetCore.UI.Commands
                 Console.WriteLine("Авторизация успешна");
                 Console.WriteLine();
                 Menu.CurrentUser = tmpUser;
-                _mainMenu[(int)Menu.CurrentUser.Role].Print();
-                _mainMenu[(int)Menu.CurrentUser.Role].SetCommand(_mainMenu[(int)Menu.CurrentUser.Role].ReadCommand());
-                _mainMenu[(int)Menu.CurrentUser.Role].Run();
-                
+                var currentMenu = new Menu();
+
+                switch (Menu.CurrentUser.Role.Name.ToLower())
+                {
+                    case "администратор":
+                        currentMenu = _mainMenu[0];
+                        break;
+
+                    case "клиент":
+                        currentMenu = _mainMenu[2];
+                        break;
+
+                    case "управляющий":
+                        currentMenu = _mainMenu[1];
+                        break;
+                }
+
+                currentMenu.Print();
+                currentMenu.SetCommand(currentMenu.ReadCommand());
+                currentMenu.Run();
             }
             else
             {

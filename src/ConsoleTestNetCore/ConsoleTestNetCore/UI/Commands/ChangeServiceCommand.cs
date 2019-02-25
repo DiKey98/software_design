@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ConsoleTest.UI;
 using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.UI.Commands
@@ -43,7 +42,13 @@ namespace ConsoleTestNetCore.UI.Commands
             var cost = decimal.Parse(Console.ReadLine());
             Console.WriteLine("Ед. измерения:");
             var measurement = Console.ReadLine();
-            var newService = new ServiceInfo(oldService.Id, name, cost, measurement);
+            var newService = new ServiceInfo
+            {
+                Id = oldService.Id,
+                CostPerUnit = cost,
+                Name = name,
+                Measurement = measurement
+            };
             _serviceOperations.ChangeServiceInfo(oldService, newService);
         }
 

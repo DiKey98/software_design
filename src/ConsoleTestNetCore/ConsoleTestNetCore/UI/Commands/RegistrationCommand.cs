@@ -1,5 +1,4 @@
 ﻿using System;
-using ConsoleTest.UI;
 using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.UI.Commands
@@ -7,27 +6,30 @@ namespace ConsoleTestNetCore.UI.Commands
     public class RegistrationCommand : ICommand
     {
         private readonly IUsersContainer _usersContainer;
+        private readonly IRolesContainer _rolesContainer;
         private readonly Menu _mainMenu;
 
         public string Name { get; }
 
-        public RegistrationCommand(string name, IUsersContainer usersContainer, Menu mainMenu)
+        public RegistrationCommand(string name, IUsersContainer usersContainer, 
+            IRolesContainer rolesContainer, Menu mainMenu)
         {
             Name = name;
             _usersContainer = usersContainer;
             _mainMenu = mainMenu;
+            _rolesContainer = rolesContainer;
         }
    
         public void Execute()
         {
             Console.Write("Роль (администратор, управляющий, клиент): ");
-            var role = Console.ReadLine()?.ToLower();
-            Roles.RolesValues roleId;
-            if (role != null && Roles.StringToRole(role) != Roles.RolesValues.ErrorRole)
+            var roleName = Console.ReadLine()?.ToLower();
+            Role role;
+            if (roleName != null)
             {
-                roleId = Roles.StringToRole(role);
+                role = _rolesContainer.GetRoleByName(roleName);
 
-            }
+            } 
             else
             {
                 Refresh("Неверно указана роль");
@@ -43,7 +45,7 @@ namespace ConsoleTestNetCore.UI.Commands
             Console.Write("Пароль: ");
             var password = Console.ReadLine();
 
-            var user = new User(fio, login, password, roleId);
+            var user = new User{Fio = fio, Login = login, Password = password, Role = role};
             var tmpUser = _usersContainer.GetUserByLogin(user.Login);
             if (tmpUser != null)
             {

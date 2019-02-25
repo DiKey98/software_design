@@ -1,5 +1,4 @@
 ﻿using System;
-using ConsoleTest.UI;
 
 namespace ConsoleTestNetCore.UI.Commands
 {

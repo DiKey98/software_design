@@ -1,5 +1,4 @@
 ﻿using System;
-using ConsoleTest.UI;
 using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.UI.Commands
@@ -23,7 +22,7 @@ namespace ConsoleTestNetCore.UI.Commands
             var services = _servicesContainer.GetOrders(null, false);
             foreach (var service in services)
             {
-                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Клиент {service.Client.Fio}");
+                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Клиент {service.User.Fio}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

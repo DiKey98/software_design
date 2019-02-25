@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Castle.Core;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
-using ConsoleTest.UI;
 using ConsoleTestNetCore.Containers.InMemory;
 using ConsoleTestNetCore.Logging;
 using ConsoleTestNetCore.Operations;
+using ConsoleTestNetCore.UI;
 using ConsoleTestNetCore.UI.Commands;
 using HotelServicesNetCore;
 
@@ -14,44 +15,31 @@ namespace ConsoleTestNetCore
 {
     public class Program
     {
-        private static void Main(string[] args)
+        private static void Main1(string[] args)
         {
-            //using (var db = new DbUsersContainer())
-            //{
-            //    var user1 = new User("Петров", "petr337", "12345", Roles.RolesValues.Client);
-            //    var user2 = new User("Смирнов", "smr337", "12345", Roles.RolesValues.Client);
-
-            //    db.Users.Add(user1);
-            //    db.Users.Add(user2);
-            //    db.SaveChanges();
-
-            //    var users = db.Users.ToList();
-            //    Console.WriteLine("Список объектов:");
-            //    foreach (var u in users)
-            //    {
-            //        Console.WriteLine($"{u.Id} {u.Fio} {u.Login}");
-            //    }
-            //}
-            //Console.Read();
+            var roles = new[]
+            {
+                new Role { Name = "Администратор"},
+                new Role { Name = "Управляющий"},
+                new Role { Name = "Клиент"},
+            };
 
             var users = new List<User>
-        {
-            new User("Петров П.П", "petr", "11111", Roles.RolesValues.Client),
-            new User("Смирнов П.П", "smr", "22222", Roles.RolesValues.Admin),
-            new User("Симонов П.П", "simon", "33333", Roles.RolesValues.Manager),
-            new User("Иванов П.П", "iva", "44444", Roles.RolesValues.Client),
-            new User("Сидоров П.П", "sidor", "55555", Roles.RolesValues.Client),
-            new User("Логинов П.П", "loga", "66666", Roles.RolesValues.Client),
-        };
+                {
+                    new User { Id = Guid.NewGuid().ToString(), Fio = "Петров П.П", Login = "petr", Password = "11111", Role = roles[2] },
+                    new User { Id = Guid.NewGuid().ToString(), Fio = "Смирнов П.П", Login = "smr", Password = "22222", Role = roles[0] },
+                    new User { Id = Guid.NewGuid().ToString(), Fio = "Симонов П.П", Login = "simon", Password = "33333", Role = roles[1] },
+                    new User { Id = Guid.NewGuid().ToString(), Fio = "Иванов П.П", Login = "iva", Password = "44444", Role = roles[2] },
+                    new User { Id = Guid.NewGuid().ToString(), Fio = "Сидоров П.П", Login = "sidor", Password = "55555", Role = roles[2] },
+                };
 
             var availableServices = new List<ServiceInfo>
-        {
-            new ServiceInfo("Спа", 1000, "час"),
-            new ServiceInfo("Бильярд восьмёрка", 2000, "час"),
-            new ServiceInfo("Бильярд девятка", 2000, "час"),
-            new ServiceInfo("Русский бильярд", 2000, "час"),
-        };
-
+                {
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Спа", CostPerUnit = 1000, Measurement = "час." },
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд восьмёрка", CostPerUnit = 2000, Measurement = "час" },
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд девятка", CostPerUnit = 2000, Measurement = "час" },
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Русский бильярд", CostPerUnit = 2000, Measurement = "час" }
+                };
 
             var container = new WindsorContainer();
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
@@ -61,6 +49,11 @@ namespace ConsoleTestNetCore
             container.Register(Component
                 .For<IEnumerable<User>>()
                 .Instance(users)
+                .LifestyleSingleton());
+
+            container.Register(Component
+                .For<IEnumerable<Role>>()
+                .Instance(roles)
                 .LifestyleSingleton());
 
             container.Register(Component
@@ -83,19 +76,25 @@ namespace ConsoleTestNetCore
                     .ImplementedBy<InMemoryServicesContainer>()
                     .LifestyleSingleton());
 
+            container.Register(
+                Component.For<IRolesContainer>()
+                    .ImplementedBy<InMemoryRolesContainer>()
+                    .LifestyleSingleton());
+
             var ordersContainer = container.Resolve<IOrdersContainer>();
             var usersContainer = container.Resolve<IUsersContainer>();
             var servicesContainer = container.Resolve<IServiceInfoContainer>();
+            var rolesContainer = container.Resolve<IRolesContainer>();
 
             container.Register(
                 Component.For<IUsersOperations>()
-                .ImplementedBy<InMemoryUserOperations>()
-                .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
-                .LifestyleSingleton());
+                            .ImplementedBy<UserOperations>()
+                            .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
+                            .LifestyleSingleton());
 
             container.Register(
                 Component.For<IServicesOperations>()
-                    .ImplementedBy<InMemoryServiceOperations>()
+                    .ImplementedBy<ServiceOperations>()
                     .Interceptors(InterceptorReference.ForKey("consoleLogger")).Anywhere
                     .LifestyleSingleton());
 
@@ -109,7 +108,7 @@ namespace ConsoleTestNetCore
             var adminMenu = new Menu();
 
             mainMenu.AddCommand(new EnterCommand("Вход", usersContainer, new[] { adminMenu, managerMenu, clientMenu }));
-            mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, mainMenu));
+            mainMenu.AddCommand(new RegistrationCommand("Регистрация", usersContainer, rolesContainer, mainMenu));
 
             clientMenu.AddCommand(new OrderServiceCommand("Заказать услугу", servicesContainer, userOperations, clientMenu));
             clientMenu.AddCommand(new CancelOrderCommand("Отменить заказ", userOperations, ordersContainer, clientMenu));

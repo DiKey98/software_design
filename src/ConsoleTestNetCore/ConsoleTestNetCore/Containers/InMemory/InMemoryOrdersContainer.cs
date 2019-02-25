@@ -48,7 +48,7 @@ namespace ConsoleTestNetCore.Containers.InMemory
 
             var result = user == null
                 ? _container.Where(order => true)
-                : _container.Where(order => order.Client.Equals(user));
+                : _container.Where(order => order.User.Equals(user));
 
             if (!(paid && unpaid))
             {

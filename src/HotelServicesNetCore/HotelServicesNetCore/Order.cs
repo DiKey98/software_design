@@ -4,23 +4,16 @@ namespace HotelServicesNetCore
 {
     public class Order
     {
-        public string Id { get; }
-        public ServiceInfo Service { get; }
-        public decimal Cost { get; }
-        public uint Units { get; }
+        public string Id { get; set; }
+        public decimal Cost { get; set; }
+        public uint Units { get; set; }
         public bool IsPaid { get; set; }
-        public DateTime OrderDate { get; }
-        public User Client { get; }
+        public DateTime OrderDate { get; set; }
+    
+        public string ServiceId { get; set; }
+        public ServiceInfo Service { get; set; }
 
-        public Order(ServiceInfo service, uint units, bool isPaid, DateTime orderDate, User client)
-        {
-            Id = Guid.NewGuid().ToString();
-            Service = service;
-            Cost = service.CostPerUnit * units;
-            IsPaid = isPaid;
-            OrderDate = orderDate;
-            Client = client;
-            Units = units;
-        }
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

@@ -4,13 +4,13 @@ using HotelServicesNetCore;
 namespace ConsoleTestNetCore.Operations
 {
     [Interceptor("consoleLogger")]
-    public class InMemoryServiceOperations: IServicesOperations
+    public class ServiceOperations: IServicesOperations
     {
         //private static InMemoryServiceOperations _serviceOperations;
 
         private readonly IServiceInfoContainer _servicesContainer;
 
-        public InMemoryServiceOperations(IServiceInfoContainer servicesContainer)
+        public ServiceOperations(IServiceInfoContainer servicesContainer)
         {
             _servicesContainer = servicesContainer;
         }

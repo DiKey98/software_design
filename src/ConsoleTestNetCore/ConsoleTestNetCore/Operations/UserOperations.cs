@@ -5,7 +5,7 @@ using HotelServicesNetCore;
 namespace ConsoleTestNetCore.Operations
 {
     [Interceptor("consoleLogger")]
-    public class InMemoryUserOperations: IUsersOperations
+    public class UserOperations: IUsersOperations
     {
         //private static InMemoryUserOperations _operations;
 
@@ -13,7 +13,7 @@ namespace ConsoleTestNetCore.Operations
         private readonly IOrdersContainer _ordersContainer;
         private readonly IServiceInfoContainer _serviceInfoContainer;
 
-        public InMemoryUserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer,
+        public UserOperations(IUsersContainer usersContainer, IOrdersContainer ordersContainer,
             IServiceInfoContainer serviceInfoContainer)
         {
             _usersContainer = usersContainer;
@@ -41,7 +41,11 @@ namespace ConsoleTestNetCore.Operations
         public void OrderService(User user, string name, uint units)
         {
             var serviceInfo = _serviceInfoContainer.GetServiceInfoByName(name);
-            var order = new Order(serviceInfo, units, false, DateTime.Now, user);
+            var order = new Order{Id = Guid.NewGuid().ToString(), Service = serviceInfo,
+                Units = units, IsPaid = false, OrderDate = DateTime.Now,
+                Cost = serviceInfo.CostPerUnit * units, User = user
+            };
+
             _ordersContainer.AddOrder(order);
         }
 

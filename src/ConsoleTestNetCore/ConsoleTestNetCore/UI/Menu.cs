@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ConsoleTestNetCore.UI;
 using HotelServicesNetCore;
 
-namespace ConsoleTest.UI
+namespace ConsoleTestNetCore.UI
 {
     public class Menu
     {

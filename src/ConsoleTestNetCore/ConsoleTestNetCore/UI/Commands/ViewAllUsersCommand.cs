@@ -1,5 +1,4 @@
 ﻿using System;
-using ConsoleTest.UI;
 using HotelServicesNetCore;
 
 namespace ConsoleTestNetCore.UI.Commands
@@ -25,7 +24,7 @@ namespace ConsoleTestNetCore.UI.Commands
             var users = _userContainer.GetUsers();
             foreach (var user in users)
             {
-                Console.WriteLine($"ФИО {user.Fio} логин {user.Login}");
+                Console.WriteLine($"ФИО {user.Fio} логин {user.Login} роль {user.Role.Name}");
             }
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);

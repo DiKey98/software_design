@@ -1,28 +1,19 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace HotelServicesNetCore
 {
     public class ServiceInfo
     {
-        public ServiceInfo(string name, decimal cost, string measurement)
+        public ServiceInfo()
         {
-            Name = name;
-            CostPerUnit = cost;
-            Measurement = measurement;
-            Id = Guid.NewGuid().ToString();
+            Orders = new List<Order>();
         }
 
-        public ServiceInfo(string id, string name, decimal cost, string measurement)
-        {
-            Name = name;
-            CostPerUnit = cost;
-            Measurement = measurement;
-            Id = id;
-        }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public decimal CostPerUnit { get; set; }
+        public string Measurement { get; set; }
 
-        public string Id { get; }
-        public string Name { get; }
-        public decimal CostPerUnit { get; }
-        public string Measurement { get; }
+        public List<Order> Orders { get; set; }
     }
 }
