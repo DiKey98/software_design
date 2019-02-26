@@ -49,7 +49,7 @@ namespace ConsoleTestNetCore.Containers.InDB
                     return;
                 }
 
-                var ord = GetOrderById(oldOrder.Id);
+                var ord = db.Orders.FirstOrDefault(o => o.Id == oldOrder.Id);
                 if (ord == null)
                 {
                     return;
@@ -59,13 +59,10 @@ namespace ConsoleTestNetCore.Containers.InDB
                 ord.Cost = newOrder.Cost;
                 ord.IsPaid = newOrder.IsPaid;
                 ord.OrderDate = newOrder.OrderDate;
-                ord.Service = newOrder.Service;
+                ord.Service = db.ServiceInfos.FirstOrDefault(s => s.Id == newOrder.Service.Id);
                 ord.Units = newOrder.Units;
-                ord.User = newOrder.User;
+                ord.User = db.Users.FirstOrDefault(u => u.Id == newOrder.User.Id);
 
-                db.Entry(ord.Service).State = EntityState.Unchanged;
-                db.Entry(ord.User).State = EntityState.Unchanged;
-                db.Entry(ord).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
