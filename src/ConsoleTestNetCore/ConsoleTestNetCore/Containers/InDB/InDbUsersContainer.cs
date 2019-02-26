@@ -15,6 +15,7 @@ namespace ConsoleTestNetCore.Containers.InDB
             }
             using (var db = new HotelServicesDbContext())
             {
+                user.Role = db.Roles.FirstOrDefault(r => r.Id == user.Role.Id);
                 db.Users.Add(user);
                 db.SaveChanges();
             }

@@ -50,6 +50,15 @@ namespace ConsoleTestNetCore.UI.Commands
                 Measurement = measurement
             };
             _serviceOperations.ChangeServiceInfo(oldService, newService);
+
+            Console.Clear();
+            Console.WriteLine("Услуга успешно изменена");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            _managerMenu.Print();
+            _managerMenu.SetCommand(_managerMenu.ReadCommand());
+            _managerMenu.Run();
         }
 
         private void PrintServices(ICollection<ServiceInfo> services)
