@@ -17,10 +17,11 @@ namespace ConsoleTestNetCore.Containers.InDB
 
             using (var db = new HotelServicesDbContext())
             {
+                order.User.Role = db.Roles.FirstOrDefault(r => r.Id == order.User.Role.Id);
+                order.User = db.Users.FirstOrDefault(u => u.Id == order.User.Id);
+                order.Service = db.ServiceInfos.FirstOrDefault(s => s.Id == order.Service.Id);
+
                 db.Orders.Add(order);
-                db.Entry(order.Service).State = EntityState.Unchanged;
-                db.Entry(order.User).State = EntityState.Unchanged;
-                db.Entry(order.User.Role).State = EntityState.Unchanged;
                 db.SaveChanges();
             }
         }
