@@ -24,11 +24,11 @@ namespace ConsoleTestNetCore.UI.Commands
         {
             Console.WriteLine("Заказанные услуги:");
             Console.WriteLine();
-            PrintServices(_ordersContainer.GetOrders(Menu.CurrentUser, false));
+            PrintServices(_ordersContainer.GetOrders(Menu.CurrentUser, false)); // контекст
             Console.WriteLine();
             Console.Write("Введите идентификатор заказа: ");
             var idOrder = Console.ReadLine();
-            var order = _ordersContainer.GetOrderById(idOrder);
+            var order = _ordersContainer.GetOrderById(idOrder); // контекст
             if (order == null)
             {
                 Refresh("Неверный id заказа");

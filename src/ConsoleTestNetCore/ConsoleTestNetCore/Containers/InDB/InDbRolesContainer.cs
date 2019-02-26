@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Linq;
 using HotelServicesNetCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsoleTestNetCore.Containers.InDB
 {
     public class InDbRolesContainer : IRolesContainer
     {
-        private readonly HotelServicesDbContext _dbContext;
-
-        public InDbRolesContainer(HotelServicesDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public Role GetRoleById(string id)
         {
-            return _dbContext.Roles.FirstOrDefault(r => r.Id == id);
+            using (var db = new HotelServicesDbContext())
+            {
+                return db.Roles.AsNoTracking().FirstOrDefault(r => r.Id == id);
+            }
         }
 
         public Role GetRoleByName(string name)
         {
-            return _dbContext.Roles.FirstOrDefault(r => string.Equals(r.Name, name, StringComparison.CurrentCultureIgnoreCase));
+            using (var db = new HotelServicesDbContext())
+            {
+                return db.Roles.AsNoTracking().
+                    FirstOrDefault(r => string.Equals(r.Name, name, StringComparison.CurrentCultureIgnoreCase));
+            }
         }
     }
 }
