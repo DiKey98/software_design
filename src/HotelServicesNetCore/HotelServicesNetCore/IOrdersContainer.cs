@@ -7,6 +7,7 @@ namespace HotelServicesNetCore
     {
         void AddOrder(Order order);
         void RemoveOrder(Order order);
+        void UpdateOrder(Order oldOrder, Order newOrder);
         Order GetOrderById(string id);
         ICollection<Order> GetOrders(User user = null, bool paid = true, bool unpaid = true, DateTime? from = null, DateTime? to = null);
     }

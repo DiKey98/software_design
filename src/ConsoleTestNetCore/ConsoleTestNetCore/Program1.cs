@@ -1,4 +1,5 @@
 ﻿using Castle.Core;
+using Castle.MicroKernel.Lifestyle;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
@@ -25,7 +26,7 @@ namespace ConsoleTestNetCore
                 container.Register(
                     Component.For<HotelServicesDbContext>()
                         .Instance(db)
-                        .LifestyleSingleton());
+                        .LifestyleScoped());
 
                 container.Register(
                     Component.For<IUsersContainer>()
@@ -46,6 +47,8 @@ namespace ConsoleTestNetCore
                     Component.For<IRolesContainer>()
                         .ImplementedBy<InDbRolesContainer>()
                         .LifestyleSingleton());
+
+                container.BeginScope();
 
                 var ordersContainer = container.Resolve<IOrdersContainer>();
                 var usersContainer = container.Resolve<IUsersContainer>();

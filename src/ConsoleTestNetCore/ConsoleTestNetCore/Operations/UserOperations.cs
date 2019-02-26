@@ -56,9 +56,10 @@ namespace ConsoleTestNetCore.Operations
             {
                 return;
             }
-            _ordersContainer.RemoveOrder(order);
-            order.IsPaid = true;
-            _ordersContainer.AddOrder(order);
+
+            var newOrder = order;
+            newOrder.IsPaid = true;
+            _ordersContainer.UpdateOrder(order, newOrder);
         }
 
         public void CancelService(User user, string id)

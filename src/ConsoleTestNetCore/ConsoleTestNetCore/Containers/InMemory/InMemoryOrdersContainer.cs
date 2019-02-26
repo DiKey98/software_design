@@ -34,6 +34,17 @@ namespace ConsoleTestNetCore.Containers.InMemory
             _container.Remove(order);
         }
 
+        public void UpdateOrder(Order oldOrder, Order newOrder)
+        {
+            var ord = _container.FirstOrDefault(o => o.Id == oldOrder.Id);
+            if (ord == null)
+            {
+                return;
+            }
+            _container.Remove(oldOrder);
+            _container.Add(newOrder);
+        }
+
         public Order GetOrderById(string id)
         {
             return _container.FirstOrDefault(order => order.Id.Equals(id));
