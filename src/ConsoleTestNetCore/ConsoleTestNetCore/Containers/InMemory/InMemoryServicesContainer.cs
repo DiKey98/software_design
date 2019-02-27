@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HotelServicesNetCore;
 
@@ -56,10 +57,12 @@ namespace ConsoleTestNetCore.Containers.InMemory
                 contains = true;
             }
 
-            if (contains)
+            if (!contains)
             {
-                _container.Add(newService);
-            }         
+                return;
+            }
+
+            _container.Add(newService);
         }
 
         public ServiceInfo GetServiceInfoById(string id)

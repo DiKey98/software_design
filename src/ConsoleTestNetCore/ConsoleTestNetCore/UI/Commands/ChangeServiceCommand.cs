@@ -44,10 +44,11 @@ namespace ConsoleTestNetCore.UI.Commands
             var measurement = Console.ReadLine();
             var newService = new ServiceInfo
             {
-                Id = oldService.Id,
+                Id = Guid.NewGuid().ToString(),
                 CostPerUnit = cost,
                 Name = name,
-                Measurement = measurement
+                Measurement = measurement,
+                IsDeprecated = false
             };
             _serviceOperations.ChangeServiceInfo(oldService, newService);
 

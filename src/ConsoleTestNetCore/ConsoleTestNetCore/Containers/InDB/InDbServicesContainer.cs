@@ -51,17 +51,17 @@ namespace ConsoleTestNetCore.Containers.InDB
                     return;
                 }
 
-                ord.Id = newService.Id;
-                ord.Name = newService.Name;
-                ord.CostPerUnit = newService.CostPerUnit;
-                ord.Measurement = newService.Measurement;
                 ord.IsDeprecated = true;
-
-                newService.IsDeprecated = false;
                 db.ServiceInfos.Add(newService);
-
                 db.SaveChanges();
             }
+
+            //using (var db = new HotelServicesDbContext())
+            //{
+            //    newService.IsDeprecated = false;
+            //    db.ServiceInfos.Add(newService);
+            //    db.SaveChanges();
+            //}
         }
 
         public ServiceInfo GetServiceInfoById(string id)
