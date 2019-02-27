@@ -43,6 +43,25 @@ namespace ConsoleTestNetCore.Containers.InMemory
             _container.Remove(service);
         }
 
+        public void UpdateService(ServiceInfo oldService, ServiceInfo newService)
+        {
+            var contains = false;
+            foreach (var t in _container)
+            {
+                if (t.Id != oldService.Id)
+                {
+                    continue;
+                }
+                t.IsDeprecated = true;
+                contains = true;
+            }
+
+            if (contains)
+            {
+                _container.Add(newService);
+            }         
+        }
+
         public ServiceInfo GetServiceInfoById(string id)
         {
             return _container.FirstOrDefault(service => service.Id.Equals(id));
@@ -50,12 +69,12 @@ namespace ConsoleTestNetCore.Containers.InMemory
 
         public ServiceInfo GetServiceInfoByName(string name)
         {
-            return _container.FirstOrDefault(service => service.Name.ToLower().Equals(name.ToLower()));
+            return _container.FirstOrDefault(service => service.Name.ToLower().Equals(name.ToLower()) && !service.IsDeprecated);
         }
 
         public ICollection<ServiceInfo> GetAvailableServices()
         {
-            return _container.GetRange(0, _container.Count);
+            return _container.Where(s => !s.IsDeprecated).ToList();
         }
     }
 }

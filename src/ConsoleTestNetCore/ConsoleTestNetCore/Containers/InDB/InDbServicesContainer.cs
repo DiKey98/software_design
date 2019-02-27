@@ -36,6 +36,34 @@ namespace ConsoleTestNetCore.Containers.InDB
             }
         }
 
+        public void UpdateService(ServiceInfo oldService, ServiceInfo newService)
+        {
+            using (var db = new HotelServicesDbContext())
+            {
+                if (oldService == null || newService == null)
+                {
+                    return;
+                }
+
+                var ord = db.ServiceInfos.FirstOrDefault(o => o.Id == oldService.Id);
+                if (ord == null)
+                {
+                    return;
+                }
+
+                ord.Id = newService.Id;
+                ord.Name = newService.Name;
+                ord.CostPerUnit = newService.CostPerUnit;
+                ord.Measurement = newService.Measurement;
+                ord.IsDeprecated = true;
+
+                newService.IsDeprecated = false;
+                db.ServiceInfos.Add(newService);
+
+                db.SaveChanges();
+            }
+        }
+
         public ServiceInfo GetServiceInfoById(string id)
         {
             using (var db = new HotelServicesDbContext())
@@ -50,7 +78,7 @@ namespace ConsoleTestNetCore.Containers.InDB
             using (var db = new HotelServicesDbContext())
             {
                 return db.ServiceInfos.AsNoTracking().FirstOrDefault(
-                    r => string.Equals(r.Name, name, StringComparison.CurrentCultureIgnoreCase));
+                    r => string.Equals(r.Name, name, StringComparison.CurrentCultureIgnoreCase) && !r.IsDeprecated);
             } 
         }
 
@@ -58,7 +86,7 @@ namespace ConsoleTestNetCore.Containers.InDB
         {
             using (var db = new HotelServicesDbContext())
             {
-                return db.ServiceInfos.AsNoTracking().ToList();
+                return db.ServiceInfos.Where(s => !s.IsDeprecated).AsNoTracking().ToList();
             }
         }
     }

@@ -35,10 +35,14 @@ namespace ConsoleTestNetCore
 
             var availableServices = new List<ServiceInfo>
                 {
-                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Спа", CostPerUnit = 1000, Measurement = "час." },
-                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд восьмёрка", CostPerUnit = 2000, Measurement = "час" },
-                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд девятка", CostPerUnit = 2000, Measurement = "час" },
-                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Русский бильярд", CostPerUnit = 2000, Measurement = "час" }
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Спа", CostPerUnit = 1000,
+                        Measurement = "час.", IsDeprecated = false},
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд восьмёрка", CostPerUnit = 2000,
+                        Measurement = "час", IsDeprecated = false },
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Бильярд девятка", CostPerUnit = 2000,
+                        Measurement = "час", IsDeprecated = false },
+                    new ServiceInfo { Id = Guid.NewGuid().ToString(), Name = "Русский бильярд", CostPerUnit = 2000,
+                        Measurement = "час", IsDeprecated = false }
                 };
 
             var container = new WindsorContainer();

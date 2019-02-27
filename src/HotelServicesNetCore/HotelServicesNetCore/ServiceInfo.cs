@@ -13,6 +13,7 @@ namespace HotelServicesNetCore
         public string Name { get; set; }
         public decimal CostPerUnit { get; set; }
         public string Measurement { get; set; }
+        public bool IsDeprecated { get; set; }
 
         public List<Order> Orders { get; set; }
     }

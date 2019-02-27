@@ -27,8 +27,8 @@ namespace ConsoleTestNetCore.Operations
             {
                 return;
             }
-            _servicesContainer.RemoveServiceInfo(tmpService);
-            _servicesContainer.AddServiceInfo(newService);
+
+            _servicesContainer.UpdateService(oldService, newService);
         }
     }
 }

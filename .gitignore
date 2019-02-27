@@ -262,3 +262,5 @@ __pycache__/
 *.orig
 src/ConsoleTest/ConsoleTest/Program_*
 *.cd
+src/ConsoleTestNetCore/ConsoleTestNetCore/Migrations/20190227074419_Field_IsDeprecated.cs
+src/ConsoleTestNetCore/ConsoleTestNetCore/Migrations/
