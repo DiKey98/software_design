@@ -59,17 +59,17 @@ namespace ConsoleTestNetCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3d1ece96-f442-4933-8904-222c416658f9",
+                            Id = "7b5aead8-6888-4a95-a7bb-dc64a350292e",
                             Name = "Клиент"
                         },
                         new
                         {
-                            Id = "e1a08eb9-7542-4b57-a778-07ce1953655a",
+                            Id = "37b8175c-6f09-4fbe-b5b7-afcd3d3285b9",
                             Name = "Администратор"
                         },
                         new
                         {
-                            Id = "adc7c2d2-603a-4291-971b-d8da557c8648",
+                            Id = "0e59f4f5-0c6a-4a8c-a2e9-77545924ce61",
                             Name = "Управляющий"
                         });
                 });
@@ -80,6 +80,8 @@ namespace ConsoleTestNetCore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("CostPerUnit");
+
+                    b.Property<string>("ImgSrc");
 
                     b.Property<bool>("IsDeprecated");
 
@@ -94,7 +96,7 @@ namespace ConsoleTestNetCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3cce7817-37c3-4db6-94c7-3614fa874e0d",
+                            Id = "bdc0f864-3cf2-4ee9-8ef2-ad8bc7790b36",
                             CostPerUnit = 1000m,
                             IsDeprecated = false,
                             Measurement = "час.",
@@ -102,7 +104,7 @@ namespace ConsoleTestNetCore.Migrations
                         },
                         new
                         {
-                            Id = "1ed5091c-71e9-42bc-90dc-e8d0879a9e04",
+                            Id = "33b364c3-f54e-49e1-bac2-f7775e65c978",
                             CostPerUnit = 2000m,
                             IsDeprecated = false,
                             Measurement = "час",
@@ -110,7 +112,7 @@ namespace ConsoleTestNetCore.Migrations
                         },
                         new
                         {
-                            Id = "d911383f-3861-4bce-be08-df7b6cd5e9c0",
+                            Id = "5a36076e-6e72-4199-a504-7324e79deb01",
                             CostPerUnit = 2000m,
                             IsDeprecated = false,
                             Measurement = "час",
@@ -118,7 +120,7 @@ namespace ConsoleTestNetCore.Migrations
                         },
                         new
                         {
-                            Id = "466e0082-6ebb-4cd7-aa75-ec2bc6749384",
+                            Id = "f7f1b91e-f932-4c79-b95c-a86fd90ed5ed",
                             CostPerUnit = 2000m,
                             IsDeprecated = false,
                             Measurement = "час",
@@ -148,43 +150,43 @@ namespace ConsoleTestNetCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d70eb863-3e7c-4b12-b5f1-3c2811e76ac6",
+                            Id = "275925f4-4def-40ee-ad6a-35fd1c94810c",
                             Fio = "Петров П.П",
                             Login = "petr",
                             Password = "11111",
-                            RoleId = "3d1ece96-f442-4933-8904-222c416658f9"
+                            RoleId = "7b5aead8-6888-4a95-a7bb-dc64a350292e"
                         },
                         new
                         {
-                            Id = "6e82273d-a3e1-47c2-b698-97b3c24aa695",
+                            Id = "083593ae-b82b-494c-a215-f02b7af5781a",
                             Fio = "Смирнов П.П",
                             Login = "smr",
                             Password = "22222",
-                            RoleId = "e1a08eb9-7542-4b57-a778-07ce1953655a"
+                            RoleId = "37b8175c-6f09-4fbe-b5b7-afcd3d3285b9"
                         },
                         new
                         {
-                            Id = "424532fa-955e-4989-9795-7083217657f9",
+                            Id = "add73c8d-801a-4242-bae0-31dd9351ed34",
                             Fio = "Симонов П.П",
                             Login = "simon",
                             Password = "33333",
-                            RoleId = "adc7c2d2-603a-4291-971b-d8da557c8648"
+                            RoleId = "0e59f4f5-0c6a-4a8c-a2e9-77545924ce61"
                         },
                         new
                         {
-                            Id = "e1fef2d1-defe-4e68-8824-b12be008edf3",
+                            Id = "7f8b2a30-8a78-4b81-99fc-677c105fd68b",
                             Fio = "Иванов П.П",
                             Login = "iva",
                             Password = "44444",
-                            RoleId = "3d1ece96-f442-4933-8904-222c416658f9"
+                            RoleId = "7b5aead8-6888-4a95-a7bb-dc64a350292e"
                         },
                         new
                         {
-                            Id = "d521b263-4117-4df4-9aff-e3b580248bf7",
+                            Id = "25c9c630-1b06-4951-aeb5-3c1d9dca3e62",
                             Fio = "Сидоров П.П",
                             Login = "sidor",
                             Password = "55555",
-                            RoleId = "3d1ece96-f442-4933-8904-222c416658f9"
+                            RoleId = "7b5aead8-6888-4a95-a7bb-dc64a350292e"
                         });
                 });
 

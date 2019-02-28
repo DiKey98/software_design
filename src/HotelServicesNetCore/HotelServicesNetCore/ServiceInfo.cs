@@ -14,6 +14,7 @@ namespace HotelServicesNetCore
         public decimal CostPerUnit { get; set; }
         public string Measurement { get; set; }
         public bool IsDeprecated { get; set; }
+        public string ImgSrc { get; set; }
 
         public List<Order> Orders { get; set; }
     }
