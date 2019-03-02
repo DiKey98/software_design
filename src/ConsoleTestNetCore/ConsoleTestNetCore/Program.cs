@@ -48,7 +48,7 @@ namespace ConsoleTestNetCore
             var container = new WindsorContainer();
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
 
-            container.Register(Component.For<ConsoleLoggerInterceptor>().LifeStyle.Singleton.Named("consoleLogger"));
+            container.Register(Component.For<ConsoleLoggerInterceptor>().LifeStyle.Transient.Named("consoleLogger"));
 
             container.Register(Component
                 .For<IEnumerable<User>>()
@@ -122,6 +122,7 @@ namespace ConsoleTestNetCore
             managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, managerMenu));
             managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ChangeServiceCommand("Изменить услугу", servicesOperations, servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAttendanceStatiscticsCommand("Статистика заказов", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));

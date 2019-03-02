@@ -78,6 +78,7 @@ namespace ConsoleTestNetCore
             managerMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, managerMenu));
             managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ChangeServiceCommand("Изменить услугу", servicesOperations, servicesContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAttendanceStatiscticsCommand("Статистика заказов", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));
