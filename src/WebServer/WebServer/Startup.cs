@@ -88,6 +88,18 @@ namespace WebServer
                     "ChangeService",
                     "{controller=Services}/{action=Change}/{id?}");
 
+                routes.MapRoute(
+                    "ServicesService",
+                    "{controller=Services}/{action=Order}/{id?}");
+
+                routes.MapRoute(
+                    "ServicesService",
+                    "{controller=Services}/{action=Buy}/{id?}");
+
+                routes.MapRoute(
+                    "ServicesService",
+                    "{controller=Services}/{action=Cancel}/{id?}");
+
 
                 routes.MapRoute(
                     "AdminUsers",
