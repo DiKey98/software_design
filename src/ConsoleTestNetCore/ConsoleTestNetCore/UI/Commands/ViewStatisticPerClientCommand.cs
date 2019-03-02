@@ -73,10 +73,16 @@ namespace ConsoleTestNetCore.UI.Commands
                 var timeString = service.OrderDate.ToString("g", CultureInfo.CurrentCulture);
                 if (service.IsPaid)
                 {
-                    Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Дата {timeString} Оплачен");
+                    Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Дата {timeString} Оплачена");
                 } else
-                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Дата {timeString} Не оплачен");
+                Console.WriteLine($"Услуга {service.Service.Name} Стоимость {service.Cost} Дата {timeString} Не оплачена");
             }
+
+            if(services.Count==0)
+            {
+                Console.WriteLine("Заказов нет");
+            }
+
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.ReadKey(false);
             Console.Clear();
