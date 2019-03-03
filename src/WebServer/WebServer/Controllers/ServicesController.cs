@@ -26,20 +26,20 @@ namespace WebServer.Controllers
             _usersContainer = usersContainer;
         }
 
-        public IActionResult Service(string id)
+        public IActionResult Order(string id)
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
+            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //{
+            //    return RedirectToAction("Authorization", "Home");
+            //}
 
-            var service = _serviceInfoContainer.GetServiceInfoById(id);
-            if (service == null)
-            {
-                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
-            }
+            //var service = _serviceInfoContainer.GetServiceInfoById(id);
+            //if (service == null)
+            //{
+            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+            //}
 
-            return View(service);
+            return View();
         }
 
         public IActionResult Change(string id)
@@ -65,7 +65,7 @@ namespace WebServer.Controllers
 
             if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
             {
-                return RedirectToAction("Service", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+                return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
             }
 
             var newService = new ServiceInfo
@@ -80,10 +80,10 @@ namespace WebServer.Controllers
 
             _servicesOperations.ChangeServiceInfo(service, newService);
 
-            return RedirectToAction("Service", "Services", new {id = newService.Id});
+            return RedirectToAction("Change", "Services", new {id = newService.Id});
         }
 
-        public IActionResult Order(string id)
+        public IActionResult OrderAction(string id)
         {
             if (!IsAuthorizedInDb(HttpContext.Session.Id))
             {
@@ -93,7 +93,7 @@ namespace WebServer.Controllers
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null)
             {
-                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
             }
 
             //var userId = Request.Query["userId"];
@@ -108,7 +108,7 @@ namespace WebServer.Controllers
             uint units = 10;
             _usersOperations.OrderService(user, service.Name, units);
 
-            return RedirectToAction("Service", "Services", new {id = service.Id});
+            return RedirectToAction("Order", "Services", new {id = service.Id});
         }
 
         public IActionResult Buy(string id)
@@ -121,7 +121,7 @@ namespace WebServer.Controllers
             var order = _ordersContainer.GetOrderById(id);
             if (order == null)
             {
-                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
             }
 
             //var userId = Request.Query["userId"];
@@ -134,7 +134,7 @@ namespace WebServer.Controllers
 
             _usersOperations.PayService(user, order.Id);
 
-            return RedirectToAction("Service", "Services", new { id = order.Id });
+            return RedirectToAction("Order", "Services", new { id = order.Id });
         }
 
         public IActionResult Cancel(string id)
@@ -147,7 +147,7 @@ namespace WebServer.Controllers
             var order = _ordersContainer.GetOrderById(id);
             if (order == null)
             {
-                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
             }
 
             //var userId = Request.Query["userId"];
@@ -160,7 +160,7 @@ namespace WebServer.Controllers
 
             _usersOperations.CancelService(user, order.Id);
 
-            return RedirectToAction("Service", "Services", new { id = order.Id });
+            return RedirectToAction("Order", "Services", new { id = order.Id });
         }
     }
 }

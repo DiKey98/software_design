@@ -47,3 +47,23 @@ body {
 .thumbnail {
     background: cadetblue;
 }
+
+.center {
+    width: 150px;
+    margin: 40px auto;
+}
+
+#counter {
+    background: linear-gradient(#2e3a6a, #2f0b45);
+    color: white;
+}
+
+#serviceName {
+    text-align: center;
+}
+
+#mes {
+    position: absolute;
+    margin-left: 20px;
+    width: 50px;
+}

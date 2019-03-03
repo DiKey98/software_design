@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>title</title>
+    <link href="/css/site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="container-fluid center-block">
@@ -32,16 +33,26 @@
 
                             <h3>@Model[i * (int)ViewData["columns"] + j].Name</h3>
 
-                            <p>@Model[i * (int)ViewData["columns"] + j].CostPerUnit руб. /
-                            @Model[i * (int)ViewData["columns"] + j].Measurement</p>
-
                             <p>
+                                @Model[i * (int)ViewData["columns"] + j].CostPerUnit руб. /
+                            @Model[i * (int)ViewData["columns"] + j].Measurement
+                        </p>
 
-                                @Html.ActionLink("Заказать", "Services", "Order", 
-                               new {id = Model[i * (int)ViewData["columns"] + j].Id},
-                                    new {@class = "btn btn-success", role = "button"})
+                        <p>
 
-                            </p>
+                            @Html.ActionLink("Заказать", "Services", "Order",
+                                new {id = Model[i * (int)ViewData["columns"] + j].Id},
+                                new {@class = "btn btn-success", role = "button"})
+
+                        </p>
+
+                        <p>
+
+                            @Html.ActionLink("Редактировать", "Services", "Service",
+                                new {id = Model[i * (int)ViewData["columns"] + j].Id},
+                                new {@class = "btn btn-primary", role = "button"})
+
+                        </p>
 
                         </div>
                     </div>

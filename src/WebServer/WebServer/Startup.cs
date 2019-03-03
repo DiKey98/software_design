@@ -125,6 +125,10 @@ namespace WebServer
                     "{controller=Services}/{action=Order}/{id?}");
 
                 routes.MapRoute(
+                    "ServicesOrderAction",
+                    "{controller=Services}/{action=OrderAction}/{id?}");
+
+                routes.MapRoute(
                     "ServicesBuy",
                     "{controller=Services}/{action=Buy}/{id?}");
 
