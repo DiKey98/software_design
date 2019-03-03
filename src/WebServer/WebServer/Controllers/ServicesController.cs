@@ -1,5 +1,9 @@
-﻿using HotelServicesNetCore;
+﻿using System;
+using Castle.Core.Internal;
+using HotelServicesNetCore;
 using Microsoft.AspNetCore.Mvc;
+
+using static WebServer.Helpers.AuthorizationHelper;
 
 namespace WebServer.Controllers
 {
@@ -8,60 +12,155 @@ namespace WebServer.Controllers
         private readonly IUsersOperations _usersOperations;
         private readonly IServiceInfoContainer _serviceInfoContainer;
         private readonly IUsersContainer _usersContainer;
+        private readonly IServicesOperations _servicesOperations;
+        private readonly IOrdersContainer _ordersContainer;
 
         public ServicesController(IServiceInfoContainer serviceInfoContainer, 
-            IUsersContainer usersContainer, IUsersOperations usersOperations)
+            IUsersContainer usersContainer, IUsersOperations usersOperations, 
+            IServicesOperations servicesOperations, IOrdersContainer ordersContainer)
         {
             _usersOperations = usersOperations;
+            _servicesOperations = servicesOperations;
+            _ordersContainer = ordersContainer;
             _serviceInfoContainer = serviceInfoContainer;
             _usersContainer = usersContainer;
         }
 
         public IActionResult Service(string id)
         {
-            return View();
-        }
-
-        public IActionResult Change(string id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public void Order(string id)
-        {
-            //TODO проверка авторизации
+            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null)
             {
-                Response.Redirect("{controller = Services}/{action = Order}");
-                return;
+                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
             }
 
-            var user = _usersContainer.GetUserById(Request.Form["userId"]);
+            return View(service);
+        }
+
+        public IActionResult Change(string id)
+        {
+            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            if (service == null || service.IsDeprecated)
+            {
+                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+            }
+
+            //var name = Request.Query["name"];
+            //var measurement = Request.Query["measurement"];
+            //var costPerUnit = uint.Parse(Request.Query["costPerUnit"]);
+
+            var name = "Пирамида";
+            var measurement = "мин.";
+            uint costPerUnit = 10000;
+
+            if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
+            {
+                return RedirectToAction("Service", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+            }
+
+            var newService = new ServiceInfo
+            {
+                Id = Guid.NewGuid().ToString(),
+                CostPerUnit = costPerUnit,
+                ImgSrc = service.ImgSrc,
+                IsDeprecated = false,
+                Measurement = measurement,
+                Name = name
+            };
+
+            _servicesOperations.ChangeServiceInfo(service, newService);
+
+            return RedirectToAction("Service", "Services", new {id = newService.Id});
+        }
+
+        public IActionResult Order(string id)
+        {
+            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            if (service == null)
+            {
+                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+            }
+
+            //var userId = Request.Query["userId"];
+            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
+            var user = _usersContainer.GetUserById(userId);
             if (user == null)
             {
-                Response.Redirect("{controller = Home}/{action = Authorization}");
-                return;
+                return RedirectToAction("Authorization", "Home");
             }
 
-            var units = uint.Parse(Request.Form["units"]);
-
+            //var units = uint.Parse(Request.Query["units"]);
+            uint units = 10;
             _usersOperations.OrderService(user, service.Name, units);
-            Response.Redirect("{controller = Services}/{action = Order}");
+
+            return RedirectToAction("Service", "Services", new {id = service.Id});
         }
 
-        [HttpPost]
         public IActionResult Buy(string id)
         {
-            return null;
+            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            var order = _ordersContainer.GetOrderById(id);
+            if (order == null)
+            {
+                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+            }
+
+            //var userId = Request.Query["userId"];
+            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
+            var user = _usersContainer.GetUserById(userId);
+            if (user == null)
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            _usersOperations.PayService(user, order.Id);
+
+            return RedirectToAction("Service", "Services", new { id = order.Id });
         }
 
-        [HttpPost]
         public IActionResult Cancel(string id)
         {
-            return null;
+            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            var order = _ordersContainer.GetOrderById(id);
+            if (order == null)
+            {
+                return RedirectToAction("Service", "Services", new { message = "Услуга не существует" });
+            }
+
+            //var userId = Request.Query["userId"];
+            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
+            var user = _usersContainer.GetUserById(userId);
+            if (user == null)
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            _usersOperations.CancelService(user, order.Id);
+
+            return RedirectToAction("Service", "Services", new { id = order.Id });
         }
     }
 }

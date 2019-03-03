@@ -1,4 +1,5 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using System;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using HotelServicesNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -31,8 +32,24 @@ namespace WebServer
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(10);
+                options.Cookie.Name = "userSession";
+                options.Cookie.MaxAge = TimeSpan.FromDays(10);
+            });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => false;
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+           
             var container = new WindsorContainer();
             container.Register(Component.For<ConsoleLoggerInterceptor>().LifeStyle.Singleton.Named("consoleLogger"));
 
@@ -42,6 +59,8 @@ namespace WebServer
             services.AddTransient<IRolesContainer, InDbRolesContainer>();
             services.AddTransient<IUsersOperations, UserOperations>();
             services.AddTransient<IServicesOperations, ServiceOperations>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +79,7 @@ namespace WebServer
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
@@ -77,9 +97,21 @@ namespace WebServer
 
                 routes.MapRoute(
                     "HomeAuthorization",
-                    "{controller=Home}/{action=Authorization}");
+                    "{controller=Home}/{action=Authorization}/{message?}");
 
-   
+                routes.MapRoute(
+                    "Login",
+                    "{controller=Home}/{action=Login}");
+
+                routes.MapRoute(
+                    "Logout",
+                    "{controller=Home}/{action=Logout}");
+
+                routes.MapRoute(
+                    "RegAction",
+                    "{controller=Home}/{action=RegAction}");
+
+
                 routes.MapRoute(
                     "ServicesService",
                     "{controller=Services}/{action=Service}/{id?}");
@@ -89,15 +121,15 @@ namespace WebServer
                     "{controller=Services}/{action=Change}/{id?}");
 
                 routes.MapRoute(
-                    "ServicesService",
+                    "ServicesOrder",
                     "{controller=Services}/{action=Order}/{id?}");
 
                 routes.MapRoute(
-                    "ServicesService",
+                    "ServicesBuy",
                     "{controller=Services}/{action=Buy}/{id?}");
 
                 routes.MapRoute(
-                    "ServicesService",
+                    "ServicesCancel",
                     "{controller=Services}/{action=Cancel}/{id?}");
 
 
@@ -108,10 +140,6 @@ namespace WebServer
                 routes.MapRoute(
                     "AdminOrders",
                     "{controller=Admin}/{action=Orders}/{type?}");
-
-                routes.MapRoute(
-                    "AdminServices",
-                    "{controller=Admin}/{action=Services}");
 
 
                 routes.MapRoute(

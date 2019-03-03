@@ -49,6 +49,7 @@ namespace ConsoleTestNetCore.UI.Commands
 
             if (ordes.Count == 0)
             {
+                Console.WriteLine();
                 Console.WriteLine("Нет заказов за указанный период");
 
                 Console.WriteLine();

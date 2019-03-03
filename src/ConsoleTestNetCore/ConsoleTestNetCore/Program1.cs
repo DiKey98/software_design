@@ -14,7 +14,7 @@ namespace ConsoleTestNetCore
 {
     public class Program1
     {
-        private static void Main(string[] args)
+        private static void Main1(string[] args)
         {
             var container = new WindsorContainer();
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
@@ -79,7 +79,7 @@ namespace ConsoleTestNetCore
             managerMenu.AddCommand(new ViewAllPaidServicesCommand("Посмотреть оплаченные услуги", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ChangeServiceCommand("Изменить услугу", servicesOperations, servicesContainer, managerMenu));
             managerMenu.AddCommand(new ViewStatisticPerClientCommand("Посмотреть статистику по клиентам", ordersContainer, usersContainer, managerMenu));
-            mainMenu.AddCommand(new ViewAttendanceStatiscticsCommand("Статистика заказов", ordersContainer, managerMenu));
+            managerMenu.AddCommand(new ViewAttendanceStatiscticsCommand("Статистика заказов", ordersContainer, managerMenu));
             managerMenu.AddCommand(new ExitCommand("Выход", mainMenu));
 
             adminMenu.AddCommand(new ViewAllServicesCommand("Посмотреть все услуги", servicesContainer, adminMenu));

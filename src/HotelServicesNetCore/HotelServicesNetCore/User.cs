@@ -13,5 +13,7 @@ namespace HotelServicesNetCore
         public Role Role { get; set; }
 
         public List<Order> Order { get; set; }
+
+        public Authorization Authorization { get; set; }
     }
 }

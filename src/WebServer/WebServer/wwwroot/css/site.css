@@ -3,6 +3,9 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url("/images/background.jpg") no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 /* Wrapping element */
@@ -34,4 +37,13 @@ body {
     .carousel-caption {
         display: none;
     }
+}
+
+#content {
+    margin-top: 2%;
+    color: white;
+}
+
+.thumbnail {
+    background: cadetblue;
 }

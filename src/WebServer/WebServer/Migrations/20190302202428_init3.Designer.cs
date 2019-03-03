@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebServer.Models;
@@ -9,9 +10,10 @@ using WebServer.Models;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(HotelServicesDbContext))]
-    partial class HotelServicesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190302202428_init3")]
+    partial class init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebServer.Models;
@@ -9,9 +10,10 @@ using WebServer.Models;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(HotelServicesDbContext))]
-    partial class HotelServicesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190302145630_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +76,9 @@ namespace WebServer.Migrations
                     b.ToTable("Roles");
 
                     b.HasData(
-                        new { Id = "83679d65-1376-47a2-849a-2067a1827e1f", Name = "Клиент" },
-                        new { Id = "071a6fae-5c71-41e4-838e-fe4dd5caa74e", Name = "Администратор" },
-                        new { Id = "0a32f7e4-6c54-4224-b01b-87c3766a2f04", Name = "Управляющий" }
+                        new { Id = "e08aa1a6-ac70-435c-bca7-3b47357fdcae", Name = "Клиент" },
+                        new { Id = "35244ee3-a0c0-40b0-b2bd-637996bba961", Name = "Администратор" },
+                        new { Id = "ef978a22-aaf4-48b6-b05e-01e500975173", Name = "Управляющий" }
                     );
                 });
 
@@ -100,10 +102,10 @@ namespace WebServer.Migrations
                     b.ToTable("ServiceInfos");
 
                     b.HasData(
-                        new { Id = "482cf7e2-9173-4b82-8256-198d0d94a15a", CostPerUnit = 1000m, ImgSrc = "~/images/services/spa.png", IsDeprecated = false, Measurement = "час.", Name = "Спа" },
-                        new { Id = "bea244f6-846b-43da-bb15-3bdd8bbc551c", CostPerUnit = 2000m, ImgSrc = "~/images/services/eight.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд восьмёрка" },
-                        new { Id = "24eba2e4-b3d1-44e1-8ec4-6d3f702bea43", CostPerUnit = 2000m, ImgSrc = "~/images/services/nine.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд девятка" },
-                        new { Id = "8da23433-2dc0-4f99-9a05-c76dc01bad4b", CostPerUnit = 2000m, ImgSrc = "~/images/services/russian_billiards.png", IsDeprecated = false, Measurement = "час", Name = "Русский бильярд" }
+                        new { Id = "cb693424-a8d2-44c6-adf7-3df9eb36626f", CostPerUnit = 1000m, ImgSrc = "~/images/services/spa.png", IsDeprecated = false, Measurement = "час.", Name = "Спа" },
+                        new { Id = "a9d98270-6f82-4c51-96b3-5a1edb742973", CostPerUnit = 2000m, ImgSrc = "~/images/services/eight.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд восьмёрка" },
+                        new { Id = "35e2c37b-aeb5-4759-aa1a-b60a7cbafb31", CostPerUnit = 2000m, ImgSrc = "~/images/services/nine.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд девятка" },
+                        new { Id = "c96987c0-2582-4e3c-b5d4-125a4031b387", CostPerUnit = 2000m, ImgSrc = "~/images/services/russian_billiards.png", IsDeprecated = false, Measurement = "час", Name = "Русский бильярд" }
                     );
                 });
 
@@ -127,11 +129,11 @@ namespace WebServer.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = "89441ea2-af34-4ce7-a962-794cd72691c7", Fio = "Петров П.П", Login = "petr", Password = "11111", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" },
-                        new { Id = "966afb7d-56c6-427d-9dd1-bb8f21cb1b59", Fio = "Смирнов П.П", Login = "smr", Password = "22222", RoleId = "071a6fae-5c71-41e4-838e-fe4dd5caa74e" },
-                        new { Id = "d7bbc2e5-c93f-4940-a1c4-6d799a4cad1c", Fio = "Симонов П.П", Login = "simon", Password = "33333", RoleId = "0a32f7e4-6c54-4224-b01b-87c3766a2f04" },
-                        new { Id = "668e9aa2-e708-45fd-b349-6afcbaf3845c", Fio = "Иванов П.П", Login = "iva", Password = "44444", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" },
-                        new { Id = "d7564ecd-0b66-45ac-9b4c-baa6582fe110", Fio = "Сидоров П.П", Login = "sidor", Password = "55555", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" }
+                        new { Id = "183fdc5b-37a1-473c-b54c-f22a3637aad0", Fio = "Петров П.П", Login = "petr", Password = "11111", RoleId = "e08aa1a6-ac70-435c-bca7-3b47357fdcae" },
+                        new { Id = "97e7d77e-813a-4eb4-bd70-32a8edd7df62", Fio = "Смирнов П.П", Login = "smr", Password = "22222", RoleId = "35244ee3-a0c0-40b0-b2bd-637996bba961" },
+                        new { Id = "3a4faf23-34ad-4e99-ac4b-6614ea2f653a", Fio = "Симонов П.П", Login = "simon", Password = "33333", RoleId = "ef978a22-aaf4-48b6-b05e-01e500975173" },
+                        new { Id = "cedeab94-8798-489d-a21c-1038cd543ceb", Fio = "Иванов П.П", Login = "iva", Password = "44444", RoleId = "e08aa1a6-ac70-435c-bca7-3b47357fdcae" },
+                        new { Id = "e0215ca7-116e-4072-a5d8-9d63ffb15dd1", Fio = "Сидоров П.П", Login = "sidor", Password = "55555", RoleId = "e08aa1a6-ac70-435c-bca7-3b47357fdcae" }
                     );
                 });
 

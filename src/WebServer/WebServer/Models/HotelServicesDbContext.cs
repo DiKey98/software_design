@@ -10,6 +10,7 @@ namespace WebServer.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ServiceInfo> ServiceInfos { get; set; }
+        public DbSet<Authorization> Authorizations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
