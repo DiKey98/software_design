@@ -45,7 +45,15 @@ body {
 }
 
 .thumbnail {
-    background: cadetblue;
+    background: linear-gradient(#2e3a6a, #2f0b45);
+}
+
+.caption h3 {
+    color: white;
+}
+
+.caption p {
+    color: white;
 }
 
 .center {
@@ -66,4 +74,22 @@ body {
     position: absolute;
     margin-left: 20px;
     width: 50px;
+}
+
+#orderBtn {
+    margin-top: 20px;
+}
+
+#priceInfo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#orderForm {
+    background: linear-gradient(#2e3a6a, #2f0b45);
+    width: 70%;
+}
+
+#sericeImg {
+    margin-bottom: -15px;
 }

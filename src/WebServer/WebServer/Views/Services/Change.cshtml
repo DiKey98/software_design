@@ -1,14 +1,73 @@
 ﻿@*@model TModel*@
 
+@{
+    Layout = "_AdminLayout";
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/js/Change.js"></script>
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Изменить услугу</title>
+    <link href="/css/Forms.css" rel="stylesheet" type="text/css" />
+    <link href="/css/Change.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
-<div>
-    <h1>Менеджер - изменить услугу</h1>
-</div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="tab" role="tabpanel">
+                        <div class="tab-content tabs">
+                            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                                <form id="changeServiceForm" class="form-horizontal" enctype="multipart/form-data">
+
+                                    <div id="serviceChangeName">
+                                        <h1>Изменение услуги</h1>
+                                    </div>
+
+                                    <img id="serviceChangeImg" class="center-block" src="/images/services/eight.png" alt="..." />
+
+                                    <div class="form-group">
+                                        <label for="inputName">Название</label>
+                                        <input type="email" class="form-control" id="inputName">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputMeasurement">Ед. измерения</label>
+                                        <input type="email" class="form-control" id="inputMeasurement">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputCost">Стоимость ед.</label>
+                                        <input type="email" class="form-control" id="inputCost">
+                                    </div>
+
+                                    <div class="example-2">
+                                        <div class="form-group">
+                                            <input type="file" name="file" id="file" class="input-file">
+                                            <label for="file" class="btn btn-tertiary js-labelFile">
+                                                <i class="icon fa fa-check"></i>
+                                                <span class="js-fileName">Загрузить изображение</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-default">Изменить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-offset-3 col-md-6 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div>
 </body>
 </html>

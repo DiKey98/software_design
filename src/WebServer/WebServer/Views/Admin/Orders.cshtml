@@ -1,14 +1,60 @@
-﻿@*@model TModel*@
+﻿@model List<HotelServicesNetCore.Order>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script type="text/javascript" src="/js/Orders.js"></script>
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Заказы</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link href="/css/Users.css" rel="stylesheet" type="text/css"/>
+    <link href="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/Orders.css">
 </head>
+
 <body>
-<div>
-    <h1>Админ - заказы</h1> 
-</div>
+<input type="text" id="datepicker"/>
+<table
+    id="table"
+    data-filter-control="true"
+    data-filter-show-clear="true"
+    class="table table table-scroll">
+    <thead>
+        <tr>
+            @*<th data-field="id" data-filter-control="input">ID</th>*@
+            <th data-field="fio" data-filter-control="input">Пользователь</th>
+            <th data-field="login" data-filter-control="input">Услуга</th>
+            <th data-field="role" data-filter-control="input">Стоимость</th>
+            <th data-field="role" data-filter-control="input">Дата</th>
+            <th data-field="role" data-filter-control="input">Оплачен</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model)
+    {
+        var paid = order.IsPaid ? "Да" : "Нет";
+        <tr>
+            @*<td>@order.Id</td>*@
+            <td>@order.User.Fio</td>
+            <td>@order.Service.Name</td>
+            <td>@order.Cost руб.</td>
+            <td>@order.OrderDate.ToString("dd.MM.yyyy")</td>
+            <td>@paid</td>
+        </tr>
+    }
+    </tbody>
+</table>
 </body>
 </html>

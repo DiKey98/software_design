@@ -1,4 +1,5 @@
-﻿@*@model TModel*@
+﻿@using Newtonsoft.Json
+@*@model TModel*@
 @{
     Layout = "_AdminLayout";
 }
@@ -15,10 +16,17 @@
     <script type="text/javascript" src="/js/Order.js"></script>
 }
 
+<script type="text/javascript">
+    var data = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>
+
 <div>
-    <form class="center-block">
-        <div id="serviceName"><h1>Русский бильярд</h1></div>
-        <img class="center-block" src="/images/services/eight.png" alt="..."/>
+    <form id="orderForm" class="center-block">
+        <br/>
+        <div id="serviceName">
+            <h1>Русский бильярд</h1>
+        </div>
+        <img id="sericeImg" class="center-block" src="/images/services/eight.png" alt="..."/>
         <div class="center">
             <div class="input-group">
                 <span class="input-group-btn">
@@ -26,22 +34,28 @@
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </span>
-                <input id="counter" type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="1000">
+                <input id="counter" type="text" name="quant[2]" class="form-control input-number" value="1" min="1" max="1000">
                 <span class="input-group-btn">
-                    <button id="orderBtn" type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                    <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
-                <div id="mes"><h4>час.</h4></div>
-                <div><div><h4>Цена:</h4></div> <div><h4>1000</h4></div> <div><h4>руб.</h4></div></div>
-                @*<div class="form-group center-block">
-            <button  type="submit" class="btn btn-default">Заказать</button>
-        </div>*@
+                <div id="mes">
+                    <h4>час.</h4>
+                </div>
             </div>
-            
+            <div id="priceInfo" class="center-block">
+                <div>
+                    <h4>Цена: 1000 руб.</h4>
+                </div>
+                <div id="orderBtn" class="form-group center-block">
+                    <button type="submit" class="btn btn-success center-block">Заказать</button>
+                </div>
+            </div>
+            <br />
         </div>
     </form>
-    
+
 </div>
 </body>
 </html>

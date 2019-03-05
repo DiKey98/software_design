@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using HotelServicesNetCore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,24 +21,53 @@ namespace WebServer.Controllers
 
         public IActionResult Users()
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
+            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //{
+            //    return RedirectToAction("Authorization", "Home");
+            //}
 
             var users = _usersContainer.GetUsers();
-            return View(users);
+            return View(users as List<User>);
         }
 
         public IActionResult Orders()
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //{
+            //    return RedirectToAction("Authorization", "Home");
+            //}
+
+            DateTime? start;
+            DateTime? end;
+
+            var parsed = DateTime.TryParseExact(Request.Query["start"], "dd.MM.yyyy", 
+                CultureInfo.CurrentCulture, DateTimeStyles.None, out var date);
+
+            if (parsed)
             {
-                return RedirectToAction("Authorization", "Home");
+                start = date;
+            }
+            else
+            {
+                start = null;
             }
 
-            var orders = _ordersContainer.GetOrders(from: DateTime.Today, to: DateTime.Today);
-            return View(orders);
+            parsed = DateTime.TryParseExact(Request.Query["end"], "dd.MM.yyyy",
+                CultureInfo.CurrentCulture, DateTimeStyles.None, out date);
+
+            if (parsed)
+            {
+                end = date;
+            }
+            else
+            {
+                end = null;
+            }
+
+            var user = _usersContainer.GetUserByLogin(Request.Query["user"]);
+            var orders = _ordersContainer.GetOrders(user, from: start, to: end);
+
+            return View(orders as List<Order>);
         } 
     }
 }

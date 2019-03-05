@@ -44,43 +44,59 @@ namespace WebServer.Controllers
 
         public IActionResult Change(string id)
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
+            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //{
+            //    return RedirectToAction("Authorization", "Home");
+            //}
 
-            var service = _serviceInfoContainer.GetServiceInfoById(id);
-            if (service == null || service.IsDeprecated)
-            {
-                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
-            }
+            //var service = _serviceInfoContainer.GetServiceInfoById(id);
+            //if (service == null)
+            //{
+            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+            //}
+
+            return View();
+        }
+
+        public void ChangeAction(string id)
+        {
+            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            //{
+            //    return RedirectToAction("Authorization", "Home");
+            //}
+
+            //var service = _serviceInfoContainer.GetServiceInfoById(id);
+            //if (service == null || service.IsDeprecated)
+            //{
+            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+            //}
 
             //var name = Request.Query["name"];
             //var measurement = Request.Query["measurement"];
             //var costPerUnit = uint.Parse(Request.Query["costPerUnit"]);
 
-            var name = "Пирамида";
-            var measurement = "мин.";
-            uint costPerUnit = 10000;
+            //var name = "Пирамида";
+            //var measurement = "мин.";
+            //uint costPerUnit = 10000;
 
-            if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
-            {
-                return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
-            }
+            //if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
+            //{
+            //    return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+            //}
 
-            var newService = new ServiceInfo
-            {
-                Id = Guid.NewGuid().ToString(),
-                CostPerUnit = costPerUnit,
-                ImgSrc = service.ImgSrc,
-                IsDeprecated = false,
-                Measurement = measurement,
-                Name = name
-            };
+            //var newService = new ServiceInfo
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    CostPerUnit = costPerUnit,
+            //    ImgSrc = service.ImgSrc,
+            //    IsDeprecated = false,
+            //    Measurement = measurement,
+            //    Name = name
+            //};
 
-            _servicesOperations.ChangeServiceInfo(service, newService);
+            //_servicesOperations.ChangeServiceInfo(service, newService);
 
-            return RedirectToAction("Change", "Services", new {id = newService.Id});
+            //return RedirectToAction("Change", "Services", new {id = newService.Id});
         }
 
         public IActionResult OrderAction(string id)
