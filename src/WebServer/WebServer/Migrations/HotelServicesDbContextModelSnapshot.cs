@@ -74,9 +74,9 @@ namespace WebServer.Migrations
                     b.ToTable("Roles");
 
                     b.HasData(
-                        new { Id = "83679d65-1376-47a2-849a-2067a1827e1f", Name = "Клиент" },
-                        new { Id = "071a6fae-5c71-41e4-838e-fe4dd5caa74e", Name = "Администратор" },
-                        new { Id = "0a32f7e4-6c54-4224-b01b-87c3766a2f04", Name = "Управляющий" }
+                        new { Id = "abd656d8-fc8e-4841-ac2b-5b1ce71fddf3", Name = "Клиент" },
+                        new { Id = "a88ab815-05d6-4620-811c-4d30038b3a16", Name = "Администратор" },
+                        new { Id = "5ccca18c-2cc1-4967-9cc9-c1d79aa503bb", Name = "Управляющий" }
                     );
                 });
 
@@ -100,10 +100,10 @@ namespace WebServer.Migrations
                     b.ToTable("ServiceInfos");
 
                     b.HasData(
-                        new { Id = "482cf7e2-9173-4b82-8256-198d0d94a15a", CostPerUnit = 1000m, ImgSrc = "~/images/services/spa.png", IsDeprecated = false, Measurement = "час.", Name = "Спа" },
-                        new { Id = "bea244f6-846b-43da-bb15-3bdd8bbc551c", CostPerUnit = 2000m, ImgSrc = "~/images/services/eight.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд восьмёрка" },
-                        new { Id = "24eba2e4-b3d1-44e1-8ec4-6d3f702bea43", CostPerUnit = 2000m, ImgSrc = "~/images/services/nine.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд девятка" },
-                        new { Id = "8da23433-2dc0-4f99-9a05-c76dc01bad4b", CostPerUnit = 2000m, ImgSrc = "~/images/services/russian_billiards.png", IsDeprecated = false, Measurement = "час", Name = "Русский бильярд" }
+                        new { Id = "e7c1e8f2-bee5-4a4a-9914-ca3cca123f23", CostPerUnit = 1000m, ImgSrc = "~/images/services/spa.png", IsDeprecated = false, Measurement = "час.", Name = "Спа" },
+                        new { Id = "cc16e2cd-c3f4-4bb1-85cb-27f9b9fb665f", CostPerUnit = 2000m, ImgSrc = "~/images/services/eight.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд восьмёрка" },
+                        new { Id = "a67f3844-9591-4441-9642-16f959389c72", CostPerUnit = 2000m, ImgSrc = "~/images/services/nine.png", IsDeprecated = false, Measurement = "час", Name = "Бильярд девятка" },
+                        new { Id = "a5841981-aa2e-4915-9127-d0ae5f366c2f", CostPerUnit = 2000m, ImgSrc = "~/images/services/russian_billiards.png", IsDeprecated = false, Measurement = "час", Name = "Русский бильярд" }
                     );
                 });
 
@@ -127,11 +127,11 @@ namespace WebServer.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = "89441ea2-af34-4ce7-a962-794cd72691c7", Fio = "Петров П.П", Login = "petr", Password = "11111", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" },
-                        new { Id = "966afb7d-56c6-427d-9dd1-bb8f21cb1b59", Fio = "Смирнов П.П", Login = "smr", Password = "22222", RoleId = "071a6fae-5c71-41e4-838e-fe4dd5caa74e" },
-                        new { Id = "d7bbc2e5-c93f-4940-a1c4-6d799a4cad1c", Fio = "Симонов П.П", Login = "simon", Password = "33333", RoleId = "0a32f7e4-6c54-4224-b01b-87c3766a2f04" },
-                        new { Id = "668e9aa2-e708-45fd-b349-6afcbaf3845c", Fio = "Иванов П.П", Login = "iva", Password = "44444", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" },
-                        new { Id = "d7564ecd-0b66-45ac-9b4c-baa6582fe110", Fio = "Сидоров П.П", Login = "sidor", Password = "55555", RoleId = "83679d65-1376-47a2-849a-2067a1827e1f" }
+                        new { Id = "7d703faf-9766-445a-b4e0-04c13bc18620", Fio = "Петров П.П", Login = "petr", Password = "11111", RoleId = "abd656d8-fc8e-4841-ac2b-5b1ce71fddf3" },
+                        new { Id = "1a975caf-1182-4a0b-a2bc-dd0504dec30d", Fio = "Смирнов П.П", Login = "smr", Password = "22222", RoleId = "a88ab815-05d6-4620-811c-4d30038b3a16" },
+                        new { Id = "c877145c-da2a-449c-899b-3a8774a90781", Fio = "Симонов П.П", Login = "simon", Password = "33333", RoleId = "5ccca18c-2cc1-4967-9cc9-c1d79aa503bb" },
+                        new { Id = "b3184e11-c1ec-4582-9d3c-aa154c794504", Fio = "Иванов П.П", Login = "iva", Password = "44444", RoleId = "abd656d8-fc8e-4841-ac2b-5b1ce71fddf3" },
+                        new { Id = "0c732bb7-2263-4920-8638-4c6448ad5edf", Fio = "Сидоров П.П", Login = "sidor", Password = "55555", RoleId = "abd656d8-fc8e-4841-ac2b-5b1ce71fddf3" }
                     );
                 });
 

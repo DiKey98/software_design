@@ -25,6 +25,8 @@ namespace WebServer.Controllers
         public IActionResult Index(string message)
         {
             ViewData["message"] = message;
+            ViewData["sessionId"] = HttpContext.Session.GetString("sessionId");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View();
         }
 
@@ -47,23 +49,25 @@ namespace WebServer.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public object Login()
         {
-            //var login = Request.Query["login"];
-            //var password = Request.Query["password"];
+            var login = Request.Form["login"];
+            var password = Request.Form["password"];
 
-            var login = "smr";
-            var password = "22222";
+            //var login = "smr";
+            //var password = "22222";
 
             var user = _usersContainer.GetUserByLogin(login);
             if (user == null)
             {
-                return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
+                //return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
+                return Json(new { message = "Неверный логин или пароль"});
             }
 
             if (user.Password != password)
             {
-                return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
+                //return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
+                return Json(new { message = "Неверный логин или пароль" });
             }
 
             AuthorizeInDb(HttpContext.Session.Id, user.Id);
@@ -77,7 +81,7 @@ namespace WebServer.Controllers
             Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
             Response.Cookies.Append("roleId", user.Role.Id, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
 
-            return RedirectToAction("Index", "Home", new { message = "Авторизация успешна" });
+            return Json(new { ok = true });
         }
 
         public IActionResult Logout()
@@ -96,29 +100,31 @@ namespace WebServer.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult RegAction()
+        public void RegAction()
         {
-            var login = Request.Query["login"];
-            var password = Request.Query["password"];
-            var fio = Request.Query["fio"];
-            var roleName = Request.Query["role"];
+            var login = Request.Form["login"];
+            var password = Request.Form["password"];
+            var fio = Request.Form["fio"];
+            var roleName = Request.Form["role"];
 
-            if (fio.IsNullOrEmpty() || 
-                login.IsNullOrEmpty() || 
-                password.IsNullOrEmpty() || 
-                roleName.IsNullOrEmpty())
-            {
-                return RedirectToAction("Registration", "Home", new { message = "Некорректные параметры" });
-            }
 
-            if (IsExistsLogin(login))
-            {
-                return RedirectToAction("Registration", "Home", new { message = "Логин уже существует" });
-            }
 
-            AddUserToDb(fio, login, password, roleName);
+            //if (fio.IsNullOrEmpty() || 
+            //    login.IsNullOrEmpty() || 
+            //    password.IsNullOrEmpty() || 
+            //    roleName.IsNullOrEmpty())
+            //{
+            //    return RedirectToAction("Registration", "Home", new { message = "Некорректные параметры" });
+            //}
 
-            return RedirectToAction("Authorization", "Home", new { message = "Регистрация успешна" });
+            //if (IsExistsLogin(login))
+            //{
+            //    return RedirectToAction("Registration", "Home", new { message = "Логин уже существует" });
+            //}
+
+            //AddUserToDb(fio, login, password, roleName);
+
+            //return RedirectToAction("Authorization", "Home", new { message = "Регистрация успешна" });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -11,7 +11,7 @@
             if (currentVal > input.attr("min")) {
                 input.val(currentVal - 1).change();
             }
-            if (parseInt(input.val()) == input.attr("min")) {
+            if (parseInt(input.val()) === input.attr("min")) {
                 $(this).attr("disabled", true);
             }
 

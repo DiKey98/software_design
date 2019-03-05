@@ -1,6 +1,13 @@
-﻿@{
+﻿@using static WebServer.Helpers.AuthorizationHelper;
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_AdminLayout";
+    if (IsAuthorizedInDb(ViewData["sessionId"].ToString()))
+    {
+
+
+    }
 }
 
 @section Scripts {
