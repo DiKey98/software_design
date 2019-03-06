@@ -1,5 +1,4 @@
 ﻿@using Newtonsoft.Json
-
 @{
     ViewData["Title"] = "Home Page";
 
@@ -11,41 +10,37 @@
     {
         switch (ViewData["roleName"].ToString().ToLower())
         {
-            switch (ViewData["roleName"].ToString().ToLower())
-            {
-                case "администратор":
-                    {
-                        Layout = "_AdminLayout";
-                        break;
-                    }
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
 
-                case "управляющий":
-                    {
-                        Layout = "_ManagerLayout";
-                        break;
-                    }
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
 
-                default:
-                    {
-                        Layout = "_UserLayout";
-                        break;
-                    }
-            }
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
         }
     }
 
 }
 
-}
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
+
 @section Scripts {
     <script type="text/javascript" src="/js/index.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/setlogin.js"></script>
 }
-
-<script type="text/javascript">
-    window.data = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
-</script>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
@@ -89,11 +84,11 @@
     </a>
 </div>
 
-<div align="justify">
-    <h2 align="center" class="info"> Добро пожаловать в City17!</h2>
-        <h2 class="info">
-            Это современная гостиница, удобно расположенная в самом центре города.
-            В каждом отеле сети City17 мы гарантируем Вам теплый приём, прекрасное обслуживание, комфортабельные,
-            элегантные номера и широкий спектр возможностей для работы и досуга.
-        </h2>
+<div class="info1" align="justify">
+    <h5 align="center" class="info"> Добро пожаловать в City17!</h5>
+    <h6 class="info">
+        Это современная гостиница, удобно расположенная в самом центре города.
+        В каждом отеле сети City17 мы гарантируем Вам теплый приём, прекрасное обслуживание, комфортабельные,
+        элегантные номера и широкий спектр возможностей для работы и досуга.
+    </h6>
 </div>

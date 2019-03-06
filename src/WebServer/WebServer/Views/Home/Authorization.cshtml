@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@{
     if (ViewData["roleName"] == null)
     {
         Layout = "_UserLayout";
@@ -27,6 +28,10 @@
         }
     }
 }
+
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 @section Scripts {
     <script type="text/javascript" src="/js/index.js"></script>

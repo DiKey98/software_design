@@ -40,9 +40,6 @@
     <Content Update="Views\Admin\Orders.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Admin\Services.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Admin\Users.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

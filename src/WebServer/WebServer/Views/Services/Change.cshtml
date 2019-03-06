@@ -1,4 +1,5 @@
-﻿@*@model TModel*@
+﻿@using Newtonsoft.Json
+@model HotelServicesNetCore.ServiceInfo
 
 @{
     if (ViewData["roleName"] == null)
@@ -30,6 +31,10 @@
     }
 }
 
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
+
 @section Scripts {
     <script type="text/javascript" src="/js/Change.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
@@ -59,21 +64,21 @@
                                         <h1>Изменение услуги</h1>
                                     </div>
 
-                                    <img id="serviceChangeImg" class="center-block" src="/images/services/eight.png" alt="..." />
+                                    <img id="serviceChangeImg" class="center-block" src="@Model.ImgSrc" alt="..." />
 
                                     <div class="form-group">
                                         <label for="inputName">Название</label>
-                                        <input type="email" class="form-control" id="inputName">
+                                        <input type="text" value="@Model.Name" class="form-control" id="inputName">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="inputMeasurement">Ед. измерения</label>
-                                        <input type="email" class="form-control" id="inputMeasurement">
+                                        <input type="text" value="@Model.Measurement" class="form-control" id="inputMeasurement">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="inputCost">Стоимость ед.</label>
-                                        <input type="email" class="form-control" id="inputCost">
+                                        <input type="text" value="@Model.CostPerUnit" class="form-control" id="inputCost">
                                     </div>
 
                                     <div class="example-2">

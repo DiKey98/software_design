@@ -1,14 +1,46 @@
-﻿@model List<WebServer.Controllers.ManagerController.UsersActivityStatistics>
+﻿@using Newtonsoft.Json
+@model List<WebServer.Controllers.ManagerController.UsersActivityStatistics>
 
 @{
-    Layout = "_AdminLayout";
+    if (ViewData["roleName"] == null)
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        switch (ViewData["roleName"].ToString().ToLower())
+        {
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
+
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
+
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
+        }
+    }
 }
+
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 @section Scripts {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript" src="/js/Orders.js"></script>
     <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/setlogin.js"></script>
 
     <script type="text/javascript" src="/js/Users.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.js"></script>

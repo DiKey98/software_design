@@ -30,6 +30,8 @@ namespace WebServer.Controllers
             }
 
             var users = _usersContainer.GetUsers();
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(users as List<User>);
         }
 
@@ -72,6 +74,8 @@ namespace WebServer.Controllers
             var user = _usersContainer.GetUserByLogin(Request.Query["user"]);
             var orders = _ordersContainer.GetOrders(user, from: start, to: end);
 
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(orders as List<Order>);
         } 
     }

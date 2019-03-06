@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -40,8 +41,8 @@
             </div>
         </div>
     </nav>
-
-    <partial name="_CookieConsentPartial" />
+    
+<partial name="_CookieConsentPartial" />
 
     <div id="content" class="container body-content">
         @RenderBody()

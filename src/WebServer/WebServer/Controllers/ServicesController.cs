@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Castle.Core.Internal;
 using HotelServicesNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,9 +40,10 @@ namespace WebServer.Controllers
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null)
             {
-                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+                return RedirectToAction("Services", "Home", new { message = "Услуга не существует" });
             }
 
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(service);
         }
 
@@ -53,13 +56,15 @@ namespace WebServer.Controllers
                 return RedirectToAction("Authorization", "Home");
             }
 
-            //var service = _serviceInfoContainer.GetServiceInfoById(id);
-            //if (service == null)
-            //{
-            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
-            //}
+            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            if (service == null)
+            {
+                return RedirectToAction("Services", "Home", new { message = "Услуга не существует" });
+            }
 
-            return View();
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
+            return View(service);
         }
 
         public IActionResult Basket()
@@ -92,6 +97,7 @@ namespace WebServer.Controllers
 
             ViewData["columns"] = 2;
             ViewData["role"] = HttpContext.Session.GetString("role");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(ordersParams);
         }
 
@@ -104,39 +110,35 @@ namespace WebServer.Controllers
                 return RedirectToAction("Authorization", "Home");
             }
 
-            //var service = _serviceInfoContainer.GetServiceInfoById(id);
-            //if (service == null || service.IsDeprecated)
-            //{
-            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
-            //}
+            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            if (service == null || service.IsDeprecated)
+            {
+                return RedirectToAction("Services", "Home", new { message = "Услуга не существует" });
+            }
 
-            //var name = Request.Query["name"];
-            //var measurement = Request.Query["measurement"];
-            //var costPerUnit = uint.Parse(Request.Query["costPerUnit"]);
+            var name = Request.Query["name"].ToString();
+            var measurement = Request.Query["measurement"].ToString();
+            var costPerUnit = uint.Parse(Request.Query["costPerUnit"].ToString());
 
-            //var name = "Пирамида";
-            //var measurement = "мин.";
-            //uint costPerUnit = 10000;
+            if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
+            {
+                return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+            }
 
-            //if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
-            //{
-            //    return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
-            //}
+            var newService = new ServiceInfo
+            {
+                Id = Guid.NewGuid().ToString(),
+                CostPerUnit = costPerUnit,
+                ImgSrc = service.ImgSrc,
+                IsDeprecated = false,
+                Measurement = measurement,
+                Name = name
+            };
 
-            //var newService = new ServiceInfo
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    CostPerUnit = costPerUnit,
-            //    ImgSrc = service.ImgSrc,
-            //    IsDeprecated = false,
-            //    Measurement = measurement,
-            //    Name = name
-            //};
+            _servicesOperations.ChangeServiceInfo(service, newService);
 
-            //_servicesOperations.ChangeServiceInfo(service, newService);
-
-            //return RedirectToAction("Change", "Services", new {id = newService.Id});
-            return null;
+            ViewData["login"] = HttpContext.Session.GetString("login");
+            return RedirectToAction("Change", "Services", new { id = newService.Id });
         }
 
         public object OrderAction()
@@ -154,16 +156,14 @@ namespace WebServer.Controllers
                 return Json(new { message = "" });
             }
 
-            //var userId = Request.Query["userId"];
-            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
+            var userId = HttpContext.Session.GetString("userId");
             var user = _usersContainer.GetUserById(userId);
             if (user == null)
             {
                 return Json(new { message = "NO_AUTHORIZED" });
             }
 
-            //var units = uint.Parse(Request.Form["units"]);
-            uint units = 10;
+            var units = uint.Parse(Request.Form["units"]);
             _usersOperations.OrderService(user, service.Name, units);
 
             return Json(new { ok = true });

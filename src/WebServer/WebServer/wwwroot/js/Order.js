@@ -3,19 +3,20 @@
 
     var count = parseInt($('#counter').val());
     if (count <= maxValue) {
-        $('#price').text(`Цена: ${window.data.CostPerUnit * count} руб.`)
+        $('#price').text(`Цена: ${window.data.CostPerUnit * count} руб.`);
     } else {
-        $('#price').text(`Цена: ${window.data.CostPerUnit} руб.`)
+        $('#price').text(`Цена: ${window.data.CostPerUnit} руб.`);
     }
 
     $('#confim').click(function (e) {
         e.preventDefault();
+        var count = parseInt($('#counter').val());
         $.ajax({
-            url: '/Home/OrderAction',
+            url: '/Services/OrderAction',
             method: 'POST',
             data: {
-                ServiceId: window.data.Id,
-                Units: count,
+                id: window.data.Id,
+                units: count
             },
             success: function (jsonData) {
                 if (jsonData.message === "NO_AUTHORIZED") {

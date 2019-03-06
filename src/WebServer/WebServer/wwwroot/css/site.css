@@ -9,9 +9,13 @@ body {
 }
 
 .info {
-    font: bold 2em Arial, sans-serif;
+    font: bold 1.5em Arial, sans-serif;
     color: white;
     text-shadow: #000000 1px 1px 0, #000000 2px 2px 0, #000000 3px 3px 0, #000000 4px 4px 0, #000000 3px 3px 0;
+}
+
+.info1 {
+    margin-top: 5%;
 }
 
 /* Wrapping element */

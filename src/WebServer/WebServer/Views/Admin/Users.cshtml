@@ -1,4 +1,5 @@
-﻿@model List<HotelServicesNetCore.User>
+﻿@using Newtonsoft.Json
+@model List<HotelServicesNetCore.User>
 
 @{
     if (ViewData["roleName"] == null)
@@ -29,6 +30,10 @@
         }
     }
 }
+
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 @section Scripts {
     <script type="text/javascript" src="/js/Users.js"></script>

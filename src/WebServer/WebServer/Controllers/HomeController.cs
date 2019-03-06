@@ -35,20 +35,15 @@ namespace WebServer.Controllers
             var services = _serviceInfoContainer.GetAvailableServices();
             ViewData["columns"] = 2;
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(services as List<ServiceInfo>);
-        }
-
-        public IActionResult Registration(string message)
-        {
-            ViewData["message"] = message;
-            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
-            return View();
         }
 
         public object Authorization(string message)
         {
             ViewData["message"] = message;
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View();
         }
 
@@ -57,19 +52,14 @@ namespace WebServer.Controllers
             var login = Request.Form["login"];
             var password = Request.Form["password"];
 
-            //var login = "smr";
-            //var password = "22222";
-
             var user = _usersContainer.GetUserByLogin(login);
             if (user == null)
             {
-                //return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
                 return Json(new { message = "Неверный логин или пароль"});
             }
 
             if (user.Password != password)
             {
-                //return RedirectToAction("Authorization", "Home", new { message = "Неверный логин или пароль" });
                 return Json(new { message = "Неверный логин или пароль" });
             }
 
@@ -81,10 +71,6 @@ namespace WebServer.Controllers
             HttpContext.Session.SetString("fio", user.Fio);
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("role", user.Role.Name);
-
-            //Response.Cookies.Append("sessionId", HttpContext.Session.Id, new CookieOptions {MaxAge = TimeSpan.FromDays(10)});
-            //Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
-            //Response.Cookies.Append("roleId", user.Role.Id, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
 
             return Json(new { ok = true, login = user.Login });
         }
@@ -105,31 +91,29 @@ namespace WebServer.Controllers
             return RedirectToAction("Index", "Home");
         }
                 
-        public void RegAction()
+        public object RegAction()
         {
             var login = Request.Form["login"];
             var password = Request.Form["password"];
             var fio = Request.Form["fio"];
             var roleName = Request.Form["role"];
 
+            if (fio.IsNullOrEmpty() ||
+                login.IsNullOrEmpty() ||
+                password.IsNullOrEmpty() ||
+                roleName.IsNullOrEmpty())
+            {
+                return Json(new { message = "Некорректные параметры" });
+            }
 
+            if (IsExistsLogin(login))
+            {
+                return Json(new { message = "Логин уже существует" });
+            }
 
-            //if (fio.IsNullOrEmpty() || 
-            //    login.IsNullOrEmpty() || 
-            //    password.IsNullOrEmpty() || 
-            //    roleName.IsNullOrEmpty())
-            //{
-            //    return RedirectToAction("Registration", "Home", new { message = "Некорректные параметры" });
-            //}
+            AddUserToDb(fio, login, password, roleName);
 
-            //if (IsExistsLogin(login))
-            //{
-            //    return RedirectToAction("Registration", "Home", new { message = "Логин уже существует" });
-            //}
-
-            //AddUserToDb(fio, login, password, roleName);
-
-            //return RedirectToAction("Authorization", "Home", new { message = "Регистрация успешна" });
+            return Json(new { ok = true });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

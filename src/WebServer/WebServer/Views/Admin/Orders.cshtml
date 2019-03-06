@@ -1,4 +1,5 @@
-﻿@model List<HotelServicesNetCore.Order>
+﻿@using Newtonsoft.Json
+@model List<HotelServicesNetCore.Order>
 
 @{
     if (ViewData["roleName"] == null)
@@ -29,6 +30,10 @@
         }
     }
 }
+
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 @section Scripts {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

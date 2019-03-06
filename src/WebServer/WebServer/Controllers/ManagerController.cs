@@ -12,29 +12,11 @@ namespace WebServer.Controllers
 {
     public class ManagerController : Controller
     {
-        private readonly IUsersContainer _usersContainer;
         private readonly IOrdersContainer _ordersContainer;
 
-        public ManagerController(IUsersContainer usersContainer, IOrdersContainer ordersContainer)
+        public ManagerController(IOrdersContainer ordersContainer)
         {
-            _usersContainer = usersContainer;
             _ordersContainer = ordersContainer;
-        }
-
-        public IActionResult Users()
-        {
-            return View();
-        }
-
-        public IActionResult Orders()
-        {
-            return View();
-        }
-
-        public IActionResult Services()
-        {
-
-            return View();
         }
 
         public IActionResult UsersActivity()
@@ -86,6 +68,8 @@ namespace WebServer.Controllers
                 })
                 .OrderBy(x => x.UserName).ToList();
 
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View(statistics);
         }
 

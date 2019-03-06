@@ -1,4 +1,5 @@
-﻿@model List<HotelServicesNetCore.ServiceInfo>
+﻿@using Newtonsoft.Json
+@model List<HotelServicesNetCore.ServiceInfo>
 
 @{
     if (ViewData["roleName"] == null)
@@ -29,6 +30,10 @@
         }
     }
 }
+
+<script type="text/javascript">
+    window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 @section Scripts {
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
@@ -75,13 +80,13 @@
                                     @Model[i * (int)ViewData["columns"] + j].Measurement
                                 </p>
 
-                                @if (ViewData["role"] == null || ViewData["role"].ToString().ToLower() == "клиент")
+                                @if (ViewData["roleName"] == null || ViewData["roleName"].ToString().ToLower() == "клиент")
                                 {
                                     @Html.ActionLink("Заказать", "Order", "Services",
                                         new {id = Model[i * (int) ViewData["columns"] + j].Id},
                                         new {@class = "btn btn-success", role = "button"})
                                 }
-                                else if (ViewData["role"].ToString().ToLower() == "управляющий")
+                                else if (ViewData["roleName"].ToString().ToLower() == "управляющий")
                                 {
                                     <p>
 
