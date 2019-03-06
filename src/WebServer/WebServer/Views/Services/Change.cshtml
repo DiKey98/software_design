@@ -1,11 +1,39 @@
 ﻿@*@model TModel*@
 
 @{
-    Layout = "_AdminLayout";
+    if (ViewData["roleName"] == null)
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        switch (ViewData["roleName"].ToString().ToLower())
+        {
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
+
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
+
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
+        }
+    }
 }
 
 @section Scripts {
     <script type="text/javascript" src="/js/Change.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/setlogin.js"></script>
 }
 
 <!DOCTYPE html>

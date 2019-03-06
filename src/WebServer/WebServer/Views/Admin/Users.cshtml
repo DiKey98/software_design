@@ -1,7 +1,33 @@
 ﻿@model List<HotelServicesNetCore.User>
 
 @{
-    Layout = "_AdminLayout";
+    if (ViewData["roleName"] == null)
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        switch (ViewData["roleName"].ToString().ToLower())
+        {
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
+
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
+
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
+        }
+    }
 }
 
 @section Scripts {
@@ -9,6 +35,8 @@
     <script type="text/javascript" src="/js/index.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/setlogin.js"></script>
 }
 
 <!DOCTYPE html>
@@ -16,37 +44,36 @@
 <html>
 <head>
     <title>Пользователи</title>
-    <link href="/css/Users.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/Users.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.css" rel="stylesheet">
 </head>
 <body>
-<div>
-    <table
-        id="table"
-        data-filter-control="true"
-        data-filter-show-clear="true"
-        class="table table table-scroll">
-        <thead>
-        <tr>
-            <th data-field="id" data-filter-control="input">ID</th>
-            <th data-field="fio" data-filter-control="input">ФИО</th>
-            <th data-field="login" data-filter-control="input">Логин</th>
-            <th data-field="role" data-filter-control="input">Роль</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.Fio</td>
-                <td>@user.Login</td>
-                <td>@user.Role.Name</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <div>
+        <table id="table"
+               data-filter-control="true"
+               data-filter-show-clear="true"
+               class="table table table-scroll">
+            <thead>
+                <tr>
+                    <th data-field="id" data-filter-control="input">ID</th>
+                    <th data-field="fio" data-filter-control="input">ФИО</th>
+                    <th data-field="login" data-filter-control="input">Логин</th>
+                    <th data-field="role" data-filter-control="input">Роль</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Fio</td>
+                        <td>@user.Login</td>
+                        <td>@user.Role.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-</div>
+    </div>
 </body>
 </html>

@@ -1,8 +1,36 @@
 ﻿@using Newtonsoft.Json
-@*@model TModel*@
+@model HotelServicesNetCore.ServiceInfo
+
 @{
-    Layout = "_AdminLayout";
+    if (ViewData["roleName"] == null)
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        switch (ViewData["roleName"].ToString().ToLower())
+        {
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
+
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
+
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
+        }
+    }
 }
+
 
 <!DOCTYPE html>
 
@@ -12,50 +40,52 @@
 </head>
 <body>
 
-@section Scripts {
-    <script type="text/javascript" src="/js/Order.js"></script>
-}
+    <script type="text/javascript">
+        window.data = @Html.Raw(JsonConvert.SerializeObject(Model));
+    </script>
 
-<script type="text/javascript">
-    var data = @Html.Raw(JsonConvert.SerializeObject(Model));
-</script>
+    @section Scripts {
+        <script type="text/javascript" src="/js/Order.js"></script>
+        <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+        <script type="text/javascript" src="/js/setlogin.js"></script>
+    }
 
-<div>
-    <form id="orderForm" class="center-block">
-        <br/>
-        <div id="serviceName">
-            <h1>Русский бильярд</h1>
-        </div>
-        <img id="sericeImg" class="center-block" src="/images/services/eight.png" alt="..."/>
-        <div class="center">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="quant[2]">
-                        <span class="glyphicon glyphicon-minus"></span>
-                    </button>
-                </span>
-                <input id="counter" type="text" name="quant[2]" class="form-control input-number" value="1" min="1" max="1000">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                </span>
-                <div id="mes">
-                    <h4>час.</h4>
-                </div>
-            </div>
-            <div id="priceInfo" class="center-block">
-                <div>
-                    <h4>Цена: 1000 руб.</h4>
-                </div>
-                <div id="orderBtn" class="form-group center-block">
-                    <button type="submit" class="btn btn-success center-block">Заказать</button>
-                </div>
-            </div>
+    <div>
+        <form id="orderForm" class="center-block">
             <br />
-        </div>
-    </form>
+            <div id="serviceName">
+                <h1>@Model.Name</h1>
+            </div>
+            <img id="sericeImg" class="center-block" src="@Model.ImgSrc" alt="..." />
+            <div class="center">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="quant[2]">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input id="counter" type="text" name="quant[2]" class="form-control input-number" value="1" min="1" max="100">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                    <div id="mes">
+                        <h4>@Model.Measurement</h4>
+                    </div>
+                </div>
+                <div id="priceInfo" class="center-block">
+                    <div>
+                        <h4 id="price"></h4>
+                    </div>
+                    <div id="orderBtn" class="form-group center-block">
+                        <button id="confim" type="submit" class="btn btn-success center-block">Заказать</button>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </form>
 
-</div>
+    </div>
 </body>
 </html>

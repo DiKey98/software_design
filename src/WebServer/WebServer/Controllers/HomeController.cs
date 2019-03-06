@@ -25,8 +25,7 @@ namespace WebServer.Controllers
         public IActionResult Index(string message)
         {
             ViewData["message"] = message;
-            ViewData["sessionId"] = HttpContext.Session.GetString("sessionId");
-            ViewData["login"] = HttpContext.Session.GetString("login");
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             return View();
         }
 
@@ -34,18 +33,21 @@ namespace WebServer.Controllers
         {
             var services = _serviceInfoContainer.GetAvailableServices();
             ViewData["columns"] = 2;
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             return View(services as List<ServiceInfo>);
         }
 
         public IActionResult Registration(string message)
         {
             ViewData["message"] = message;
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             return View();
         }
 
         public object Authorization(string message)
         {
             ViewData["message"] = message;
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             return View();
         }
 
@@ -73,6 +75,7 @@ namespace WebServer.Controllers
             AuthorizeInDb(HttpContext.Session.Id, user.Id);
 
             HttpContext.Session.SetString("roleId", user.Role.Id);
+            HttpContext.Session.SetString("roleName", user.Role.Name);
             HttpContext.Session.SetString("login", user.Login);
             HttpContext.Session.SetString("fio", user.Fio);
             HttpContext.Session.SetString("userId", user.Id);
@@ -81,7 +84,7 @@ namespace WebServer.Controllers
             Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
             Response.Cookies.Append("roleId", user.Role.Id, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
 
-            return Json(new { ok = true });
+            return Json(new { ok = true, login = user.Login });
         }
 
         public IActionResult Logout()
@@ -99,7 +102,7 @@ namespace WebServer.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
+                
         public void RegAction()
         {
             var login = Request.Form["login"];
@@ -130,6 +133,7 @@ namespace WebServer.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

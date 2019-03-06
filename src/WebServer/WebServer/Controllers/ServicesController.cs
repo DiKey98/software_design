@@ -33,13 +33,13 @@ namespace WebServer.Controllers
             //    return RedirectToAction("Authorization", "Home");
             //}
 
-            //var service = _serviceInfoContainer.GetServiceInfoById(id);
-            //if (service == null)
-            //{
-            //    return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
-            //}
+            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            if (service == null)
+            {
+                return RedirectToAction("Services", "Manager", new { message = "Услуга не существует" });
+            }
 
-            return View();
+            return View(service);
         }
 
         public IActionResult Change(string id)

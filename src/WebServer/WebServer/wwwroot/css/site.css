@@ -83,6 +83,7 @@ body {
 #priceInfo {
     text-align: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 #orderForm {
