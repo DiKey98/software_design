@@ -1,9 +1,9 @@
-﻿@{
+﻿@using Newtonsoft.Json
+
+@{
     ViewData["Title"] = "Home Page";
 
     if (ViewData["roleName"] == null)
-    {
-        if (ViewData["roleName"] == null)
     {
         Layout = "_UserLayout";
     }
@@ -30,38 +30,18 @@
                 }
         }
     }
-    }
-    else
-    {
-        switch (ViewData["roleName"].ToString().ToLower())
-        {
-            case "администратор":
-                {
-                    Layout = "_AdminLayout";
-                    break;
-                }
 
-            case "управляющий":
-                {
-                    Layout = "_ManagerLayout";
-                    break;
-                }
+}
 
-            default:
-                {
-                    Layout = "_UserLayout";
-                    break;
-                }
-        }
-    }
-
-    }
-
-    @section Scripts {
+@section Scripts {
     <script type="text/javascript" src="/js/index.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/setlogin.js"></script>
 }
+
+<script type="text/javascript">
+    window.data = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+</script>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

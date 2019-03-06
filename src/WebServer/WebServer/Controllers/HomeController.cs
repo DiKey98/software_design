@@ -26,6 +26,7 @@ namespace WebServer.Controllers
         {
             ViewData["message"] = message;
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
             return View();
         }
 
@@ -81,9 +82,9 @@ namespace WebServer.Controllers
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("role", user.Role.Name);
 
-            Response.Cookies.Append("sessionId", HttpContext.Session.Id, new CookieOptions {MaxAge = TimeSpan.FromDays(10)});
-            Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
-            Response.Cookies.Append("roleId", user.Role.Id, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
+            //Response.Cookies.Append("sessionId", HttpContext.Session.Id, new CookieOptions {MaxAge = TimeSpan.FromDays(10)});
+            //Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
+            //Response.Cookies.Append("roleId", user.Role.Id, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });
 
             return Json(new { ok = true, login = user.Login });
         }

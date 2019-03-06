@@ -97,7 +97,6 @@
             return;
         };
         
-
         $.ajax({
             url: '/Home/Login',
             method: 'POST',
@@ -107,12 +106,13 @@
             },
             dataType: 'JSON',
             success: function (jsonData) {
+                console.log(jsonData);
                 if (jsonData.ok) {
-                    window.location.replace("/Home/Index");
+                    window.location.replace("/");
                     return;
                 }
 
-                if (jsonData !== null && jsonData !== undefined) {
+                if (jsonData.message !== null && jsonData.message !== undefined) {
                     $('#inputLogin').css({
                         borderColor: "red",
                         borderWidth: "2px"

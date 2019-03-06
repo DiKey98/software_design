@@ -60,10 +60,11 @@
                         }
                         return;
                     }
+
                     <div class="col-sm-6 col-md-6">
                         <div class="thumbnail">
-                            <img src="@Model[i * (int)ViewData["columns"] + j].ImgSrc" data-src="holder.js/100x100"
-                                 alt=@Model[i * (int)ViewData["columns"] + j].ImgSrc>
+                            <img src="@Model[i * (int) ViewData["columns"] + j].ImgSrc" data-src="holder.js/100x100"
+                                 alt=@Model[i * (int) ViewData["columns"] + j].ImgSrc>
 
                             <div class="caption">
 
@@ -77,7 +78,7 @@
                                 @if (ViewData["role"] == null || ViewData["role"].ToString().ToLower() == "клиент")
                                 {
                                     @Html.ActionLink("Заказать", "Order", "Services",
-                                        new {id = Model[i * (int)ViewData["columns"] + j].Id},
+                                        new {id = Model[i * (int) ViewData["columns"] + j].Id},
                                         new {@class = "btn btn-success", role = "button"})
                                 }
                                 else if (ViewData["role"].ToString().ToLower() == "управляющий")
@@ -90,15 +91,11 @@
 
                                     </p>
                                 }
-
-                                <p>
-                                    @Html.ActionLink("Редактировать", "Services", "Service",
-                                             new { id = Model[i * (int)ViewData["columns"] + j].Id },
-                                             new { @class = "btn btn-primary", role = "button" })
-                                </p>
+                            </div>
                         </div>
                     </div>
                 }
+
             </div>
         }
     </div>

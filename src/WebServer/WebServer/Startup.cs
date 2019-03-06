@@ -59,8 +59,6 @@ namespace WebServer
             services.AddTransient<IRolesContainer, InDbRolesContainer>();
             services.AddTransient<IUsersOperations, UserOperations>();
             services.AddTransient<IServicesOperations, ServiceOperations>();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
