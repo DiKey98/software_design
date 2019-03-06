@@ -264,3 +264,12 @@ src/ConsoleTest/ConsoleTest/Program_*
 *.cd
 src/ConsoleTestNetCore/ConsoleTestNetCore/Migrations/20190227074419_Field_IsDeprecated.cs
 src/ConsoleTestNetCore/ConsoleTestNetCore/Migrations/
+src/WebServer/WebServer/Views/Home/Services_REMOTE_10088.cshtml
+src/WebServer/WebServer/Views/Home/Services_LOCAL_10088.cshtml
+src/WebServer/WebServer/Views/Home/Services_BASE_10088.cshtml
+src/WebServer/WebServer/Views/Admin/Orders_BASE_29456.cshtml
+src/WebServer/WebServer/Views/Admin/Orders_REMOTE_29456.cshtml
+src/WebServer/WebServer/Views/Admin/Orders_LOCAL_29456.cshtml
+src/WebServer/WebServer/Views/Home/Index_BASE_34012.cshtml
+src/WebServer/WebServer/Views/Home/Index_REMOTE_34012.cshtml
+src/WebServer/WebServer/Views/Home/Index_LOCAL_34012.cshtml
