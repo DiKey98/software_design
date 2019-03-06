@@ -1,4 +1,4 @@
-﻿@model List<HotelServicesNetCore.Order>
+﻿@model List<WebServer.Controllers.ManagerController.UsersActivityStatistics>
 
 @{
     Layout = "_AdminLayout";
@@ -19,7 +19,7 @@
 
 <html>
 <head>
-    <title>Заказы</title>
+    <title>Статистика</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" type="text/css" href="/css/Orders.css">
     <link href="/css/Users.css" rel="stylesheet" type="text/css" />
@@ -27,7 +27,7 @@
 </head>
 
 <body>
-<label for="datepicker">Выбрать дату:</label>
+    <label for="datepicker">Выбрать дату:</label>
     <input type="text" id="datepicker" />
 
     <table id="table"
@@ -36,25 +36,22 @@
            class="table table table-scroll">
         <thead>
             <tr>
-                <th data-field="id" data-filter-control="input">ID</th>
                 <th data-field="user" data-filter-control="input">Клиент</th>
-                <th data-field="service" data-filter-control="input">Услуга</th>
-                <th data-field="cost" data-filter-control="input">Стоимость</th>
-                <th data-field="date" data-filter-control="input">Дата</th>
-                <th data-field="paid" data-filter-control="input">Оплачен</th>
+                <th data-field="service" data-filter-control="input">Всего заказов</th>
+                <th data-field="cost" data-filter-control="input">Оплаченных заказов</th>
+                <th data-field="date" data-filter-control="input">Неоплаченных заказов</th>
+                <th data-field="paid" data-filter-control="input">Общая стоимость заказов</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in Model)
+            @foreach (var stat in Model)
             {
-                var paid = order.IsPaid ? "Да" : "Нет";
                 <tr>
-                    <td>@order.Id</td>
-                    <td>@order.User.Fio</td>
-                    <td>@order.Service.Name</td>
-                    <td>@order.Cost руб.</td>
-                    <td>@order.OrderDate.ToString("dd.MM.yyyy")</td>
-                    <td>@paid</td>
+                    <td>@stat.UserName</td>
+                    <td>@stat.OrdersCount</td>
+                    <td>@stat.PaidOrdersCount</td>
+                    <td>@stat.UnPaidOrdersCount</td>
+                    <td>@stat.OrdersCost руб.</td>
                 </tr>
             }
         </tbody>

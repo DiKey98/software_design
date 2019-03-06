@@ -12,55 +12,61 @@
     <link href="/css/site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="container-fluid center-block">
+    <div class="container-fluid center-block">
 
-    @for (var i = 0; i < Model.Count; i++)
-    {
-        <div class="row">
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <div class="row">
 
-            @for (var j = 0; j < (int)ViewData["columns"]; j++)
-            {
-                if (i * (int)ViewData["columns"] + j >= Model.Count)
+                @for (var j = 0; j < (int)ViewData["columns"]; j++)
                 {
-                    return;
-                }
-                <div class="col-sm-6 col-md-6">
-                    <div class="thumbnail">
-                        <img src="@Model[i * (int)ViewData["columns"] + j].ImgSrc" data-src="holder.js/100x100" 
-                             alt=@Model[i * (int)ViewData["columns"] + j].ImgSrc>
+                    if (i * (int)ViewData["columns"] + j >= Model.Count)
+                    {
+                        if (Model.Count % 2 != 0)
+                        {
+                            <div class="row">
+                            </div>
+                        }
+                        return;
+                    }
+                    <div class="col-sm-6 col-md-6">
+                        <div class="thumbnail">
+                            <img src="@Model[i * (int)ViewData["columns"] + j].ImgSrc" data-src="holder.js/100x100"
+                                 alt=@Model[i * (int)ViewData["columns"] + j].ImgSrc>
 
-                        <div class="caption">
+                            <div class="caption">
 
-                            <h3>@Model[i * (int)ViewData["columns"] + j].Name</h3>
+                                <h3>@Model[i * (int)ViewData["columns"] + j].Name</h3>
 
-                            <p>
-                                @Model[i * (int)ViewData["columns"] + j].CostPerUnit руб. /
-                            @Model[i * (int)ViewData["columns"] + j].Measurement
-                        </p>
+                                <p>
+                                    @Model[i * (int)ViewData["columns"] + j].CostPerUnit руб. /
+                                    @Model[i * (int)ViewData["columns"] + j].Measurement
+                                </p>
 
-                        <p>
+                                @if (ViewData["role"] == null || ViewData["role"].ToString().ToLower() == "клиент")
+                                {
+                                    @Html.ActionLink("Заказать", "Order", "Services",
+                                        new {id = Model[i * (int)ViewData["columns"] + j].Id},
+                                        new {@class = "btn btn-success", role = "button"})
+                                }
+                                else if (ViewData["role"].ToString().ToLower() == "управляющий")
+                                {
+                                    <p>
 
-                            @Html.ActionLink("Заказать", "Services", "Order",
-                                new {id = Model[i * (int)ViewData["columns"] + j].Id},
-                                new {@class = "btn btn-success", role = "button"})
+                                        @Html.ActionLink("Редактировать", "Change", "Services",
+                                            new {id = Model[i * (int) ViewData["columns"] + j].Id},
+                                            new {@class = "btn btn-primary", role = "button"})
 
-                        </p>
+                                    </p>
+                                }
 
-                        <p>
-
-                            @Html.ActionLink("Редактировать", "Services", "Service",
-                                new {id = Model[i * (int)ViewData["columns"] + j].Id},
-                                new {@class = "btn btn-primary", role = "button"})
-
-                        </p>
-
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
-
-</div>
+                }
+            </div>
+        }
+        <br />
+    </div>
 </body>
 </html>

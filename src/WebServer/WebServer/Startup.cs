@@ -129,8 +129,12 @@ namespace WebServer
                     "{controller=Services}/{action=Order}/{id?}");
 
                 routes.MapRoute(
+                    "ServicesBasket",
+                    "{controller=Services}/{action=Basket}");
+
+                routes.MapRoute(
                     "ServicesOrderAction",
-                    "{controller=Services}/{action=OrderAction}/{id?}");
+                    "{controller=Services}/{action=OrderAction}");
 
                 routes.MapRoute(
                     "ServicesBuy",
@@ -157,6 +161,10 @@ namespace WebServer
                 routes.MapRoute(
                     "ManagerServices",
                     "{controller=Manager}/{action=Services}");
+
+                routes.MapRoute(
+                    "ManagerUsersActivity",
+                    "{controller=Manager}/{action=UsersActivity}");
             });
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using HotelServicesNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using static WebServer.Helpers.AuthorizationHelper;
@@ -21,10 +22,12 @@ namespace WebServer.Controllers
 
         public IActionResult Users()
         {
-            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            //{
-            //    return RedirectToAction("Authorization", "Home");
-            //}
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() == "клиент" || 
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             var users = _usersContainer.GetUsers();
             return View(users as List<User>);
@@ -32,10 +35,12 @@ namespace WebServer.Controllers
 
         public IActionResult Orders()
         {
-            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            //{
-            //    return RedirectToAction("Authorization", "Home");
-            //}
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() == "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             DateTime? start;
             DateTime? end;

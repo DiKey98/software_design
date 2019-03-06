@@ -32,6 +32,7 @@ namespace WebServer.Controllers
         {
             var services = _serviceInfoContainer.GetAvailableServices();
             ViewData["columns"] = 2;
+            ViewData["role"] = HttpContext.Session.GetString("role");
             return View(services as List<ServiceInfo>);
         }
 
@@ -52,8 +53,8 @@ namespace WebServer.Controllers
             //var login = Request.Query["login"];
             //var password = Request.Query["password"];
 
-            var login = "smr";
-            var password = "22222";
+            var login = "petr";
+            var password = "11111";
 
             var user = _usersContainer.GetUserByLogin(login);
             if (user == null)
@@ -72,6 +73,7 @@ namespace WebServer.Controllers
             HttpContext.Session.SetString("login", user.Login);
             HttpContext.Session.SetString("fio", user.Fio);
             HttpContext.Session.SetString("userId", user.Id);
+            HttpContext.Session.SetString("role", user.Role.Name);
 
             Response.Cookies.Append("sessionId", HttpContext.Session.Id, new CookieOptions {MaxAge = TimeSpan.FromDays(10)});
             Response.Cookies.Append("login", user.Login, new CookieOptions { MaxAge = TimeSpan.FromDays(10) });

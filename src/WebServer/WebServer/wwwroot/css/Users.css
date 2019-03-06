@@ -18,3 +18,7 @@
 .table-scroll thead > tr > th {
     border: none;
 }
+
+.table {
+    width: 100%;
+}

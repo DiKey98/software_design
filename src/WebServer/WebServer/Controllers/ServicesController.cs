@@ -1,6 +1,6 @@
-﻿using System;
-using Castle.Core.Internal;
+﻿using System.Linq;
 using HotelServicesNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using static WebServer.Helpers.AuthorizationHelper;
@@ -28,10 +28,12 @@ namespace WebServer.Controllers
 
         public IActionResult Order(string id)
         {
-            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            //{
-            //    return RedirectToAction("Authorization", "Home");
-            //}
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             //var service = _serviceInfoContainer.GetServiceInfoById(id);
             //if (service == null)
@@ -44,10 +46,12 @@ namespace WebServer.Controllers
 
         public IActionResult Change(string id)
         {
-            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            //{
-            //    return RedirectToAction("Authorization", "Home");
-            //}
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "управляющий" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             //var service = _serviceInfoContainer.GetServiceInfoById(id);
             //if (service == null)
@@ -58,12 +62,47 @@ namespace WebServer.Controllers
             return View();
         }
 
-        public void ChangeAction(string id)
+        public IActionResult Basket()
         {
-            //if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            //{
-            //    return RedirectToAction("Authorization", "Home");
-            //}
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
+            var user = _usersContainer.GetUserById(HttpContext.Session.GetString("userId"));
+            if (user == null)
+            {
+                RedirectToAction("Authorization", "Home");
+            }
+
+            var ordersParams = _ordersContainer
+                .GetOrders(user, unpaid: true, paid: false)
+                .Select(o => new OrderParams
+                {
+                    Id = o.Id,
+                    Cost = o.Cost,
+                    ImgSrc = o.Service.ImgSrc,
+                    Measurement = o.Service.Measurement,
+                    ServiceName = o.Service.Name,
+                    Units = o.Units
+                })
+                .ToList();
+
+            ViewData["columns"] = 2;
+            ViewData["role"] = HttpContext.Session.GetString("role");
+            return View(ordersParams);
+        }
+
+        public object ChangeAction(string id)
+        {
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "управляющий" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
 
             //var service = _serviceInfoContainer.GetServiceInfoById(id);
             //if (service == null || service.IsDeprecated)
@@ -97,19 +136,22 @@ namespace WebServer.Controllers
             //_servicesOperations.ChangeServiceInfo(service, newService);
 
             //return RedirectToAction("Change", "Services", new {id = newService.Id});
+            return null;
         }
 
-        public IActionResult OrderAction(string id)
+        public object OrderAction()
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return Json(new {message = "NO_AUTHORIZED"});
             }
 
-            var service = _serviceInfoContainer.GetServiceInfoById(id);
+            var service = _serviceInfoContainer.GetServiceInfoById(Request.Form["id"]);
             if (service == null)
             {
-                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
+                return Json(new { message = "" });
             }
 
             //var userId = Request.Query["userId"];
@@ -117,66 +159,62 @@ namespace WebServer.Controllers
             var user = _usersContainer.GetUserById(userId);
             if (user == null)
             {
-                return RedirectToAction("Authorization", "Home");
+                return Json(new { message = "NO_AUTHORIZED" });
             }
 
-            //var units = uint.Parse(Request.Query["units"]);
+            //var units = uint.Parse(Request.Form["units"]);
             uint units = 10;
             _usersOperations.OrderService(user, service.Name, units);
 
-            return RedirectToAction("Order", "Services", new {id = service.Id});
+            return Json(new { ok = true });
         }
 
-        public IActionResult Buy(string id)
+        public object Buy()
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return Json(new { message = "NO_AUTHORIZED" });
+            }
+
+            var order = _ordersContainer.GetOrderById(Request.Form["id"]);
+            if (order == null)
+            {
+                return Json(new { message = "" });
+            }
+
+            _usersOperations.PayService(order.User, order.Id);
+            return Json(new { ok = true });
+        }
+
+        public object Cancel(string id)
+        {
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "клиент" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return Json(new { message = "NO_AUTHORIZED" });
             }
 
             var order = _ordersContainer.GetOrderById(id);
             if (order == null)
             {
-                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
+                return Json(new { message = "" });
             }
 
-            //var userId = Request.Query["userId"];
-            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
-            var user = _usersContainer.GetUserById(userId);
-            if (user == null)
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
-
-            _usersOperations.PayService(user, order.Id);
-
-            return RedirectToAction("Order", "Services", new { id = order.Id });
+            _usersOperations.CancelService(order.User, order.Id);
+            return Json(new { ok = true });
         }
 
-        public IActionResult Cancel(string id)
+        public class OrderParams
         {
-            if (!IsAuthorizedInDb(HttpContext.Session.Id))
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
-
-            var order = _ordersContainer.GetOrderById(id);
-            if (order == null)
-            {
-                return RedirectToAction("Order", "Services", new { message = "Услуга не существует" });
-            }
-
-            //var userId = Request.Query["userId"];
-            var userId = "0c408d05-dc94-40b2-b257-098d1974ef65";
-            var user = _usersContainer.GetUserById(userId);
-            if (user == null)
-            {
-                return RedirectToAction("Authorization", "Home");
-            }
-
-            _usersOperations.CancelService(user, order.Id);
-
-            return RedirectToAction("Order", "Services", new { id = order.Id });
+            public string Id { get; set; }
+            public string ServiceName { get; set; }
+            public string ImgSrc { get; set; }
+            public decimal Cost { get; set; }
+            public uint Units { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

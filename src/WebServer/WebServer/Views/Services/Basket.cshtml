@@ -1,0 +1,63 @@
+﻿@model List<WebServer.Controllers.ServicesController.OrderParams>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Корзина</title>
+    <link href="/css/site.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div>
+
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <div class="row">
+
+                @for (var j = 0; j < (int)ViewData["columns"]; j++)
+                {
+                    if (i * (int)ViewData["columns"] + j >= Model.Count)
+                    {
+                        if (Model.Count % 2 != 0)
+                        {
+                            <div class="row">
+                            </div>
+                        }
+                        return;
+                    }
+                    <div class="col-sm-6 col-md-6">
+                        <div class="thumbnail">
+                            <img src="@Model[i * (int)ViewData["columns"] + j].ImgSrc" data-src="holder.js/600x300"
+                                 alt=@Model[i * (int)ViewData["columns"] + j].ImgSrc>
+
+                            <div class="caption">
+
+                                <h3>@Model[i * (int)ViewData["columns"] + j].ServiceName</h3>
+
+                                <p>
+                                    @Model[i * (int)ViewData["columns"] + j].Cost руб.
+                                </p>
+
+                                <p>
+                                    @Model[i * (int)ViewData["columns"] + j].Units
+                                    @Model[i * (int)ViewData["columns"] + j].Measurement
+                                </p>
+
+                                @if (ViewData["role"] != null && ViewData["role"].ToString().ToLower() == "клиент")
+                                {
+                                    <button type="button" class="btn btn-success">Оплатить</button>
+                                    <button type="button" class="btn btn-danger">Отменить</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

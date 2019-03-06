@@ -36,4 +36,5 @@
     });
 
     $('#table').bootstrapTable();
+    $('#datepicker').val("");
 });
