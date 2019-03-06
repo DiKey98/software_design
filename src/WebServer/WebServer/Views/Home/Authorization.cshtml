@@ -1,12 +1,43 @@
 ﻿@*@model TModel*@
 
 @{
-    Layout = "_AdminLayout";
+    if (ViewData["roleName"] == null)
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        switch (ViewData["roleName"].ToString().ToLower())
+        {
+            case "администратор":
+                {
+                    Layout = "_AdminLayout";
+                    break;
+                }
+
+            case "управляющий":
+                {
+                    Layout = "_ManagerLayout";
+                    break;
+                }
+
+            default:
+                {
+                    Layout = "_UserLayout";
+                    break;
+                }
+        }
+    }
 }
 
 @section Scripts {
     <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/Registration.js"></script>
+    <script type="text/javascript" src="/js/Autorisation.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/setlogin.js"></script>
 }
+
 
 <!DOCTYPE html>
 
@@ -24,23 +55,25 @@
                     <div class="tab" role="tabpanel">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Войти</a></li>
-                            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Зарегистрироваться</a></li>
+                            <li id="auth" role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Войти</a></li>
+                            <li id="reg" role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Зарегистрироваться</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabs">
                             <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                <form class="form-horizontal">
+                                <form id="enterForm" class="form-horizontal">
                                     <div class="form-group">
                                         <label for="inputLogin">Логин</label>
-                                        <input type="email" class="form-control" id="inputLogin">
+                                        <input type="text" class="form-control" id="inputLogin">
+                                        <p id="reInputInfo5"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword">Пароль</label>
                                         <input type="password" class="form-control" id="inputPassword">
+                                        <p id="reInputInfo6"></p>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default">Войти</button>
+                                        <button id="au" type="submit" class="btn btn-default">Войти</button>
                                     </div>
                                 </form>
                             </div>
@@ -49,21 +82,25 @@
                                     <div class="form-group">
                                         <label for="inputName1">Ваше имя</label>
                                         <input type="text" class="form-control" id="inputName1">
+                                        <p id="reInputInfo4"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1">Логин</label>
-                                        <input type="text" class="form-control" id="inputPassword1">
+                                        <label for="inputLogin1">Логин</label>
+                                        <input type="text" class="form-control" id="inputLogin1">
+                                        <p id="reInputInfo3"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputLogin1">Пароль</label>
-                                        <input type="password" class="form-control" id="inputLogin1">
+                                        <label for="inputPassword1">Пароль</label>
+                                        <input type="password" class="form-control" id="inputPassword1">
+                                        <p id="reInputInfo2"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="reinputPassword1">Повторите пароль</label>
                                         <input type="password" class="form-control" id="reinputPassword1">
+                                        <p id="reInputInfo"></p>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default">Зарегистрироваться</button>
+                                        <button id="regButton" type="submit" class="btn btn-default">Зарегистрироваться</button>
                                     </div>
                                 </form>
                             </div>
