@@ -11,28 +11,32 @@
     {
         switch (ViewData["roleName"].ToString().ToLower())
         {
-            case "администратор":
-                {
-                    Layout = "_AdminLayout";
-                    break;
-                }
+            switch (ViewData["roleName"].ToString().ToLower())
+            {
+                case "администратор":
+                    {
+                        Layout = "_AdminLayout";
+                        break;
+                    }
 
-            case "управляющий":
-                {
-                    Layout = "_ManagerLayout";
-                    break;
-                }
+                case "управляющий":
+                    {
+                        Layout = "_ManagerLayout";
+                        break;
+                    }
 
-            default:
-                {
-                    Layout = "_UserLayout";
-                    break;
-                }
+                default:
+                    {
+                        Layout = "_UserLayout";
+                        break;
+                    }
+            }
         }
     }
 
 }
 
+}
 @section Scripts {
     <script type="text/javascript" src="/js/index.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
@@ -83,4 +87,13 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
+</div>
+
+<div align="justify">
+    <h2 align="center" class="info"> Добро пожаловать в City17!</h2>
+        <h2 class="info">
+            Это современная гостиница, удобно расположенная в самом центре города.
+            В каждом отеле сети City17 мы гарантируем Вам теплый приём, прекрасное обслуживание, комфортабельные,
+            элегантные номера и широкий спектр возможностей для работы и досуга.
+        </h2>
 </div>

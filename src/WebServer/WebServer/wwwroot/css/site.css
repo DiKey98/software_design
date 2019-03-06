@@ -8,6 +8,12 @@ body {
     background-attachment: fixed;
 }
 
+.info {
+    font: bold 2em Arial, sans-serif;
+    color: white;
+    text-shadow: #000000 1px 1px 0, #000000 2px 2px 0, #000000 3px 3px 0, #000000 4px 4px 0, #000000 3px 3px 0;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
