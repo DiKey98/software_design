@@ -28,6 +28,26 @@ namespace WebServer.Controllers
                 return RedirectToAction("Authorization", "Home");
             }
 
+            if (Request.Method == "GET")
+            {
+                var ords = _ordersContainer.GetOrders(null, from: DateTime.Today, to: DateTime.Today);
+
+                var st = ords.GroupBy(o => o.User)
+               .Select(group => new UsersActivityStatistics
+               {
+                   UserName = group.Key.Fio,
+                   OrdersCount = group.Count(),
+                   PaidOrdersCount = group.Count(s => s.IsPaid),
+                   UnPaidOrdersCount = group.Count(s => !s.IsPaid),
+                   OrdersCost = group.Sum(s => s.Cost)
+               })
+               .OrderBy(x => x.UserName).ToList();
+
+                ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+                ViewData["login"] = HttpContext.Session.GetString("login");
+                return View(st as List<UsersActivityStatistics>);
+            }
+
             DateTime? start;
             DateTime? end;
 
@@ -70,14 +90,14 @@ namespace WebServer.Controllers
 
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             ViewData["login"] = HttpContext.Session.GetString("login");
-            return View(statistics);
+            return Json(statistics);
         }
 
         public class UsersActivityStatistics
         {
             public string UserName { get; set; }
             public int OrdersCount { get; set; }
-            public int PaidOrdersCount { get; set; }
+            public int PaidOrdersCount { get; set; } 
             public int UnPaidOrdersCount { get; set; }
             public decimal OrdersCost { get; set; }
         }

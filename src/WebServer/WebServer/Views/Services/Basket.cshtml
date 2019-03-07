@@ -33,10 +33,12 @@
 
 @section Scripts {
     <script type="text/javascript" src="/js/setlogin.js"></script>
+    <script type="text/javascript" src="/js/Basket.js"></script>
 }
 
 <script type="text/javascript">
     window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+    window.ordersCount = @Html.Raw(JsonConvert.SerializeObject(Model.Count));
 </script>
 
 <!DOCTYPE html>
@@ -51,7 +53,7 @@
 
         @for (var i = 0; i < Model.Count; i++)
         {
-            <div class="row">
+            <div id="row@i" class="row">
 
                 @for (var j = 0; j < (int)ViewData["columns"]; j++)
                 {
@@ -64,7 +66,7 @@
                         }
                         return;
                     }
-                    <div class="col-sm-6 col-md-6">
+                    <div id="column@(i * (int)ViewData["columns"] + j)" class="col-sm-6 col-md-6">
                         <div class="thumbnail">
                             <img src="@Model[i * (int)ViewData["columns"] + j].ImgSrc" data-src="holder.js/600x300"
                                  alt=@Model[i * (int)ViewData["columns"] + j].ImgSrc>
@@ -84,8 +86,19 @@
 
                                 @if (ViewData["role"] != null && ViewData["role"].ToString().ToLower() == "клиент")
                                 {
-                                    <button type="button" class="btn btn-success">Оплатить</button>
-                                    <button type="button" class="btn btn-danger">Отменить</button>
+                                    <button type="button" id="confim@(i * (int)ViewData["columns"] + j)"
+                                            data-id="@Model[i * (int)ViewData["columns"] + j].Id"
+                                            data-columnid="column@(i * (int)ViewData["columns"] + j)"
+                                            class="btn btn-success">
+                                        Оплатить
+                                    </button>
+
+                                    <button type="button" id="deny@(i * (int)ViewData["columns"] + j)"
+                                            data-id="@Model[i * (int)ViewData["columns"] + j].Id"
+                                            data-columnid="column@(i * (int)ViewData["columns"] + j)"
+                                            class="btn btn-danger">
+                                        Отменить
+                                    </button>
                                 }
                             </div>
                         </div>

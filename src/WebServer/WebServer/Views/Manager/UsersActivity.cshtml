@@ -41,6 +41,7 @@
     <script type="text/javascript" src="/js/Orders.js"></script>
     <script type="text/javascript" src="/js/index.js"></script>
     <script type="text/javascript" src="/js/setlogin.js"></script>
+    <script type="text/javascript" src="/js/Statistic.js"></script> 
 
     <script type="text/javascript" src="/js/Users.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.13.5/dist/bootstrap-table.min.js"></script>
@@ -75,7 +76,7 @@
                 <th data-field="paid" data-filter-control="input">Общая стоимость заказов</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="table-content">
             @foreach (var stat in Model)
             {
                 <tr>
