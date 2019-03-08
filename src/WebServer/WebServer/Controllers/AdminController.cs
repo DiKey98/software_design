@@ -85,6 +85,13 @@ namespace WebServer.Controllers
             ViewData["login"] = HttpContext.Session.GetString("login");
             return Json(orders);
             //return View(orders as List<Order>);
-        } 
+        }
+
+        public IActionResult RegAdmin()
+        {
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
+            return View();
+        }
     }
 }

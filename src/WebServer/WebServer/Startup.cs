@@ -120,7 +120,7 @@ namespace WebServer
 
                 routes.MapRoute(
                     "ChangeServiceAction",
-                    "{controller=Services}/{action=ChangeAction}/{id?}");
+                    "{controller=Services}/{action=ChangeAction}");
 
                 routes.MapRoute(
                     "ServicesOrder",
@@ -163,6 +163,18 @@ namespace WebServer
                 routes.MapRoute(
                     "ManagerUsersActivity",
                     "{controller=Manager}/{action=UsersActivity}");
+
+                routes.MapRoute(
+                    "RegManager",
+                    "{controller=Manager}/{action=RegManager}");
+
+                routes.MapRoute(
+                    "RegManagerAction",
+                    "{controller=Manager}/{action=RegManagerAction}");
+
+                routes.MapRoute(
+                    "RegAdmin",
+                    "{controller=Admin}/{action=RegAdmin}");
             });
         }
     }

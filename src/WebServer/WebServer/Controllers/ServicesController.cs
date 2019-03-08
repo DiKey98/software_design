@@ -101,28 +101,30 @@ namespace WebServer.Controllers
             return View(ordersParams);
         }
 
-        public object ChangeAction(string id)
+        public object ChangeAction()
         {
             var role = HttpContext.Session.GetString("role");
             if (role == null || role.ToLower() != "управляющий" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return Json(new { message = "NO_AUTHORIZED" });
             }
+
+            var id = Request.Form["id"];
 
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null || service.IsDeprecated)
             {
-                return RedirectToAction("Services", "Home", new { message = "Услуга не существует" });
+                return Json(new { message = "" });
             }
 
-            var name = Request.Query["name"].ToString();
-            var measurement = Request.Query["measurement"].ToString();
-            var costPerUnit = uint.Parse(Request.Query["costPerUnit"].ToString());
+            var name = Request.Form["name"].ToString();
+            var measurement = Request.Form["measurement"].ToString();
+            var costPerUnit = uint.Parse(Request.Form["costPerUnit"]); //проверить на знак
 
             if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
             {
-                return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+                return Json(new { message = "Некорректные параметры услуги" });
             }
 
             var newService = new ServiceInfo
@@ -138,7 +140,7 @@ namespace WebServer.Controllers
             _servicesOperations.ChangeServiceInfo(service, newService);
 
             ViewData["login"] = HttpContext.Session.GetString("login");
-            return RedirectToAction("Change", "Services", new { id = newService.Id });
+            return Json(new { ok = true });
         }
 
         public object OrderAction()

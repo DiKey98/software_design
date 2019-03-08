@@ -5,9 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Manager\Reg.cshtml.cs" />
+    <Compile Remove="Views\Manager\Registration.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\About.cshtml" />
     <Content Remove="Views\Home\Contact.cshtml" />
     <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="Views\Manager\Registration.cshtml" />
+    <Content Remove="wwwroot\js\RegManager.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
