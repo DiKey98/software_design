@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Castle.Core.Internal;
 using HotelServicesNetCore;
@@ -64,6 +65,7 @@ namespace WebServer.Controllers
 
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             ViewData["login"] = HttpContext.Session.GetString("login");
+            ViewData["id"] = id;
             return View(service);
         }
 
@@ -101,44 +103,73 @@ namespace WebServer.Controllers
             return View(ordersParams);
         }
 
-        public object ChangeAction(string id)
+        public object ChangeAction()
         {
             var role = HttpContext.Session.GetString("role");
             if (role == null || role.ToLower() != "управляющий" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return Json(new {message = "NO_AUTHORIZED"});
             }
 
+            var id = Request.Form["id"];
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null || service.IsDeprecated)
             {
-                return RedirectToAction("Services", "Home", new { message = "Услуга не существует" });
+                return Json(new { message = "" });
             }
 
-            var name = Request.Query["name"].ToString();
-            var measurement = Request.Query["measurement"].ToString();
-            var costPerUnit = uint.Parse(Request.Query["costPerUnit"].ToString());
+            var name = Request.Form["name"].ToString();
+            var measurement = Request.Form["measurement"].ToString();
+            var costPerUnit = decimal.Parse(Request.Form["cost"].ToString());
 
             if (name.IsNullOrEmpty() || measurement.IsNullOrEmpty())
             {
-                return RedirectToAction("Change", "Services", new { message = "Некорретные параметры услуги", id = service.Id });
+                return Json(new { message = "Некорректные параметры" });
             }
 
+            var isEmpty = false;
+            var fileName = "";
+            if (Request.Form.Files.Count == 0)
+            {
+                isEmpty = true;
+            }
+            else
+            {
+                var file = Request.Form.Files[0];
+                if (file.Length > 0)
+                {
+                    fileName = Guid.NewGuid().ToString();
+                    using (var inputStream = new FileStream($"wwwroot/images/services/{fileName}.jpg", 
+                        FileMode.Create))
+                    {
+                        file.CopyTo(inputStream);
+                    }
+                }
+            }
+            
             var newService = new ServiceInfo
             {
                 Id = Guid.NewGuid().ToString(),
                 CostPerUnit = costPerUnit,
-                ImgSrc = service.ImgSrc,
+                ImgSrc = !isEmpty ? $"/images/services/{fileName}.jpg" : service.ImgSrc,
                 IsDeprecated = false,
                 Measurement = measurement,
                 Name = name
             };
 
-            _servicesOperations.ChangeServiceInfo(service, newService);
+            if (service.CostPerUnit == newService.CostPerUnit &&
+                service.ImgSrc == newService.ImgSrc &&
+                service.Measurement == newService.Measurement &&
+                service.Name == newService.Name)
+            {
+                ViewData["login"] = HttpContext.Session.GetString("login");
+                return Json(new { ok = true });
+            }
 
+            _servicesOperations.ChangeServiceInfo(service, newService);
             ViewData["login"] = HttpContext.Session.GetString("login");
-            return RedirectToAction("Change", "Services", new { id = newService.Id });
+            return Json(new { ok = true });
         }
 
         public object OrderAction()

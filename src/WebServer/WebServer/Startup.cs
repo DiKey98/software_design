@@ -120,7 +120,7 @@ namespace WebServer
 
                 routes.MapRoute(
                     "ChangeServiceAction",
-                    "{controller=Services}/{action=ChangeAction}/{id?}");
+                    "{controller=Services}/{action=ChangeAction}");
 
                 routes.MapRoute(
                     "ServicesOrder",

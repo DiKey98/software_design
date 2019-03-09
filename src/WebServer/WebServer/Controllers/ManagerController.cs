@@ -45,13 +45,13 @@ namespace WebServer.Controllers
 
                 ViewData["roleName"] = HttpContext.Session.GetString("roleName");
                 ViewData["login"] = HttpContext.Session.GetString("login");
-                return View(st as List<UsersActivityStatistics>);
+                return View(st);
             }
 
             DateTime? start;
             DateTime? end;
 
-            var parsed = DateTime.TryParseExact(Request.Query["start"], "dd.MM.yyyy",
+            var parsed = DateTime.TryParseExact(Request.Form["start"], "dd.MM.yyyy",
                 CultureInfo.CurrentCulture, DateTimeStyles.None, out var date);
 
             if (parsed)
@@ -63,7 +63,7 @@ namespace WebServer.Controllers
                 start = null;
             }
 
-            parsed = DateTime.TryParseExact(Request.Query["end"], "dd.MM.yyyy",
+            parsed = DateTime.TryParseExact(Request.Form["end"], "dd.MM.yyyy",
                 CultureInfo.CurrentCulture, DateTimeStyles.None, out date);
 
             if (parsed)

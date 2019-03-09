@@ -33,6 +33,7 @@
 
 <script type="text/javascript">
     window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+    window.serviceid = @Html.Raw(JsonConvert.SerializeObject(ViewData["id"]));
 </script>
 
 @section Scripts {
@@ -92,7 +93,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default">Изменить</button>
+                                        <button type="submit" class="btn btn-default" id="changeBtn">Изменить</button>
                                     </div>
                                 </form>
                             </div>
