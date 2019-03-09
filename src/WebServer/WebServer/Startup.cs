@@ -163,6 +163,18 @@ namespace WebServer
                 routes.MapRoute(
                     "ManagerUsersActivity",
                     "{controller=Manager}/{action=UsersActivity}");
+
+                routes.MapRoute(
+                    "RegManager",
+                    "{controller=Manager}/{action=RegManager}");
+
+                routes.MapRoute(
+                    "RegManagerAction",
+                    "{controller=Manager}/{action=RegManagerAction}");
+
+                routes.MapRoute(
+                    "RegAdmin",
+                    "{controller=Admin}/{action=RegAdmin}");
             });
         }
     }

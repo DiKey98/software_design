@@ -109,10 +109,11 @@ namespace WebServer.Controllers
             if (role == null || role.ToLower() != "управляющий" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return Json(new {message = "NO_AUTHORIZED"});
+                return Json(new { message = "NO_AUTHORIZED" });
             }
 
             var id = Request.Form["id"];
+
             var service = _serviceInfoContainer.GetServiceInfoById(id);
             if (service == null || service.IsDeprecated)
             {

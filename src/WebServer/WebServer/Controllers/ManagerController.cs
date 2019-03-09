@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Castle.Core.Internal;
 using HotelServicesNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -91,6 +92,18 @@ namespace WebServer.Controllers
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             ViewData["login"] = HttpContext.Session.GetString("login");
             return Json(statistics);
+        }
+
+        public IActionResult RegManager()
+        {
+            ViewData["roleName"] = HttpContext.Session.GetString("roleName");
+            ViewData["login"] = HttpContext.Session.GetString("login");
+            return View();
+        }
+
+        public object RegManagerAction()
+        {
+            return null;
         }
 
         public class UsersActivityStatistics

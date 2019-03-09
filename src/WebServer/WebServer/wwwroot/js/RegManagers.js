@@ -10,7 +10,7 @@
         $('#enterForm').ready(function () {
             setTimeout(function () {
                 $("#footerContent").removeClass("navbar-fixed-bottom");
-            }, 200); 
+            }, 200);
         });
     });
 
@@ -30,7 +30,7 @@
         var password = $('#inputPassword1').val();
         var password2 = $('#reinputPassword1').val();
 
-       
+
         if (name.length === 0 && login.length === 0 && password.length === 0 && password2.length === 0) {
 
             $('#inputName1').css({
@@ -153,7 +153,7 @@
                 fio: name,
                 login: login,
                 password: password,
-                role: "Клиент"
+                role: "Управляющий" 
             },
             dataType: 'JSON',
             success: function (jsonData) {
