@@ -31,6 +31,7 @@
 
 <script type="text/javascript">
     window.login = @Html.Raw(JsonConvert.SerializeObject(ViewData["login"]));
+    window.where = @Html.Raw(JsonConvert.SerializeObject(ViewData["where"]));
 </script>
 
 @section Scripts {

@@ -75,13 +75,13 @@ namespace WebServer.Controllers
             if (role == null || role.ToLower() != "клиент" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return RedirectToAction("Authorization", "Home", new {where="/Services/Basket"});
             }
 
             var user = _usersContainer.GetUserById(HttpContext.Session.GetString("userId"));
             if (user == null)
             {
-                RedirectToAction("Authorization", "Home");
+                RedirectToAction("Authorization", "Home", new { where = "/Services/Basket" });
             }
 
             var ordersParams = _ordersContainer
@@ -109,7 +109,7 @@ namespace WebServer.Controllers
             if (role == null || role.ToLower() != "управляющий" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return Json(new { message = "NO_AUTHORIZED" });
+                return Json(new { message = "NO_AUTHORIZED"});
             }
 
             var id = Request.Form["id"];

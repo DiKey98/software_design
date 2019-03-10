@@ -151,6 +151,10 @@ namespace WebServer
                     "AdminOrders",
                     "{controller=Admin}/{action=Orders}/{type?}");
 
+                routes.MapRoute(
+                    "RegAdmin",
+                    "{controller=Admin}/{action=RegAdmin}");
+
 
                 routes.MapRoute(
                     "ManagerOrders",
@@ -167,14 +171,6 @@ namespace WebServer
                 routes.MapRoute(
                     "RegManager",
                     "{controller=Manager}/{action=RegManager}");
-
-                routes.MapRoute(
-                    "RegManagerAction",
-                    "{controller=Manager}/{action=RegManagerAction}");
-
-                routes.MapRoute(
-                    "RegAdmin",
-                    "{controller=Admin}/{action=RegAdmin}");
             });
         }
     }

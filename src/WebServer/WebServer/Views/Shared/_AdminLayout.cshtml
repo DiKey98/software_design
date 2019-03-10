@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebServer</title>
+    <title>@ViewData["Title"] - Hotel City 17</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -27,8 +27,8 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Главная</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Services">Услуги</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Services">Пользователи</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Services">Заказы</a></li>
+                    <li><a asp-area="" asp-controller="Admin" asp-action="Users">Пользователи</a></li>
+                    <li><a asp-area="" asp-controller="Admin" asp-action="Orders">Заказы</a></li>
                     <li><a asp-area="" asp-controller="Admin" asp-action="RegAdmin">Регистрация администратора</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -48,13 +48,11 @@
     <div id="content" class="container body-content">
         @RenderBody()
 
-        <div id="footerContent" class="container body-content">
-            <hr />
+        <div id="footerContent" class="container-fluid navbar-inverse navbar-fixed-bottom">
             <footer>
-                <p>&copy; 2019 - Hotel City 17 Все права защищены</p>
+                <p id="footerText">&copy; 2019 - Hotel City 17 Все права защищены</p>
             </footer>
         </div>
-
     </div>
 
     <environment include="Development">

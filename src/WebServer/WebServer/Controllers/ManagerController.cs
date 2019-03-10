@@ -23,7 +23,7 @@ namespace WebServer.Controllers
         public IActionResult UsersActivity()
         {
             var role = HttpContext.Session.GetString("role");
-            if (role == null || role.ToLower() == "клиент" ||
+            if (role == null || role.ToLower() != "управляющий" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
                 return RedirectToAction("Authorization", "Home");
@@ -96,14 +96,16 @@ namespace WebServer.Controllers
 
         public IActionResult RegManager()
         {
+            var role = HttpContext.Session.GetString("role");
+            if (role == null || role.ToLower() != "управляющий" ||
+                !IsAuthorizedInDb(HttpContext.Session.Id))
+            {
+                return RedirectToAction("Authorization", "Home");
+            }
+
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             ViewData["login"] = HttpContext.Session.GetString("login");
             return View();
-        }
-
-        public object RegManagerAction()
-        {
-            return null;
         }
 
         public class UsersActivityStatistics

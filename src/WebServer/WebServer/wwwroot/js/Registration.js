@@ -4,24 +4,6 @@
         borderWidth: "0"
     });
 
-    // зачем мы сначала удаляем а потом добавляем класс чтобы футтер внизу был
-
-    $('#reg').click(function () {
-        $('#enterForm').ready(function () {
-            setTimeout(function () {
-                $("#footerContent").removeClass("navbar-fixed-bottom");
-            }, 200); 
-        });
-    });
-
-    $('#auth').click(function () {
-        $('#enterForm').ready(function () {
-            setTimeout(function () {
-                $("#footerContent").addClass("navbar-fixed-bottom");
-            }, 150);
-        });
-    });
-
     $("#regButton").click(function (event) {
         event.preventDefault();
 

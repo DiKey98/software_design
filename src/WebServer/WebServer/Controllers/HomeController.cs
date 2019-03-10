@@ -39,11 +39,12 @@ namespace WebServer.Controllers
             return View(services as List<ServiceInfo>);
         }
 
-        public object Authorization(string message)
+        public IActionResult Authorization(string message)
         {
             ViewData["message"] = message;
             ViewData["roleName"] = HttpContext.Session.GetString("roleName");
             ViewData["login"] = HttpContext.Session.GetString("login");
+            ViewData["where"] = Request.Query["where"];
             return View();
         }
 
@@ -72,10 +73,10 @@ namespace WebServer.Controllers
             HttpContext.Session.SetString("userId", user.Id);
             HttpContext.Session.SetString("role", user.Role.Name);
 
-            return Json(new { ok = true, login = user.Login });
+            return Json(new { ok = true, login = user.Login, role = user.Role.Name });
         }
 
-        public IActionResult Logout()
+        public object Logout()
         {
             var userId = HttpContext.Session.GetString("userId");
             if (userId != null)

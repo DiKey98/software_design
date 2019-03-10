@@ -35,7 +35,7 @@ namespace WebServer.Controllers
             return View(users as List<User>);
         }
 
-        public object Orders()
+        public IActionResult Orders()
         {
             var role = HttpContext.Session.GetString("role");
             if (role == null || role.ToLower() == "клиент" ||

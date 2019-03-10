@@ -3,26 +3,6 @@
         borderWidth: "0"
     });
 
-    $('#reg').click(function () {
-        $('#enterForm').ready(function () {
-            setTimeout(function () {
-                $("#footerContent").removeClass("navbar-fixed-bottom");
-            }, 200);
-        });
-    });
-
-    $('#auth').click(function () {
-        $('#enterForm').ready(function () {
-            setTimeout(function () {
-                $("#footerContent").addClass("navbar-fixed-bottom");
-            }, 150);
-        });
-    });
-
-    //if (message !== null && message !== undefined && message !== "") {
-
-    //};
-
     $('#inputLogin').focusin(function (event) {
         $('#inputLogin').css({
             borderWidth: "0"
@@ -106,8 +86,17 @@
             },
             dataType: 'JSON',
             success: function (jsonData) {
-                console.log(jsonData);
+                if (jsonData.where !== null && jsonData.where !== undefined) {
+                    window.where = jsonData.where;
+                }
+
                 if (jsonData.ok) {
+                    if (window.where !== null && window.where !== undefined
+                        && window.where !== "" && window.where.length !== 0 &&
+                        jsonData.role.toLowerCase() === "клиент") {
+                        window.location.replace(window.where);
+                        return;
+                    }
                     window.location.replace("/");
                     return;
                 }
