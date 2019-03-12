@@ -35,7 +35,9 @@ namespace WebServer.Controllers
             if (role == null || role.ToLower() != "клиент" ||
                 !IsAuthorizedInDb(HttpContext.Session.Id))
             {
-                return RedirectToAction("Authorization", "Home");
+                return RedirectToAction("Authorization", "Home", id.IsNullOrEmpty() 
+                    ? new { where = "/Home/Services" } 
+                    : new {where=$"/Services/Order?id={id}"});
             }
 
             var service = _serviceInfoContainer.GetServiceInfoById(id);
