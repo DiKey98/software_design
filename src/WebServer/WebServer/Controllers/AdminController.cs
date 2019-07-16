@@ -9,7 +9,7 @@ using static WebServer.Helpers.AuthorizationHelper;
 
 namespace WebServer.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : Controller // лалалалаллалал
     {
         private readonly IUsersContainer _usersContainer;
         private readonly IOrdersContainer _ordersContainer;
