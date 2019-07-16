@@ -33,13 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="HotelServicesNetCore">
-      <HintPath>..\..\HotelServicesNetCore\HotelServicesNetCore\bin\Release\netcoreapp2.1\HotelServicesNetCore.dll</HintPath>
-    </Reference>
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Reference Include="HotelServicesNetCore">
+      <HintPath>..\..\HotelServicesNetCore\HotelServicesNetCore\bin\Release\netcoreapp2.1\HotelServicesNetCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
